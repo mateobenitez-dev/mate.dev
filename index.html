@@ -30,6 +30,9 @@
   --accent-ink: #ffffff;
   --wa: #b23a3a;
   --grid: rgba(43, 44, 47, .06);
+  --night: #2b2c2f;
+  --night-ink: #f3f2f1;
+  --night-muted: #b3b4b8;
   --f-display: "Archivo", "Arial Narrow", system-ui, sans-serif;
   --f-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
   --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
@@ -38,16 +41,19 @@
   :root:not([data-theme="light"]) {
     --bg: #2b2c2f; --surface: #34353a; --ink: #f3f2f1; --muted: #b3b4b8; --line: #4a4b50; --steel: #8b8d92;
     --accent: #c94848; --accent-ink: #ffffff; --wa: #c94848; --grid: rgba(243, 242, 241, .05);
+    --night: #222326;
     color-scheme: dark;
   }
 }
 :root[data-theme="dark"] {
   --bg: #2b2c2f; --surface: #34353a; --ink: #f3f2f1; --muted: #b3b4b8; --line: #4a4b50; --steel: #8b8d92;
   --accent: #c94848; --accent-ink: #ffffff; --wa: #c94848; --grid: rgba(243, 242, 241, .05);
+  --night: #222326;
   color-scheme: dark;
 }
 
 * { box-sizing: border-box; }
+html, body { overflow-x: clip; }
 html { scroll-behavior: smooth; }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { animation: none !important; transition: none !important; } }
 body {
@@ -117,15 +123,41 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
   .hero .wrap { grid-template-columns: minmax(0, 1fr); grid-template-areas: "logo" "eyebrow" "title" "row"; }
 }
 
-/* Fondo de líneas que se curvan hacia el cursor */
-#flux { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
-main, footer { position: relative; z-index: 1; }
+/* Portada oscura con líneas de fondo */
+.hero { position: relative; overflow: hidden; background: var(--night); color: var(--night-ink); border-bottom: 0; min-height: 600px; display: grid; align-items: center; }
+#flux { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; }
+.hero .wrap { position: relative; z-index: 1; width: 100%; }
+.hero h1 { color: var(--night-ink); }
+.hero .eyebrow { color: var(--night-muted); }
+.hero .hero-row p { color: var(--night-muted); }
 
-/* Logo eléctrico */
-.elogo { grid-area: logo; position: relative; width: clamp(150px, 22vw, 260px); aspect-ratio: 1; max-width: 100%; }
-.elogo svg { width: 100%; height: 100%; display: block; }
-.elogo canvas { position: absolute; inset: -22%; width: 144%; height: 144%; pointer-events: none; }
-@media (max-width: 760px) { .elogo { width: 120px; } }
+/* Logo eléctrico (ElectricLogo) */
+.elogo { grid-area: logo; position: relative; width: clamp(240px, 32vw, 420px); aspect-ratio: 1; max-width: 100%; }
+.elogo > svg { position: absolute; inset: 12.67%; width: 74.67%; height: 74.67%; display: block; opacity: 1; transition: opacity .6s ease; }
+.elogo.is-live > svg { opacity: .9; }
+.elogo .l-box { fill: #1d1e21; }
+.elogo .l-m { fill: var(--night-ink); }
+.elogo-gl { position: absolute; inset: 0; }
+@media (max-width: 760px) { .elogo { width: 200px; justify-self: start; } }
+
+/* Componentes portados de React Bits */
+.target-cursor { position: fixed; inset: 0; z-index: 2147483647; pointer-events: none; }
+.target-cursor__corner { position: absolute; top: 0; left: 0; box-sizing: border-box; border-style: solid; border-color: var(--target-cursor-color, #ffffff); transform-origin: 0 0; will-change: transform; }
+.target-cursor__dot { position: absolute; top: 0; left: 0; border-radius: 50%; background: var(--target-cursor-color, #ffffff); will-change: transform; }
+.target-cursor__label { position: absolute; top: 0; left: 0; color: var(--target-cursor-color, #ffffff); font-size: 12px; font-weight: 500; line-height: 1; white-space: nowrap; opacity: 0; will-change: transform, opacity; }
+.gradual-blur { pointer-events: none; }
+.electric-logo { position: relative; width: 100%; height: 100%; overflow: hidden; }
+.specular-button {
+  position: relative; isolation: isolate; display: inline-flex; align-items: center; justify-content: center; gap: .5em;
+  border: 0; border-radius: var(--sb-radius); line-height: 1; letter-spacing: .01em; color: var(--sb-text-color);
+  background: color-mix(in srgb, var(--sb-tint) calc(var(--sb-tint-opacity) * 100%), transparent);
+  box-shadow: 0 10px 24px -14px rgba(0, 0, 0, .45);
+  -webkit-backdrop-filter: blur(var(--sb-blur)); backdrop-filter: blur(var(--sb-blur));
+  cursor: pointer; -webkit-tap-highlight-color: transparent; transition: transform .25s cubic-bezier(.2, .8, .2, 1);
+}
+.specular-button:active { transform: scale(.97); }
+.specular-button__light { position: absolute; inset: -24px; z-index: 1; display: block; width: calc(100% + 48px); height: calc(100% + 48px); pointer-events: none; }
+.specular-button__label { position: relative; z-index: 2; display: inline-flex; align-items: center; gap: inherit; }
 .hero h1 {
   font-size: clamp(44px, 9.5vw, 124px); font-weight: 900; font-stretch: 125%;
   line-height: .9; letter-spacing: -.025em;
@@ -320,14 +352,13 @@ img { max-width: 100%; }
   </div>
 </header>
 
-<canvas id="flux" aria-hidden="true"></canvas>
-
 <main id="inicio">
   <div class="hero">
+    <canvas id="flux" aria-hidden="true"></canvas>
     <div class="wrap">
       <div class="elogo" aria-hidden="true">
         <svg viewBox="0 0 128 128"><rect class="l-box" x="4" y="4" width="120" height="120" rx="26.4"/><path class="l-m" d="M25.732 83.2V45.256H35.452L36.316 50.656H36.82Q38.116 48.712 39.952 47.272Q41.788 45.832 44.02 45.112Q46.252 44.392 48.772 44.392Q52.66 44.392 55.396 45.94Q58.132 47.488 59.572 50.656H60.076Q61.372 48.712 63.208 47.272Q65.044 45.832 67.312 45.112Q69.58 44.392 72.028 44.392Q75.988 44.392 78.724 45.868Q81.46 47.344 82.936 50.332Q84.412 53.32 84.412 57.928V83.2H72.604V59.728Q72.604 58.144 72.244 57.028Q71.884 55.912 71.236 55.156Q70.588 54.4 69.58 54.04Q68.572 53.68 67.42 53.68Q65.548 53.68 64.072 54.652Q62.596 55.624 61.804 57.244Q61.012 58.864 61.012 61.024V83.2H49.204V59.728Q49.204 58.144 48.844 57.028Q48.484 55.912 47.836 55.156Q47.188 54.4 46.18 54.04Q45.172 53.68 44.02 53.68Q42.148 53.68 40.672 54.652Q39.196 55.624 38.368 57.244Q37.54 58.864 37.54 61.024V83.2Z"/><rect class="l-dot" x="93.53" y="70" width="13.2" height="13.2"/></svg>
-        <canvas></canvas>
+        <div class="elogo-gl"></div>
       </div>
       <span class="eyebrow status"><i></i>Tomando proyectos · Argentina, trabajo remoto</span>
       <h1>Tu web, <em>hecha</em><br><span class="thin">de punta a punta.</span></h1>
@@ -578,123 +609,6 @@ update();
 const generic = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Hola Mate! Vi tu web y quiero consultarte por un proyecto.")}`;
 document.querySelectorAll(".js-wa").forEach(a => { a.href = generic; a.target = "_blank"; a.rel = "noopener"; });
 
-// ---- Fondo: líneas de flujo que el cursor revela y curva ----
-const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
-const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
-(() => {
-  const cv = document.getElementById("flux"); if (!cv) return;
-  const ctx = cv.getContext("2d");
-  let W, H, dpr, colors, t = 0, running = true;
-  const mouse = { x: -9999, y: -9999, k: 0, tk: 0 };
-  const readColors = () => { colors = { line: css("--steel"), hot: css("--accent") }; };
-  const resize = () => {
-    dpr = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight;
-    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  };
-  const R = 240;
-  function frame() {
-    ctx.clearRect(0, 0, W, H);
-    mouse.k += (mouse.tk - mouse.k) * 0.08;
-    const n = Math.max(18, Math.round(H / 26)), step = 14;
-    for (let i = 0; i < n; i++) {
-      const base = (i + 0.5) / n * H;
-      const pts = [];
-      for (let x = -step; x <= W + step; x += step) {
-        let y = base + 18 * Math.sin(x * 0.0042 + t * 0.55 + i * 0.47) + 9 * Math.sin(x * 0.011 - t * 0.8 + i * 1.3);
-        const dx = x - mouse.x, dy = y - mouse.y, d = Math.hypot(dx, dy);
-        let f = 0;
-        if (d < R) {
-          f = Math.pow(1 - d / R, 2) * mouse.k;
-          const a = Math.atan2(dy, dx) + 1.2;          // remolino alrededor del cursor
-          y += (mouse.y - y) * f * 0.45 + Math.sin(a) * 22 * f;
-        }
-        pts.push([x, y, f]);
-      }
-      ctx.lineWidth = 1; ctx.globalAlpha = 0.16; ctx.strokeStyle = colors.line;
-      ctx.beginPath(); pts.forEach(([x, y], j) => j ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.stroke();
-      ctx.strokeStyle = colors.hot; ctx.lineWidth = 1.4;
-      for (let j = 1; j < pts.length; j++) {
-        const f = Math.max(pts[j][2], pts[j - 1][2]);
-        if (f < 0.02) continue;
-        ctx.globalAlpha = Math.min(0.85, f * 1.6);
-        ctx.beginPath(); ctx.moveTo(pts[j - 1][0], pts[j - 1][1]); ctx.lineTo(pts[j][0], pts[j][1]); ctx.stroke();
-      }
-    }
-    ctx.globalAlpha = 1;
-  }
-  function loop() { if (!running) return; t += 0.016; frame(); requestAnimationFrame(loop); }
-  addEventListener("pointermove", e => { mouse.x = e.clientX; mouse.y = e.clientY; mouse.tk = 1; }, { passive: true });
-  document.addEventListener("pointerleave", () => { mouse.tk = 0; });
-  addEventListener("resize", () => { resize(); if (reduceMotion) frame(); });
-  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", readColors);
-  document.addEventListener("visibilitychange", () => { running = !document.hidden && !reduceMotion; if (running) loop(); });
-  readColors(); resize();
-  if (reduceMotion) { running = false; frame(); } else loop();
-})();
-
-// ---- Logo eléctrico: contorno de rayo con chispas que saltan de los bordes ----
-(() => {
-  const box = document.querySelector(".elogo"); if (!box) return;
-  const svg = box.querySelector("svg"), cv = box.querySelector("canvas"), ctx = cv.getContext("2d");
-  const shapes = [...svg.querySelectorAll("rect, path")].map(el => {
-    let p = el;
-    if (el.tagName === "rect") {           // rect → path para poder recorrer el contorno
-      const x = +el.getAttribute("x"), y = +el.getAttribute("y"), w = +el.getAttribute("width"), h = +el.getAttribute("height"), r = +(el.getAttribute("rx") || 0);
-      p = document.createElementNS("http://www.w3.org/2000/svg", "path");
-      p.setAttribute("d", `M${x + r} ${y}H${x + w - r}Q${x + w} ${y} ${x + w} ${y + r}V${y + h - r}Q${x + w} ${y + h} ${x + w - r} ${y + h}H${x + r}Q${x} ${y + h} ${x} ${y + h - r}V${y + r}Q${x} ${y} ${x + r} ${y}Z`);
-      svg.appendChild(p); p.style.display = "none";
-    }
-    const L = p.getTotalLength(), pts = [];
-    for (let s = 0; s < L; s += 3) { const q = p.getPointAtLength(s); pts.push([q.x, q.y]); }
-    return { pts, outer: el.classList.contains("l-box") };
-  });
-  let S, dpr, color, core, sparks = [];
-  const readColors = () => { color = css("--accent"); core = css("--surface"); };
-  const resize = () => {
-    dpr = Math.min(devicePixelRatio || 1, 2); const r = cv.getBoundingClientRect();
-    cv.width = r.width * dpr; cv.height = r.height * dpr; S = r.width;
-  };
-  const map = ([x, y]) => { const k = (S / 1.44) / 128, o = S * 0.22 / 1.44; return [o + x * k, o + y * k]; };
-  const jag = (a, b, segs, amp) => {
-    const out = [a];
-    for (let i = 1; i < segs; i++) {
-      const u = i / segs, nx = -(b[1] - a[1]), ny = b[0] - a[0], l = Math.hypot(nx, ny) || 1, o = (Math.random() - .5) * amp;
-      out.push([a[0] + (b[0] - a[0]) * u + nx / l * o, a[1] + (b[1] - a[1]) * u + ny / l * o]);
-    }
-    out.push(b); return out;
-  };
-  const stroke = (pts, w, c, blur, alpha) => {
-    ctx.lineWidth = w; ctx.strokeStyle = c; ctx.shadowColor = color; ctx.shadowBlur = blur; ctx.globalAlpha = alpha;
-    ctx.beginPath(); pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.stroke();
-  };
-  function draw() {
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, S, S); ctx.lineJoin = "round";
-    const k = S / 1.44 / 128, c = map([64, 64]);
-    shapes.forEach(sh => {
-      const p = sh.pts.map(q => { const [x, y] = map(q); const j = (sh.outer ? 4 : 1.2) * k; return [x + (Math.random() - .5) * j, y + (Math.random() - .5) * j]; });
-      p.push(p[0]);
-      const w = sh.outer ? 2 : 1.2;
-      stroke(p, w * 2.4, color, 18, sh.outer ? 0.55 : 0.35);
-      stroke(p, w * 0.7, core, 6, sh.outer ? 0.9 : 0.5);
-    });
-    if (Math.random() < 0.55) {
-      const src = shapes.find(s => s.outer).pts, a = map(src[(Math.random() * src.length) | 0]);
-      const dx = a[0] - c[0], dy = a[1] - c[1], l = Math.hypot(dx, dy), len = S * (0.06 + Math.random() * 0.12);
-      const ang = Math.atan2(dy, dx) + (Math.random() - .5) * 1.2;
-      sparks.push({ pts: jag(a, [a[0] + Math.cos(ang) * len, a[1] + Math.sin(ang) * len], 6, len * 0.5), life: 3 });
-    }
-    sparks = sparks.filter(s => s.life-- > 0);
-    sparks.forEach(s => { stroke(s.pts, 2.2, color, 14, 0.4 + s.life * 0.2); stroke(s.pts, 0.8, core, 4, 0.9); });
-    ctx.globalAlpha = 1; ctx.shadowBlur = 0;
-  }
-  let last = 0;
-  function loop(ts) { if (ts - last > 55) { draw(); last = ts; } requestAnimationFrame(loop); }
-  addEventListener("resize", resize);
-  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", readColors);
-  readColors(); resize();
-  if (reduceMotion) draw(); else requestAnimationFrame(loop);
-})();
-
 // Carpetas del portfolio: en celular se abren con un toque
 document.querySelectorAll(".folder").forEach(f => {
   const hit = f.querySelector(".f-hit");
@@ -724,5 +638,6 @@ document.getElementById("copy").addEventListener("click", e => {
   });
 });
 </script>
+<script src="assets/app.js" defer></script>
 </body>
 </html>

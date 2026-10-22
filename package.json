@@ -1,0 +1,25 @@
+{
+  "name": "mate-dev",
+  "version": "1.0.0",
+  "description": "Web personal de Mate: servicios de desarrollo web, portfolio y contacto por WhatsApp.",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "esbuild src/main.js --bundle --minify --format=iife --target=es2020 --outfile=assets/app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mateoacksbenitez-wq/mate.dev.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mateoacksbenitez-wq/mate.dev/issues"
+  },
+  "homepage": "https://github.com/mateoacksbenitez-wq/mate.dev#readme",
+  "devDependencies": {
+    "esbuild": "^0.24.2",
+    "ogl": "^1.0.11"
+  },
+  "private": true
+}

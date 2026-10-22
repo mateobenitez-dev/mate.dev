@@ -2,7 +2,18 @@
 
 Web personal de Mate: servicios de desarrollo web, portfolio y contacto por WhatsApp.
 
-Es un sitio estático (HTML + CSS + JS, sin build). Se publica con GitHub Pages desde la rama `main`.
+Es un sitio estático (HTML + CSS + JS). Se publica con GitHub Pages desde la rama `main`.
+
+## Efectos
+
+Los efectos vienen de componentes de [React Bits](https://reactbits.dev) (ElectricLogo, TargetCursor, GradualBlur y SpecularButton), pasados a JavaScript sin React en `src/`. Se compilan a `assets/app.js`, que es el archivo que carga la página:
+
+```sh
+npm install
+npm run build
+```
+
+Después de tocar algo en `src/`, hay que correr `npm run build` y commitear `assets/app.js`.
 
 ## Datos a completar
 
