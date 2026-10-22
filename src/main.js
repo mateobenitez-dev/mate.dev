@@ -3,6 +3,7 @@ import { mountElectricLogo } from './electric-logo.js';
 import { mountTargetCursor } from './target-cursor.js';
 import { mountGradualBlur } from './gradual-blur.js';
 import { applySpecular } from './specular-button.js';
+import { mountReflectiveCard } from './reflective-card.js';
 
 const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
@@ -30,6 +31,22 @@ if (logoBox) {
   });
   if (logo) logoBox.closest('.elogo').classList.add('is-live');
 }
+
+// ---- Gente de confianza: tarjetas ReflectiveCard (antes que los botones, así el de WhatsApp queda adentro) ----
+document.querySelectorAll('.friend-grid .friend').forEach(card => {
+  mountReflectiveCard(card, {
+    theme: 'dark',
+    tint: '#ffffff',
+    metalness: 1,
+    roughness: 0.3,
+    blurStrength: 6,
+    shine: 1,
+    glare: 0.5,
+    width: '100%',
+    height: 440,
+    radius: 24
+  });
+});
 
 // ---- Botones: SpecularButton sobre los botones que ya existen ----
 const onDark = el => !!el.closest('.hero, .contact');
