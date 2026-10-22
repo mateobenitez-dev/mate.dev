@@ -19,7 +19,7 @@ if (logoBox) {
     src: LOGO_SRC,
     color: '#ffe9e6',
     glowColor: '#c94848',
-    scale: 0.7,
+    scale: 0.6,
     strands: 4,
     bend: 0.6,
     crackle: 1.5,

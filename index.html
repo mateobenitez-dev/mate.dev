@@ -132,13 +132,13 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .hero .hero-row p { color: var(--night-muted); }
 
 /* Logo eléctrico (ElectricLogo) */
-.elogo { grid-area: logo; position: relative; width: clamp(240px, 32vw, 420px); aspect-ratio: 1; max-width: 100%; }
-.elogo > svg { position: absolute; inset: 12.67%; width: 74.67%; height: 74.67%; display: block; opacity: 1; transition: opacity .6s ease; }
+.elogo { grid-area: logo; position: relative; width: clamp(260px, 36vw, 480px); aspect-ratio: 1; max-width: 100%; }
+.elogo > svg { position: absolute; inset: 18%; width: 64%; height: 64%; display: block; opacity: 1; transition: opacity .6s ease; }
 .elogo.is-live > svg { opacity: .9; }
 .elogo .l-box { fill: #1d1e21; }
 .elogo .l-m { fill: var(--night-ink); }
-.elogo-gl { position: absolute; inset: 0; }
-@media (max-width: 760px) { .elogo { width: 200px; justify-self: start; } }
+.elogo-gl { position: absolute; inset: 0; -webkit-mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); mask-image: radial-gradient(closest-side, #000 72%, transparent 100%); }
+@media (max-width: 760px) { .elogo { width: 220px; justify-self: start; margin-block: -24px; } }
 
 /* Componentes portados de React Bits */
 .target-cursor { position: fixed; inset: 0; z-index: 2147483647; pointer-events: none; }
@@ -204,7 +204,8 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 @media (max-width: 640px) { .work { grid-template-columns: minmax(0, 1fr); } }
 .project { display: grid; gap: 12px; justify-items: center; text-align: center; min-width: 0; }
 .project .desc { max-width: 32ch; }
-.folder { position: relative; width: 220px; height: 150px; margin-top: 170px; perspective: 900px; }
+.folder { position: relative; width: 220px; height: 150px; margin-top: 170px; perspective: 700px; transition: transform .5s cubic-bezier(.3, 1.4, .5, 1); }
+.f-back::after { content: ""; position: absolute; inset: 10px 10px 0; border-radius: 10px 10px 0 0; background: linear-gradient(rgba(0, 0, 0, .28), rgba(0, 0, 0, 0)); opacity: 0; transition: opacity .4s ease; }
 .f-back { position: absolute; inset: 0; background: var(--steel); border-radius: 4px 14px 14px 14px; }
 .f-back::before { content: ""; position: absolute; left: 0; top: -16px; width: 44%; height: 22px; background: inherit; border-radius: 10px 12px 0 0; }
 .f-front {
@@ -230,7 +231,14 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 .n1 { --px: -14px; --py: -22px; --pr: -4deg; --ox: -118px; --oy: -150px; --or: -9deg; }
 .n2 { --px: 0px; --py: -30px; --pr: 2deg; --ox: 0px; --oy: -182px; --or: 2deg; }
 .n3 { --px: 14px; --py: -20px; --pr: 5deg; --ox: 118px; --oy: -144px; --or: 8deg; }
-.folder:hover .f-front, .folder:focus-within .f-front, .folder.open .f-front { transform: rotateX(-34deg); }
+.folder:hover, .folder:focus-within, .folder.open { transform: translateY(-6px); }
+.folder:hover .f-back::after, .folder:focus-within .f-back::after, .folder.open .f-back::after { opacity: 1; }
+.folder:hover .f-front, .folder:focus-within .f-front, .folder.open .f-front { transform: rotateX(-58deg); box-shadow: 0 -18px 30px -12px rgba(0, 0, 0, .35); }
+/* Cerrada: las hojas asoman de a poco para invitar a abrirla */
+.folder:not(:hover):not(:focus-within):not(.open) .note-in { animation: peek 3.6s ease-in-out infinite; }
+.folder:not(:hover):not(:focus-within):not(.open) .n2 .note-in { animation-delay: .25s !important; }
+.folder:not(:hover):not(:focus-within):not(.open) .n3 .note-in { animation-delay: .5s !important; }
+@keyframes peek { 0%, 70%, 100% { transform: translateY(0); } 80% { transform: translateY(-14px); } 90% { transform: translateY(-4px); } }
 .folder:hover .note, .folder:focus-within .note, .folder.open .note { z-index: 6; transform: translate(var(--ox), var(--oy)) rotate(var(--or)) scale(1); }
 .folder:hover .n2, .folder:focus-within .n2, .folder.open .n2 { transition-delay: .05s; }
 .folder:hover .n3, .folder:focus-within .n3, .folder.open .n3 { transition-delay: .1s; }
@@ -609,7 +617,21 @@ update();
 const generic = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Hola Mate! Vi tu web y quiero consultarte por un proyecto.")}`;
 document.querySelectorAll(".js-wa").forEach(a => { a.href = generic; a.target = "_blank"; a.rel = "noopener"; });
 
-// Carpetas del portfolio: en celular se abren con un toque
+// Carpetas del portfolio: se abren solas una vez al aparecer en pantalla, y con un toque en celular
+if (!matchMedia("(prefers-reduced-motion: reduce)").matches) {
+  const seen = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (!e.isIntersecting) return;
+      seen.unobserve(e.target);
+      const i = [...document.querySelectorAll(".folder")].indexOf(e.target);
+      setTimeout(() => {
+        e.target.classList.add("open");
+        setTimeout(() => { if (e.target.querySelector(".f-hit").getAttribute("aria-expanded") !== "true") e.target.classList.remove("open"); }, 2200);
+      }, 300 + i * 350);
+    });
+  }, { threshold: 0.9 });
+  document.querySelectorAll(".folder").forEach(f => seen.observe(f));
+}
 document.querySelectorAll(".folder").forEach(f => {
   const hit = f.querySelector(".f-hit");
   hit.addEventListener("click", () => {
