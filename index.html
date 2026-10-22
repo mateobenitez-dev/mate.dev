@@ -1,0 +1,532 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>mate.dev · Desarrollo web</title>
+<meta name="description" content="Landing pages, sitios web y apps a medida con front y back. Hablás directo conmigo por WhatsApp.">
+<meta property="og:title" content="mate.dev · Desarrollo web">
+<meta property="og:description" content="Landing pages, sitios web y apps a medida con front y back.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/favicon-512.png">
+<meta name="theme-color" content="#2b2c2f">
+<link rel="icon" href="assets/favicon.ico" sizes="48x48">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: plano técnico. Hero tipográfico ancho, servicios como fichas de obra, trabajos en grilla, armador de mensaje para WhatsApp al cierre. */
+:root {
+  --bg: #f3f2f1;
+  --surface: #ffffff;
+  --ink: #2b2c2f;
+  --muted: #64666b;
+  --line: #c7c7c9;
+  --steel: #8b8d92;
+  --accent: #b23a3a;
+  --accent-ink: #ffffff;
+  --wa: #b23a3a;
+  --grid: rgba(43, 44, 47, .06);
+  --f-display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --f-body: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #2b2c2f; --surface: #34353a; --ink: #f3f2f1; --muted: #b3b4b8; --line: #4a4b50; --steel: #8b8d92;
+    --accent: #c94848; --accent-ink: #ffffff; --wa: #c94848; --grid: rgba(243, 242, 241, .05);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #2b2c2f; --surface: #34353a; --ink: #f3f2f1; --muted: #b3b4b8; --line: #4a4b50; --steel: #8b8d92;
+  --accent: #c94848; --accent-ink: #ffffff; --wa: #c94848; --grid: rgba(243, 242, 241, .05);
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { animation: none !important; transition: none !important; } }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--f-body); font-size: 17px; line-height: 1.6;
+}
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
+
+.wrap {
+  max-width: 1120px; margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+}
+.mono { font-family: var(--f-mono); font-size: 13px; letter-spacing: .02em; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; }
+h2 { font-size: clamp(30px, 4.4vw, 48px); font-weight: 800; font-stretch: 112%; line-height: 1.02; letter-spacing: -.01em; }
+h3 { font-size: 22px; font-weight: 700; font-stretch: 105%; line-height: 1.15; }
+p { margin: 0; }
+
+/* Barra superior */
+body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-area-inset-top, 0px); z-index: 10; background: var(--bg); }
+.top {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 9;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--line);
+}
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding-block: 14px; }
+.brand { font-family: var(--f-display); font-weight: 900; font-stretch: 120%; font-size: 20px; text-decoration: none; letter-spacing: -.01em; }
+.brand { display: inline-flex; line-height: 0; }
+.logo { height: 46px; width: auto; margin-block: -4px; }
+.l-box, .l-word { fill: var(--ink); }
+.l-m { fill: var(--bg); }
+.l-dot { fill: var(--accent); }
+.l-dev { fill: var(--steel); }
+.nav { display: flex; gap: 24px; align-items: center; }
+.nav a { text-decoration: none; font-size: 15px; color: var(--muted); }
+.nav a:hover { color: var(--ink); }
+.nav .links { display: flex; gap: 24px; }
+@media (max-width: 720px) { .nav .links { display: none; } }
+
+.btn {
+  display: inline-flex; align-items: center; gap: 10px;
+  font-family: var(--f-body); font-weight: 600; font-size: 15px;
+  padding: 12px 18px; border-radius: 999px; border: 1px solid transparent;
+  text-decoration: none; cursor: pointer; transition: transform .15s ease, background .15s ease;
+}
+.btn:hover { transform: translateY(-1px); }
+.btn-wa { background: var(--wa); color: var(--accent-ink); }
+.btn-ghost { border-color: var(--line); color: var(--ink); background: transparent; }
+.btn-ghost:hover { border-color: var(--ink); }
+.btn svg { width: 18px; height: 18px; flex: none; }
+.nav .btn { padding: 9px 14px; color: #fff; }
+
+/* Hero */
+.hero {
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+  border-bottom: 1px solid var(--line);
+}
+.hero .wrap { padding-block: clamp(56px, 9vw, 112px) clamp(48px, 7vw, 88px); display: grid; gap: 32px; }
+.hero h1 {
+  font-size: clamp(44px, 9.5vw, 124px); font-weight: 900; font-stretch: 125%;
+  line-height: .9; letter-spacing: -.025em;
+}
+.hero h1 em { font-style: normal; color: var(--accent); }
+.hero h1 .thin { font-weight: 400; font-stretch: 62%; letter-spacing: 0; }
+.hero-row { display: flex; flex-wrap: wrap; gap: 24px 48px; align-items: end; justify-content: space-between; }
+.hero-row p { max-width: 52ch; color: var(--muted); font-size: 19px; }
+.hero-row .ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.status { display: inline-flex; align-items: center; gap: 8px; }
+.status i { width: 8px; height: 8px; border-radius: 50%; background: var(--wa); box-shadow: 0 0 0 4px color-mix(in srgb, var(--wa) 25%, transparent); animation: pulse 2.4s ease-in-out infinite; }
+@keyframes pulse { 50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--wa) 0%, transparent); } }
+
+section { padding-block: clamp(64px, 9vw, 112px); }
+.sec-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 16px 40px; margin-bottom: 40px; }
+.sec-head p { max-width: 46ch; color: var(--muted); }
+
+/* Servicios */
+.plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: 14px; overflow: hidden; background: var(--surface); }
+@media (max-width: 900px) { .plans { grid-template-columns: minmax(0, 1fr); } }
+.plan { padding: 28px; display: grid; grid-template-rows: auto auto 1fr auto; gap: 18px; border-right: 1px solid var(--line); min-width: 0; }
+.plan:last-child { border-right: 0; }
+@media (max-width: 900px) { .plan { border-right: 0; border-bottom: 1px solid var(--line); } .plan:last-child { border-bottom: 0; } }
+.plan.featured { background: var(--ink); color: var(--bg); }
+.plan.featured .spec dt, .plan.featured .desc { color: color-mix(in srgb, var(--bg) 70%, var(--ink)); }
+.plan.featured .spec { border-color: color-mix(in srgb, var(--bg) 22%, var(--ink)); }
+.plan.featured .spec div { border-color: color-mix(in srgb, var(--bg) 22%, var(--ink)); }
+.plan-top { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; }
+.tag { font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; padding: 4px 8px; border-radius: 4px; border: 1px solid currentColor; opacity: .75; }
+.desc { color: var(--muted); font-size: 16px; }
+.plan ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 15.5px; }
+.plan li { display: grid; grid-template-columns: 18px 1fr; gap: 8px; }
+.plan li::before { content: "+"; font-family: var(--f-mono); color: var(--accent); font-weight: 500; }
+.spec { margin: 0; border-top: 1px solid var(--line); display: grid; }
+.spec div { display: flex; justify-content: space-between; gap: 12px; padding-block: 10px; border-bottom: 1px solid var(--line); }
+.spec dt { font-family: var(--f-mono); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.spec dd { margin: 0; font-weight: 600; font-size: 15px; text-align: right; font-variant-numeric: tabular-nums; }
+.plan .btn { justify-content: center; }
+.plan.featured .btn-ghost { color: var(--bg); border-color: color-mix(in srgb, var(--bg) 35%, var(--ink)); }
+
+/* Trabajos */
+.work { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+@media (max-width: 900px) { .work { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 600px) { .work { grid-template-columns: minmax(0, 1fr); } }
+.card { display: grid; gap: 14px; text-decoration: none; min-width: 0; }
+.shot {
+  aspect-ratio: 4 / 3; max-width: 100%; border-radius: 12px; border: 1px solid var(--line);
+  background: var(--surface); overflow: hidden; position: relative; transition: transform .2s ease;
+}
+.card:hover .shot { transform: translateY(-4px); }
+.shot .bar { height: 26px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 6px; padding-inline: 10px; }
+.shot .bar i { width: 8px; height: 8px; border-radius: 50%; background: var(--steel); opacity: .5; }
+.shot .mock { position: absolute; inset: 26px 0 0; padding: 16px; display: grid; gap: 8px; align-content: start; }
+.mock .h { height: 14px; border-radius: 3px; background: var(--ink); opacity: .85; }
+.mock .t { height: 7px; border-radius: 3px; background: var(--line); }
+.mock .blk { border-radius: 6px; }
+.m1 .blk { height: 70px; background: color-mix(in srgb, var(--accent) 22%, var(--surface)); }
+.m2 { grid-template-columns: 1fr 1fr; }
+.m2 .blk { height: 54px; background: color-mix(in srgb, var(--steel) 30%, var(--surface)); }
+.m3 { grid-template-columns: 60px 1fr; }
+.m3 .side { grid-row: span 4; background: color-mix(in srgb, var(--ink) 8%, var(--surface)); border-radius: 6px; height: 140px; }
+.m3 .blk { height: 40px; background: color-mix(in srgb, var(--accent) 14%, var(--surface)); }
+.example { position: absolute; right: 10px; bottom: 10px; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; background: var(--bg); border: 1px dashed var(--muted); color: var(--muted); padding: 3px 7px; border-radius: 4px; }
+.card-meta { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
+.card-meta p { color: var(--muted); font-size: 15px; }
+.stack { display: flex; flex-wrap: wrap; gap: 6px; }
+.stack span { font-family: var(--f-mono); font-size: 11.5px; padding: 3px 8px; border-radius: 4px; background: color-mix(in srgb, var(--ink) 6%, var(--bg)); color: var(--muted); }
+
+/* Servicios amigos */
+.friends { border-top: 1px solid var(--line); background: color-mix(in srgb, var(--steel) 14%, var(--bg)); }
+.friend-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+@media (max-width: 760px) { .friend-grid { grid-template-columns: minmax(0, 1fr); } }
+.friend { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 28px; display: grid; grid-template-rows: auto auto 1fr auto; gap: 18px; min-width: 0; }
+.friend-top { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.friend .glyph { width: 44px; height: 44px; border-radius: 10px; display: grid; place-items: center; background: color-mix(in srgb, var(--accent) 12%, var(--surface)); color: var(--accent); }
+.friend .glyph svg { width: 24px; height: 24px; }
+.friend ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; font-size: 15.5px; }
+.friend li { display: grid; grid-template-columns: 18px 1fr; gap: 8px; }
+.friend li::before { content: "+"; font-family: var(--f-mono); color: var(--accent); font-weight: 500; }
+.friend-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid var(--line); padding-top: 18px; }
+.who { display: flex; align-items: center; gap: 10px; font-size: 15px; }
+.who .av { width: 34px; height: 34px; border-radius: 50%; background: var(--ink); color: var(--bg); display: grid; place-items: center; font-family: var(--f-display); font-weight: 800; font-size: 14px; }
+.who small { display: block; color: var(--muted); font-size: 12.5px; line-height: 1.2; }
+.friend .btn { padding: 10px 16px; font-size: 14.5px; }
+
+/* Proceso */
+.process { border-top: 1px solid var(--line); }
+.steps { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; counter-reset: s; }
+@media (max-width: 900px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 520px) { .steps { grid-template-columns: minmax(0, 1fr); } }
+.step { display: grid; gap: 10px; align-content: start; border-top: 2px solid var(--ink); padding-top: 16px; min-width: 0; }
+.step .n { font-family: var(--f-mono); font-size: 13px; color: var(--accent); }
+.step p { color: var(--muted); font-size: 15.5px; }
+
+/* Contacto */
+.contact { background: var(--ink); color: var(--bg); }
+.contact .eyebrow { color: color-mix(in srgb, var(--bg) 65%, var(--ink)); }
+.contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 48px; align-items: start; }
+@media (max-width: 860px) { .contact-grid { grid-template-columns: minmax(0, 1fr); } }
+.contact h2 { font-size: clamp(36px, 5vw, 60px); overflow-wrap: anywhere; }
+.contact .lead { color: color-mix(in srgb, var(--bg) 72%, var(--ink)); margin-top: 18px; max-width: 42ch; }
+.number { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+.number strong { font-family: var(--f-mono); font-weight: 500; font-size: 20px; user-select: all; }
+.copy { font: inherit; font-size: 13px; padding: 6px 12px; border-radius: 999px; background: transparent; color: var(--bg); border: 1px solid color-mix(in srgb, var(--bg) 35%, var(--ink)); cursor: pointer; }
+
+.composer { background: var(--surface); color: var(--ink); border-radius: 16px; padding: 24px; display: grid; gap: 18px; }
+.composer label, .composer legend { font-family: var(--f-mono); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.composer fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 10px; }
+.chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.chips input { position: absolute; opacity: 0; pointer-events: none; }
+.chips label { font-family: var(--f-body); font-size: 15px; text-transform: none; letter-spacing: 0; color: var(--ink); padding: 8px 14px; border: 1px solid var(--line); border-radius: 999px; cursor: pointer; }
+.chips input:checked + label { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
+.chips input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; }
+.field { display: grid; gap: 8px; }
+.field input, .field textarea { font: inherit; font-size: 16px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; width: 100%; resize: vertical; }
+.preview { font-family: var(--f-mono); font-size: 13.5px; line-height: 1.55; background: color-mix(in srgb, var(--wa) 12%, var(--surface)); border: 1px solid color-mix(in srgb, var(--wa) 35%, var(--surface)); border-radius: 12px 12px 12px 2px; padding: 14px 16px; white-space: pre-wrap; overflow-wrap: anywhere; }
+.composer .btn-wa { justify-content: center; font-size: 16px; padding: 14px 18px; }
+.hint { font-size: 13px; color: var(--muted); }
+
+footer { border-top: 1px solid var(--line); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 28px; color: var(--muted); font-size: 14px; }
+
+.fab {
+  position: fixed; z-index: 8;
+  right: calc(20px + env(safe-area-inset-right, 0px));
+  bottom: calc(20px + env(safe-area-inset-bottom, 0px));
+  width: 58px; height: 58px; border-radius: 50%; background: var(--wa); color: #fff;
+  display: grid; place-items: center; box-shadow: 0 10px 30px -8px rgba(0,0,0,.35);
+  transition: transform .15s ease;
+}
+.fab:hover { transform: scale(1.06); }
+.fab svg { width: 28px; height: 28px; }
+</style>
+<style>
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+:root { padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="wa" viewBox="0 0 24 24"><path fill="currentColor" d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38a9.9 9.9 0 0 0 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91A9.85 9.85 0 0 0 12.04 2Zm0 18.15h-.01a8.2 8.2 0 0 1-4.19-1.15l-.3-.18-3.12.82.83-3.04-.2-.31a8.23 8.23 0 0 1-1.26-4.38c0-4.54 3.7-8.24 8.25-8.24a8.2 8.2 0 0 1 8.24 8.25c0 4.54-3.7 8.23-8.24 8.23Zm4.52-6.16c-.25-.12-1.47-.72-1.69-.81-.23-.08-.39-.12-.56.13-.16.25-.64.81-.79.97-.14.17-.29.19-.54.06-.25-.12-1.05-.39-1.99-1.23-.74-.66-1.23-1.47-1.38-1.72-.14-.25-.02-.38.11-.51.11-.11.25-.29.37-.43.13-.15.17-.25.25-.42.08-.17.04-.31-.02-.43-.06-.12-.56-1.34-.76-1.84-.2-.48-.41-.42-.56-.43h-.48a.92.92 0 0 0-.66.31c-.23.25-.87.85-.87 2.07 0 1.22.89 2.4 1.01 2.56.12.17 1.75 2.67 4.24 3.74.59.26 1.05.41 1.41.52.59.19 1.13.16 1.56.1.48-.07 1.47-.6 1.67-1.18.21-.58.21-1.07.14-1.18-.06-.1-.22-.16-.47-.29Z"/></symbol>
+</svg>
+
+<header class="top">
+  <div class="wrap">
+    <a class="brand" href="#inicio"><svg class="logo" role="img" aria-label="mate.dev" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 610 160"><rect class="l-box" x="30" y="20" width="120" height="120" rx="26.40"/><path d="M51.732 99.2V61.25600000000001H61.452L62.316 66.656H62.82Q64.116 64.712 65.952 63.272000000000006Q67.788 61.83200000000001 70.02 61.11200000000001Q72.252 60.392 74.77199999999999 60.392Q78.66 60.392 81.396 61.940000000000005Q84.132 63.48800000000001 85.572 66.656H86.076Q87.372 64.712 89.208 63.272000000000006Q91.044 61.83200000000001 93.312 61.11200000000001Q95.58 60.392 98.02799999999999 60.392Q101.988 60.392 104.72399999999999 61.86800000000001Q107.46 63.34400000000001 108.936 66.33200000000001Q110.412 69.32000000000001 110.412 73.928V99.2H98.604V75.72800000000001Q98.604 74.144 98.244 73.028Q97.884 71.912 97.23599999999999 71.156Q96.588 70.4 95.58 70.04Q94.572 69.68 93.41999999999999 69.68Q91.548 69.68 90.072 70.65200000000002Q88.596 71.62400000000001 87.804 73.244Q87.012 74.864 87.012 77.024V99.2H75.204V75.72800000000001Q75.204 74.144 74.844 73.028Q74.484 71.912 73.836 71.156Q73.188 70.4 72.18 70.04Q71.172 69.68 70.02 69.68Q68.148 69.68 66.672 70.65200000000002Q65.196 71.62400000000001 64.368 73.244Q63.54 74.864 63.54 77.024V99.2Z" class="l-m"/><rect x="119.53" y="86.00" width="13.20" height="13.20" class="l-dot"/><path d="M184.2 120.0V67.3H197.7L198.9 74.8H199.6Q201.4 72.1 203.95 70.1Q206.5 68.1 209.6 67.1Q212.7 66.1 216.2 66.1Q221.6 66.1 225.39999999999998 68.25Q229.2 70.4 231.2 74.8H231.9Q233.7 72.1 236.25 70.1Q238.8 68.1 241.95000000000002 67.1Q245.10000000000002 66.1 248.5 66.1Q254.0 66.1 257.8 68.14999999999999Q261.6 70.19999999999999 263.65 74.35Q265.7 78.5 265.7 84.9V120.0H249.3V87.4Q249.3 85.19999999999999 248.8 83.64999999999999Q248.3 82.1 247.4 81.05Q246.5 80.0 245.1 79.5Q243.7 79.0 242.10000000000002 79.0Q239.5 79.0 237.45 80.35Q235.4 81.69999999999999 234.3 83.94999999999999Q233.2 86.19999999999999 233.2 89.2V120.0H216.8V87.4Q216.8 85.19999999999999 216.3 83.64999999999999Q215.8 82.1 214.9 81.05Q214.0 80.0 212.6 79.5Q211.2 79.0 209.6 79.0Q207.0 79.0 204.95 80.35Q202.9 81.69999999999999 201.75 83.94999999999999Q200.6 86.19999999999999 200.6 89.2V120.0ZM290.59999999999997 121.2Q287.3 121.2 284.15 120.55000000000001Q281.0 119.9 278.45 118.25Q275.9 116.6 274.4 113.69999999999999Q272.9 110.8 272.9 106.4Q272.9 100.7 275.29999999999995 97.1Q277.7 93.5 282.25 91.45Q286.8 89.4 293.25 88.6Q299.7 87.8 307.7 87.8V84.5Q307.7 82.19999999999999 306.79999999999995 80.64999999999999Q305.9 79.1 304.15 78.25Q302.4 77.4 299.5 77.4Q296.9 77.4 294.95 78.0Q293.0 78.6 292.0 79.75Q291.0 80.9 291.0 82.5V83.4H275.0Q274.9 82.9 274.9 82.55Q274.9 82.19999999999999 274.9 81.6Q274.9 76.9 277.85 73.4Q280.8 69.9 286.3 68.0Q291.8 66.1 299.59999999999997 66.1Q306.9 66.1 312.35 67.89999999999999Q317.8 69.69999999999999 320.95000000000005 73.39999999999999Q324.1 77.1 324.1 83.1V105.6Q324.1 107.3 325.05 108.3Q326.0 109.3 327.4 109.3H330.8V119.4Q329.7 119.9 327.35 120.55000000000001Q325.0 121.2 321.7 121.2Q318.3 121.2 315.75 120.35Q313.2 119.5 311.54999999999995 117.95Q309.9 116.4 309.3 114.3H308.6Q306.7 116.3 304.15 117.9Q301.59999999999997 119.5 298.25 120.35Q294.9 121.2 290.59999999999997 121.2ZM296.7 109.9Q299.09999999999997 109.9 301.09999999999997 109.2Q303.09999999999997 108.5 304.54999999999995 107.25Q306.0 106.0 306.85 104.2Q307.7 102.4 307.7 100.3V96.8Q302.0 96.8 297.9 97.6Q293.8 98.4 291.6 100.1Q289.4 101.8 289.4 104.4Q289.4 106.3 290.35 107.55Q291.3 108.8 292.9 109.35Q294.5 109.9 296.7 109.9ZM354.0 121.2Q348.90000000000003 121.2 345.35 119.65Q341.8 118.1 340.05 115.0Q338.3 111.9 338.3 107.5V79.19999999999999H331.40000000000003V67.3H338.8L342.2 51.89999999999999H354.6V67.3H364.90000000000003V79.19999999999999H354.6V103.5Q354.6 106.3 355.70000000000005 107.8Q356.8 109.3 359.7 109.3H364.90000000000003V119.5Q363.6 119.9 361.65 120.35Q359.7 120.8 357.7 121.0Q355.7 121.2 354.0 121.2ZM397.8 121.2Q388.8 121.2 382.5 118.25Q376.2 115.3 372.85 109.19999999999999Q369.5 103.1 369.5 93.6Q369.5 84.3 372.8 78.19999999999999Q376.1 72.1 382.3 69.1Q388.5 66.1 397.2 66.1Q405.8 66.1 411.75 69.0Q417.70000000000005 71.9 420.80000000000007 77.9Q423.90000000000003 83.9 423.90000000000003 93.4V96.9H386.1Q386.1 101.1 387.3 104.0Q388.5 106.9 391.0 108.4Q393.5 109.9 397.7 109.9Q400.2 109.9 402.1 109.30000000000001Q404.0 108.7 405.3 107.55000000000001Q406.6 106.4 407.3 104.80000000000001Q408.0 103.2 408.0 101.2H423.90000000000003Q423.90000000000003 106.0 422.15000000000003 109.75Q420.40000000000003 113.5 417.0 116.05Q413.6 118.6 408.75 119.9Q403.90000000000003 121.2 397.8 121.2ZM386.2 87.8H407.20000000000005Q407.20000000000005 85.19999999999999 406.55000000000007 83.25Q405.90000000000003 81.3 404.65000000000003 80.0Q403.40000000000003 78.69999999999999 401.65000000000003 78.05Q399.90000000000003 77.4 397.6 77.4Q394.0 77.4 391.6 78.6Q389.2 79.8 387.9 82.1Q386.6 84.4 386.2 87.8Z" class="l-word"/><rect x="433.70" y="103.00" width="17.00" height="17.00" class="l-dot"/><path d="M474.88200000000006 120.62Q469.73600000000005 120.62 466.6360000000001 117.148Q463.53600000000006 113.676 463.53600000000006 107.786V98.176Q463.53600000000006 92.224 466.6360000000001 88.75200000000001Q469.73600000000005 85.28 474.88200000000006 85.28Q479.09800000000007 85.28 481.5780000000001 87.605Q484.05800000000005 89.93 484.05800000000005 93.96000000000001L482.63200000000006 92.41H484.182L483.99600000000004 84.474V74.74000000000001H490.69200000000006V120.0H484.05800000000005V113.49H482.63200000000006L484.05800000000005 111.94Q484.05800000000005 115.97 481.5780000000001 118.295Q479.09800000000007 120.62 474.88200000000006 120.62ZM477.17600000000004 114.792Q480.338 114.792 482.16700000000003 112.839Q483.99600000000004 110.886 483.99600000000004 107.414V98.486Q483.99600000000004 95.014 482.16700000000003 93.061Q480.338 91.108 477.17600000000004 91.108Q473.89000000000004 91.108 472.0300000000001 92.999Q470.1700000000001 94.89 470.1700000000001 98.486V107.414Q470.1700000000001 111.01 472.0300000000001 112.90100000000001Q473.89000000000004 114.792 477.17600000000004 114.792ZM514.5 120.62Q510.34600000000006 120.62 507.21500000000003 118.977Q504.08400000000006 117.334 502.4100000000001 114.358Q500.73600000000005 111.382 500.73600000000005 107.414V98.486Q500.73600000000005 94.456 502.4100000000001 91.511Q504.08400000000006 88.566 507.21500000000003 86.923Q510.34600000000006 85.28 514.5 85.28Q518.716 85.28 521.816 86.923Q524.916 88.566 526.59 91.511Q528.264 94.456 528.264 98.486V104.562H507.184V107.414Q507.184 111.196 509.07500000000005 113.18Q510.966 115.164 514.562 115.164Q517.476 115.164 519.274 114.14099999999999Q521.072 113.118 521.5060000000001 111.134H528.14Q527.3960000000001 115.474 523.676 118.047Q519.956 120.62 514.5 120.62ZM521.816 100.532V98.424Q521.816 94.70400000000001 519.956 92.658Q518.096 90.612 514.5 90.612Q510.966 90.612 509.07500000000005 92.658Q507.184 94.70400000000001 507.184 98.486V100.036L522.312 99.974ZM547.298 120.0 536.014 85.9H542.8340000000001L549.84 107.724Q550.522 109.646 551.049 111.59899999999999Q551.576 113.55199999999999 551.8240000000001 114.668Q552.134 113.55199999999999 552.6610000000001 111.59899999999999Q553.188 109.646 553.746 107.724L560.628 85.9H567.386L556.102 120.0Z" class="l-dev"/></svg>
+</a>
+    <nav class="nav" aria-label="Principal">
+      <div class="links">
+        <a href="#servicios">Servicios</a>
+        <a href="#trabajos">Trabajos</a>
+        <a href="#recomendados">Recomendados</a>
+        <a href="#proceso">Cómo trabajo</a>
+      </div>
+      <a class="btn btn-wa js-wa" href="#contacto"><svg><use href="#wa"/></svg>WhatsApp</a>
+    </nav>
+  </div>
+</header>
+
+<main id="inicio">
+  <div class="hero">
+    <div class="wrap">
+      <span class="eyebrow status"><i></i>Tomando proyectos · Argentina, trabajo remoto</span>
+      <h1>Tu web, <em>hecha</em><br><span class="thin">de punta a punta.</span></h1>
+      <div class="hero-row">
+        <p>Soy Mate, desarrollador web. Armo desde landing pages que convierten hasta sistemas completos con front, back y base de datos. Hablás directo conmigo, sin intermediarios.</p>
+        <div class="ctas">
+          <a class="btn btn-wa js-wa" href="#contacto"><svg><use href="#wa"/></svg>Escribime por WhatsApp</a>
+          <a class="btn btn-ghost" href="#trabajos">Ver trabajos</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="servicios">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Servicios</p>
+          <h2>Tres formas de<br>arrancar tu proyecto</h2>
+        </div>
+        <p>Cada proyecto se cotiza según lo que necesitás. Estas fichas te dan una idea de alcance y plazos para que sepas por dónde empezar.</p>
+      </div>
+      <div class="plans">
+        <article class="plan">
+          <div class="plan-top"><h3>Landing page</h3><span class="tag">1 página</span></div>
+          <p class="desc">Para lanzar un producto, un servicio o una campaña y llevar gente a tu WhatsApp.</p>
+          <ul>
+            <li>Diseño a medida, una sola página con 5 a 7 secciones</li>
+            <li>Adaptada a celular</li>
+            <li>Botón y formulario directo a WhatsApp</li>
+            <li>SEO básico y vista previa linda al compartir el link</li>
+          </ul>
+          <dl class="spec">
+            <div><dt>Plazo</dt><dd>7 a 10 días</dd></div>
+            <div><dt>Ideal para</dt><dd>Emprendimientos</dd></div>
+          </dl>
+        </article>
+        <article class="plan featured">
+          <div class="plan-top"><h3>Sitio web completo</h3><span class="tag">Multi-página</span></div>
+          <p class="desc">La web de tu negocio o marca, con varias secciones que podés actualizar vos.</p>
+          <ul>
+            <li>Inicio, servicios, nosotros, blog o catálogo, contacto</li>
+            <li>Panel para editar textos e imágenes</li>
+            <li>Dominio, hosting y correo configurados</li>
+            <li>Analítica para ver quién te visita</li>
+          </ul>
+          <dl class="spec">
+            <div><dt>Plazo</dt><dd>3 a 5 semanas</dd></div>
+            <div><dt>Ideal para</dt><dd>Pymes y marcas</dd></div>
+          </dl>
+        </article>
+        <article class="plan">
+          <div class="plan-top"><h3>App web a medida</h3><span class="tag">Front + back</span></div>
+          <p class="desc">Cuando necesitás que la web haga cosas: usuarios, turnos, pagos, stock o un panel interno.</p>
+          <ul>
+            <li>Frontend y backend con base de datos</li>
+            <li>Login de usuarios y roles</li>
+            <li>Integraciones: Mercado Pago, mails, APIs</li>
+            <li>Entregas por etapas, con demo en cada una</li>
+          </ul>
+          <dl class="spec">
+            <div><dt>Plazo</dt><dd>Según alcance</dd></div>
+            <div><dt>Ideal para</dt><dd>Sistemas y startups</dd></div>
+          </dl>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="trabajos" style="padding-top:0">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Trabajos</p>
+          <h2>Algunos proyectos</h2>
+        </div>
+        <p>Acá van tus proyectos reales, con captura, qué hiciste y con qué tecnologías.</p>
+      </div>
+      <div class="work">
+        <a class="card" href="#trabajos">
+          <div class="shot"><div class="bar"><i></i><i></i><i></i></div>
+            <div class="mock m1"><div class="h" style="width:62%"></div><div class="t" style="width:90%"></div><div class="t" style="width:70%"></div><div class="blk"></div><div class="t" style="width:40%"></div></div>
+            <span class="example">Ejemplo</span></div>
+          <div class="card-meta"><h3>Estudio de yoga</h3></div>
+          <p class="desc">Landing con reservas de clases por WhatsApp.</p>
+          <div class="stack"><span>Astro</span><span>Tailwind</span></div>
+        </a>
+        <a class="card" href="#trabajos">
+          <div class="shot"><div class="bar"><i></i><i></i><i></i></div>
+            <div class="mock m2"><div class="h" style="grid-column:span 2;width:50%"></div><div class="blk"></div><div class="blk"></div><div class="blk"></div><div class="blk"></div></div>
+            <span class="example">Ejemplo</span></div>
+          <div class="card-meta"><h3>Catálogo de indumentaria</h3></div>
+          <p class="desc">Sitio con catálogo editable y pedidos al chat.</p>
+          <div class="stack"><span>Next.js</span><span>CMS</span></div>
+        </a>
+        <a class="card" href="#trabajos">
+          <div class="shot"><div class="bar"><i></i><i></i><i></i></div>
+            <div class="mock m3"><div class="side"></div><div class="h" style="width:45%"></div><div class="blk"></div><div class="t"></div><div class="t" style="width:60%"></div></div>
+            <span class="example">Ejemplo</span></div>
+          <div class="card-meta"><h3>Sistema de turnos</h3></div>
+          <p class="desc">App con login, agenda y cobro con Mercado Pago.</p>
+          <div class="stack"><span>React</span><span>Node</span><span>PostgreSQL</span></div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="recomendados" class="friends">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Servicios recomendados</p>
+          <h2>Gente de confianza<br>para tu compu</h2>
+        </div>
+        <p>Servicios de amigos con los que trabajo y que recomiendo. Los contactás directo y les decís que venís de mi parte.</p>
+      </div>
+      <div class="friend-grid">
+        <article class="friend">
+          <div class="friend-top"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v10H4z"/><path d="M9 19h6M12 15v4"/><path d="M8 11l2.5-2.5L13 11l3-3"/></svg></span><span class="tag">Remoto</span></div>
+          <div><h3>Optimización de PC</h3><p class="desc" style="margin-top:8px">Tu compu lenta vuelve a andar rápido, sin que la tengas que llevar a ningún lado.</p></div>
+          <ul>
+            <li>Limpieza de programas y procesos que la frenan</li>
+            <li>Drivers y Windows actualizados</li>
+            <li>Ajustes para gaming y trabajo</li>
+            <li>Todo por acceso remoto, vos mirás en vivo</li>
+          </ul>
+          <div class="friend-foot">
+            <div class="who"><span class="av">A</span><span>Nombre del amigo<small>Técnico en hardware</small></span></div>
+            <a class="btn btn-wa js-partner" href="#recomendados" data-wa="5491100000000" data-msg="Hola! Vengo de la web de Mate, quiero optimizar mi PC de forma remota."><svg><use href="#wa"/></svg>Consultar</a>
+          </div>
+        </article>
+        <article class="friend">
+          <div class="friend-top"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="2"/><circle cx="12" cy="14" r="3"/><path d="M9 7h6"/></svg></span><span class="tag">A medida</span></div>
+          <div><h3>Armado de PC</h3><p class="desc" style="margin-top:8px">Una PC pensada para lo que hacés y para tu presupuesto, armada y probada.</p></div>
+          <ul>
+            <li>Asesoramiento para elegir cada componente</li>
+            <li>Armado prolijo, con buen manejo de cables</li>
+            <li>Instalación de sistema y pruebas de rendimiento</li>
+            <li>Para gaming, diseño, edición u oficina</li>
+          </ul>
+          <div class="friend-foot">
+            <div class="who"><span class="av">B</span><span>Nombre del amigo<small>Armador de PCs</small></span></div>
+            <a class="btn btn-wa js-partner" href="#recomendados" data-wa="5491100000000" data-msg="Hola! Vengo de la web de Mate, quiero armar una PC a medida."><svg><use href="#wa"/></svg>Consultar</a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section id="proceso" class="process">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <p class="eyebrow">Cómo trabajo</p>
+          <h2>De la charla<br>a la web online</h2>
+        </div>
+      </div>
+      <div class="steps">
+        <div class="step"><span class="n">01 · Charla</span><h3>Me contás tu idea</h3><p>Por WhatsApp o videollamada. Definimos qué necesitás y para cuándo.</p></div>
+        <div class="step"><span class="n">02 · Propuesta</span><h3>Presupuesto claro</h3><p>Alcance, plazos y precio por escrito, sin letra chica.</p></div>
+        <div class="step"><span class="n">03 · Construcción</span><h3>Avances que ves</h3><p>Te comparto un link con la web en progreso para que opines.</p></div>
+        <div class="step"><span class="n">04 · Lanzamiento</span><h3>Online y con soporte</h3><p>Publico la web en tu dominio y te acompaño después.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contacto" class="contact">
+    <div class="wrap contact-grid">
+      <div>
+        <p class="eyebrow">Contacto</p>
+        <h2>¿Arrancamos?</h2>
+        <p class="lead">Elegí qué necesitás, contame en dos líneas y te llega el mensaje armado a mi WhatsApp. Respondo en el día.</p>
+        <div class="number">
+          <strong id="num">+54 9 11 0000-0000</strong>
+          <button class="copy" id="copy" type="button">Copiar número</button>
+        </div>
+      </div>
+      <form class="composer" id="composer">
+        <fieldset>
+          <legend>¿Qué necesitás?</legend>
+          <div class="chips">
+            <input type="radio" name="tipo" id="t1" value="una landing page" checked><label for="t1">Landing page</label>
+            <input type="radio" name="tipo" id="t2" value="un sitio web completo"><label for="t2">Sitio completo</label>
+            <input type="radio" name="tipo" id="t3" value="una app web a medida"><label for="t3">App a medida</label>
+            <input type="radio" name="tipo" id="t4" value="otra cosa"><label for="t4">Otra cosa</label>
+          </div>
+        </fieldset>
+        <div class="field"><label for="nombre">Tu nombre</label><input id="nombre" value="Laura"></div>
+        <div class="field"><label for="idea">Contame en corto</label><textarea id="idea" rows="2">Tengo una pastelería y quiero mostrar los productos y recibir pedidos.</textarea></div>
+        <div class="field"><span class="eyebrow">Así me llega</span><div class="preview" id="preview"></div></div>
+        <a class="btn btn-wa" id="send" href="#" target="_blank" rel="noopener"><svg><use href="#wa"/></svg>Enviar por WhatsApp</a>
+        <p class="hint">Se abre WhatsApp con el mensaje listo. Lo mandás vos.</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>© 2026 mate.dev · Desarrollo web</span>
+    <span class="mono">Hecho a mano, sin plantillas</span>
+  </div>
+</footer>
+
+<a class="fab js-wa" href="#contacto" aria-label="Escribime por WhatsApp"><svg><use href="#wa"/></svg></a>
+
+<script>
+// Reemplazar por el número real, en formato internacional sin + ni espacios
+const WA_NUMBER = "5491100000000";
+
+const form = document.getElementById("composer");
+const preview = document.getElementById("preview");
+const send = document.getElementById("send");
+
+function buildMessage() {
+  const tipo = form.querySelector('input[name="tipo"]:checked').value;
+  const nombre = document.getElementById("nombre").value.trim();
+  const idea = document.getElementById("idea").value.trim();
+  let msg = `Hola Mate! ${nombre ? "Soy " + nombre + ". " : ""}Te escribo desde tu web, necesito ${tipo}.`;
+  if (idea) msg += `\n\n${idea}`;
+  return msg;
+}
+function update() {
+  const msg = buildMessage();
+  preview.textContent = msg;
+  send.href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+}
+form.addEventListener("input", update);
+form.addEventListener("submit", e => e.preventDefault());
+update();
+
+const generic = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Hola Mate! Vi tu web y quiero consultarte por un proyecto.")}`;
+document.querySelectorAll(".js-wa").forEach(a => { a.href = generic; a.target = "_blank"; a.rel = "noopener"; });
+
+// Cada servicio recomendado lleva su propio número en data-wa
+document.querySelectorAll(".js-partner").forEach(a => {
+  a.href = `https://wa.me/${a.dataset.wa}?text=${encodeURIComponent(a.dataset.msg)}`;
+  a.target = "_blank"; a.rel = "noopener";
+});
+
+document.getElementById("copy").addEventListener("click", e => {
+  const btn = e.currentTarget;
+  const text = document.getElementById("num").textContent;
+  navigator.clipboard.writeText(text).then(() => {
+    btn.textContent = "Copiado";
+    setTimeout(() => btn.textContent = "Copiar número", 1600);
+  }).catch(() => {
+    const r = document.createRange(); r.selectNodeContents(document.getElementById("num"));
+    const s = getSelection(); s.removeAllRanges(); s.addRange(r);
+  });
+});
+</script>
+</body>
+</html>
