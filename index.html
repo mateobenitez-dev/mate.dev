@@ -105,14 +105,27 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .nav .btn { padding: 9px 14px; color: #fff; }
 
 /* Hero */
-.hero {
-  background-image:
-    linear-gradient(var(--grid) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
-  background-size: 32px 32px;
-  border-bottom: 1px solid var(--line);
+.hero { border-bottom: 1px solid var(--line); }
+.hero .wrap {
+  padding-block: clamp(56px, 9vw, 112px) clamp(48px, 7vw, 88px); display: grid; gap: 32px;
+  grid-template-columns: minmax(0, 1fr) auto; grid-template-areas: "eyebrow eyebrow" "title logo" "row row"; align-items: center;
 }
-.hero .wrap { padding-block: clamp(56px, 9vw, 112px) clamp(48px, 7vw, 88px); display: grid; gap: 32px; }
+.hero .eyebrow { grid-area: eyebrow; }
+.hero h1 { grid-area: title; }
+.hero-row { grid-area: row; }
+@media (max-width: 760px) {
+  .hero .wrap { grid-template-columns: minmax(0, 1fr); grid-template-areas: "logo" "eyebrow" "title" "row"; }
+}
+
+/* Fondo de líneas que se curvan hacia el cursor */
+#flux { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+main, footer { position: relative; z-index: 1; }
+
+/* Logo eléctrico */
+.elogo { grid-area: logo; position: relative; width: clamp(150px, 22vw, 260px); aspect-ratio: 1; max-width: 100%; }
+.elogo svg { width: 100%; height: 100%; display: block; }
+.elogo canvas { position: absolute; inset: -22%; width: 144%; height: 144%; pointer-events: none; }
+@media (max-width: 760px) { .elogo { width: 120px; } }
 .hero h1 {
   font-size: clamp(44px, 9.5vw, 124px); font-weight: 900; font-stretch: 125%;
   line-height: .9; letter-spacing: -.025em;
@@ -153,36 +166,69 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 .plan .btn { justify-content: center; }
 .plan.featured .btn-ghost { color: var(--bg); border-color: color-mix(in srgb, var(--bg) 35%, var(--ink)); }
 
-/* Trabajos */
-.work { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 24px; }
+/* Trabajos: carpetas que se abren y largan sus notas flotando */
+.work { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 24px; }
 @media (max-width: 900px) { .work { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
-@media (max-width: 600px) { .work { grid-template-columns: minmax(0, 1fr); } }
-.card { display: grid; gap: 14px; text-decoration: none; min-width: 0; }
-.shot {
-  aspect-ratio: 4 / 3; max-width: 100%; border-radius: 12px; border: 1px solid var(--line);
-  background: var(--surface); overflow: hidden; position: relative; transition: transform .2s ease;
+@media (max-width: 640px) { .work { grid-template-columns: minmax(0, 1fr); } }
+.project { display: grid; gap: 12px; justify-items: center; text-align: center; min-width: 0; }
+.project .desc { max-width: 32ch; }
+.folder { position: relative; width: 220px; height: 150px; margin-top: 170px; perspective: 900px; }
+.f-back { position: absolute; inset: 0; background: var(--steel); border-radius: 4px 14px 14px 14px; }
+.f-back::before { content: ""; position: absolute; left: 0; top: -16px; width: 44%; height: 22px; background: inherit; border-radius: 10px 12px 0 0; }
+.f-front {
+  position: absolute; inset: 16px 0 0; z-index: 3; border-radius: 12px;
+  background: color-mix(in srgb, var(--steel) 45%, var(--line));
+  display: flex; align-items: flex-end; padding: 14px;
+  transform-origin: 50% 100%; transition: transform .5s cubic-bezier(.3, 1.5, .5, 1);
+  box-shadow: inset 0 1px 0 color-mix(in srgb, var(--surface) 40%, transparent);
 }
-.card:hover .shot { transform: translateY(-4px); }
-.shot .bar { height: 26px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 6px; padding-inline: 10px; }
-.shot .bar i { width: 8px; height: 8px; border-radius: 50%; background: var(--steel); opacity: .5; }
-.shot .mock { position: absolute; inset: 26px 0 0; padding: 16px; display: grid; gap: 8px; align-content: start; }
-.mock .h { height: 14px; border-radius: 3px; background: var(--ink); opacity: .85; }
-.mock .t { height: 7px; border-radius: 3px; background: var(--line); }
-.mock .blk { border-radius: 6px; }
-.m1 .blk { height: 70px; background: color-mix(in srgb, var(--accent) 22%, var(--surface)); }
-.m2 { grid-template-columns: 1fr 1fr; }
-.m2 .blk { height: 54px; background: color-mix(in srgb, var(--steel) 30%, var(--surface)); }
-.m3 { grid-template-columns: 60px 1fr; }
-.m3 .side { grid-row: span 4; background: color-mix(in srgb, var(--ink) 8%, var(--surface)); border-radius: 6px; height: 140px; }
-.m3 .blk { height: 40px; background: color-mix(in srgb, var(--accent) 14%, var(--surface)); }
-.example { position: absolute; right: 10px; bottom: 10px; font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; background: var(--bg); border: 1px dashed var(--muted); color: var(--muted); padding: 3px 7px; border-radius: 4px; }
-.card-meta { display: flex; justify-content: space-between; gap: 12px; align-items: baseline; }
-.card-meta p { color: var(--muted); font-size: 15px; }
-.stack { display: flex; flex-wrap: wrap; gap: 6px; }
-.stack span { font-family: var(--f-mono); font-size: 11.5px; padding: 3px 8px; border-radius: 4px; background: color-mix(in srgb, var(--ink) 6%, var(--bg)); color: var(--muted); }
+.f-label { white-space: nowrap; font-family: var(--f-mono); font-size: 12px; letter-spacing: .04em; color: var(--ink); display: flex; align-items: center; gap: 8px; }
+.f-label::before { content: ""; width: 8px; height: 8px; background: var(--accent); }
+.f-hit { position: absolute; inset: -16px 0 0; z-index: 5; background: transparent; border: 0; border-radius: 12px; cursor: pointer; }
+.note {
+  position: absolute; left: 50%; top: 50%; z-index: 2; width: 124px; height: 94px; margin: -47px 0 0 -62px;
+  transform: translate(var(--px), var(--py)) rotate(var(--pr)) scale(.92);
+  transition: transform .6s cubic-bezier(.34, 1.56, .64, 1); transition-delay: 0s;
+}
+.note-in {
+  width: 100%; height: 100%; border-radius: 8px; background: var(--surface); border: 1px solid var(--line);
+  box-shadow: 0 10px 24px -14px rgba(0, 0, 0, .45); overflow: hidden; display: grid; align-content: start;
+  text-align: left;
+}
+.n1 { --px: -14px; --py: -22px; --pr: -4deg; --ox: -118px; --oy: -150px; --or: -9deg; }
+.n2 { --px: 0px; --py: -30px; --pr: 2deg; --ox: 0px; --oy: -182px; --or: 2deg; }
+.n3 { --px: 14px; --py: -20px; --pr: 5deg; --ox: 118px; --oy: -144px; --or: 8deg; }
+.folder:hover .f-front, .folder:focus-within .f-front, .folder.open .f-front { transform: rotateX(-34deg); }
+.folder:hover .note, .folder:focus-within .note, .folder.open .note { z-index: 6; transform: translate(var(--ox), var(--oy)) rotate(var(--or)) scale(1); }
+.folder:hover .n2, .folder:focus-within .n2, .folder.open .n2 { transition-delay: .05s; }
+.folder:hover .n3, .folder:focus-within .n3, .folder.open .n3 { transition-delay: .1s; }
+.folder:hover .note-in, .folder:focus-within .note-in, .folder.open .note-in { animation: drift 3.2s ease-in-out .6s infinite; }
+.n2 .note-in { animation-delay: .9s !important; }
+.n3 .note-in { animation-delay: 1.2s !important; }
+@keyframes drift { 50% { transform: translateY(-6px); } }
+.note .bar { height: 14px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 3px; padding-inline: 6px; }
+.note .bar i { width: 4px; height: 4px; border-radius: 50%; background: var(--steel); opacity: .6; }
+.note .mock { padding: 8px; display: grid; gap: 5px; }
+.mock .h { height: 8px; border-radius: 2px; background: var(--ink); opacity: .85; }
+.mock .t { height: 4px; border-radius: 2px; background: var(--line); }
+.mock .blk { height: 26px; border-radius: 4px; background: color-mix(in srgb, var(--accent) 20%, var(--surface)); }
+.mock.m2 { grid-template-columns: 1fr 1fr; }
+.mock.m2 .blk { height: 20px; background: color-mix(in srgb, var(--steel) 30%, var(--surface)); }
+.mock.m3 { grid-template-columns: 26px 1fr; }
+.mock.m3 .side { grid-row: span 3; height: 52px; border-radius: 3px; background: color-mix(in srgb, var(--ink) 10%, var(--surface)); }
+.note-title { font-family: var(--f-mono); font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); padding: 10px 10px 6px; }
+.stack { display: flex; flex-wrap: wrap; gap: 4px; padding-inline: 10px; }
+.stack span { font-family: var(--f-mono); font-size: 10.5px; padding: 2px 6px; border-radius: 3px; background: color-mix(in srgb, var(--ink) 7%, var(--surface)); color: var(--ink); }
+.n3 { text-decoration: none; }
+.n3 .note-in { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); text-decoration: none; padding: 12px; align-content: space-between; }
+.n3 .note-in strong { font-family: var(--f-display); font-size: 17px; line-height: 1.05; font-stretch: 110%; }
+.n3 .note-in span { font-family: var(--f-mono); font-size: 18px; }
+.example { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; border: 1px dashed var(--muted); color: var(--muted); padding: 3px 7px; border-radius: 4px; }
+.work-hint { margin-top: 32px; text-align: center; font-size: 14px; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { .note, .f-front { transition: none; } }
 
 /* Servicios amigos */
-.friends { border-top: 1px solid var(--line); background: color-mix(in srgb, var(--steel) 14%, var(--bg)); }
+.friends { border-top: 1px solid var(--line); background: color-mix(in srgb, var(--steel) 14%, transparent); }
 .friend-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 @media (max-width: 760px) { .friend-grid { grid-template-columns: minmax(0, 1fr); } }
 .friend { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 28px; display: grid; grid-template-rows: auto auto 1fr auto; gap: 18px; min-width: 0; }
@@ -274,9 +320,15 @@ img { max-width: 100%; }
   </div>
 </header>
 
+<canvas id="flux" aria-hidden="true"></canvas>
+
 <main id="inicio">
   <div class="hero">
     <div class="wrap">
+      <div class="elogo" aria-hidden="true">
+        <svg viewBox="0 0 128 128"><rect class="l-box" x="4" y="4" width="120" height="120" rx="26.4"/><path class="l-m" d="M25.732 83.2V45.256H35.452L36.316 50.656H36.82Q38.116 48.712 39.952 47.272Q41.788 45.832 44.02 45.112Q46.252 44.392 48.772 44.392Q52.66 44.392 55.396 45.94Q58.132 47.488 59.572 50.656H60.076Q61.372 48.712 63.208 47.272Q65.044 45.832 67.312 45.112Q69.58 44.392 72.028 44.392Q75.988 44.392 78.724 45.868Q81.46 47.344 82.936 50.332Q84.412 53.32 84.412 57.928V83.2H72.604V59.728Q72.604 58.144 72.244 57.028Q71.884 55.912 71.236 55.156Q70.588 54.4 69.58 54.04Q68.572 53.68 67.42 53.68Q65.548 53.68 64.072 54.652Q62.596 55.624 61.804 57.244Q61.012 58.864 61.012 61.024V83.2H49.204V59.728Q49.204 58.144 48.844 57.028Q48.484 55.912 47.836 55.156Q47.188 54.4 46.18 54.04Q45.172 53.68 44.02 53.68Q42.148 53.68 40.672 54.652Q39.196 55.624 38.368 57.244Q37.54 58.864 37.54 61.024V83.2Z"/><rect class="l-dot" x="93.53" y="70" width="13.2" height="13.2"/></svg>
+        <canvas></canvas>
+      </div>
       <span class="eyebrow status"><i></i>Tomando proyectos · Argentina, trabajo remoto</span>
       <h1>Tu web, <em>hecha</em><br><span class="thin">de punta a punta.</span></h1>
       <div class="hero-row">
@@ -352,34 +404,50 @@ img { max-width: 100%; }
           <p class="eyebrow">Trabajos</p>
           <h2>Algunos proyectos</h2>
         </div>
-        <p>Acá van tus proyectos reales, con captura, qué hiciste y con qué tecnologías.</p>
+        <p>Cada carpeta es un proyecto: abrila y mirá qué hice, con qué tecnologías y el link para verlo.</p>
       </div>
       <div class="work">
-        <a class="card" href="#trabajos">
-          <div class="shot"><div class="bar"><i></i><i></i><i></i></div>
-            <div class="mock m1"><div class="h" style="width:62%"></div><div class="t" style="width:90%"></div><div class="t" style="width:70%"></div><div class="blk"></div><div class="t" style="width:40%"></div></div>
-            <span class="example">Ejemplo</span></div>
-          <div class="card-meta"><h3>Estudio de yoga</h3></div>
+        <article class="project">
+          <div class="folder">
+            <div class="f-back"></div>
+            <div class="note n1"><div class="note-in"><div class="bar"><i></i><i></i><i></i></div><div class="mock m1"><div class="h" style="width:62%"></div><div class="t" style="width:90%"></div><div class="t" style="width:70%"></div><div class="blk"></div></div></div></div>
+            <div class="note n2"><div class="note-in"><p class="note-title">Stack</p><div class="stack"><span>Astro</span><span>Tailwind</span></div></div></div>
+            <a class="note n3" href="#trabajos"><span class="note-in"><strong>Ver proyecto</strong><span>→</span></span></a>
+            <div class="f-front"><span class="f-label">estudio de yoga</span></div>
+            <button class="f-hit" type="button" aria-expanded="false" aria-label="Abrir carpeta: Estudio de yoga"></button>
+          </div>
+          <h3>Estudio de yoga</h3>
           <p class="desc">Landing con reservas de clases por WhatsApp.</p>
-          <div class="stack"><span>Astro</span><span>Tailwind</span></div>
-        </a>
-        <a class="card" href="#trabajos">
-          <div class="shot"><div class="bar"><i></i><i></i><i></i></div>
-            <div class="mock m2"><div class="h" style="grid-column:span 2;width:50%"></div><div class="blk"></div><div class="blk"></div><div class="blk"></div><div class="blk"></div></div>
-            <span class="example">Ejemplo</span></div>
-          <div class="card-meta"><h3>Catálogo de indumentaria</h3></div>
+          <span class="example">Ejemplo</span>
+        </article>
+        <article class="project">
+          <div class="folder">
+            <div class="f-back"></div>
+            <div class="note n1"><div class="note-in"><div class="bar"><i></i><i></i><i></i></div><div class="mock m2"><div class="h" style="grid-column:span 2;width:50%"></div><div class="blk"></div><div class="blk"></div><div class="blk"></div><div class="blk"></div></div></div></div>
+            <div class="note n2"><div class="note-in"><p class="note-title">Stack</p><div class="stack"><span>Next.js</span><span>CMS</span></div></div></div>
+            <a class="note n3" href="#trabajos"><span class="note-in"><strong>Ver proyecto</strong><span>→</span></span></a>
+            <div class="f-front"><span class="f-label">catálogo de indumentaria</span></div>
+            <button class="f-hit" type="button" aria-expanded="false" aria-label="Abrir carpeta: Catálogo de indumentaria"></button>
+          </div>
+          <h3>Catálogo de indumentaria</h3>
           <p class="desc">Sitio con catálogo editable y pedidos al chat.</p>
-          <div class="stack"><span>Next.js</span><span>CMS</span></div>
-        </a>
-        <a class="card" href="#trabajos">
-          <div class="shot"><div class="bar"><i></i><i></i><i></i></div>
-            <div class="mock m3"><div class="side"></div><div class="h" style="width:45%"></div><div class="blk"></div><div class="t"></div><div class="t" style="width:60%"></div></div>
-            <span class="example">Ejemplo</span></div>
-          <div class="card-meta"><h3>Sistema de turnos</h3></div>
+          <span class="example">Ejemplo</span>
+        </article>
+        <article class="project">
+          <div class="folder">
+            <div class="f-back"></div>
+            <div class="note n1"><div class="note-in"><div class="bar"><i></i><i></i><i></i></div><div class="mock m3"><div class="side"></div><div class="h" style="width:60%"></div><div class="blk"></div><div class="t"></div></div></div></div>
+            <div class="note n2"><div class="note-in"><p class="note-title">Stack</p><div class="stack"><span>React</span><span>Node</span><span>PostgreSQL</span></div></div></div>
+            <a class="note n3" href="#trabajos"><span class="note-in"><strong>Ver proyecto</strong><span>→</span></span></a>
+            <div class="f-front"><span class="f-label">sistema de turnos</span></div>
+            <button class="f-hit" type="button" aria-expanded="false" aria-label="Abrir carpeta: Sistema de turnos"></button>
+          </div>
+          <h3>Sistema de turnos</h3>
           <p class="desc">App con login, agenda y cobro con Mercado Pago.</p>
-          <div class="stack"><span>React</span><span>Node</span><span>PostgreSQL</span></div>
-        </a>
+          <span class="example">Ejemplo</span>
+        </article>
       </div>
+      <p class="work-hint">Pasá el mouse o tocá una carpeta para abrirla.</p>
     </div>
   </section>
 
@@ -509,6 +577,134 @@ update();
 
 const generic = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Hola Mate! Vi tu web y quiero consultarte por un proyecto.")}`;
 document.querySelectorAll(".js-wa").forEach(a => { a.href = generic; a.target = "_blank"; a.rel = "noopener"; });
+
+// ---- Fondo: líneas de flujo que el cursor revela y curva ----
+const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
+const css = n => getComputedStyle(document.documentElement).getPropertyValue(n).trim();
+(() => {
+  const cv = document.getElementById("flux"); if (!cv) return;
+  const ctx = cv.getContext("2d");
+  let W, H, dpr, colors, t = 0, running = true;
+  const mouse = { x: -9999, y: -9999, k: 0, tk: 0 };
+  const readColors = () => { colors = { line: css("--steel"), hot: css("--accent") }; };
+  const resize = () => {
+    dpr = Math.min(devicePixelRatio || 1, 2); W = innerWidth; H = innerHeight;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  };
+  const R = 240;
+  function frame() {
+    ctx.clearRect(0, 0, W, H);
+    mouse.k += (mouse.tk - mouse.k) * 0.08;
+    const n = Math.max(18, Math.round(H / 26)), step = 14;
+    for (let i = 0; i < n; i++) {
+      const base = (i + 0.5) / n * H;
+      const pts = [];
+      for (let x = -step; x <= W + step; x += step) {
+        let y = base + 18 * Math.sin(x * 0.0042 + t * 0.55 + i * 0.47) + 9 * Math.sin(x * 0.011 - t * 0.8 + i * 1.3);
+        const dx = x - mouse.x, dy = y - mouse.y, d = Math.hypot(dx, dy);
+        let f = 0;
+        if (d < R) {
+          f = Math.pow(1 - d / R, 2) * mouse.k;
+          const a = Math.atan2(dy, dx) + 1.2;          // remolino alrededor del cursor
+          y += (mouse.y - y) * f * 0.45 + Math.sin(a) * 22 * f;
+        }
+        pts.push([x, y, f]);
+      }
+      ctx.lineWidth = 1; ctx.globalAlpha = 0.16; ctx.strokeStyle = colors.line;
+      ctx.beginPath(); pts.forEach(([x, y], j) => j ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.stroke();
+      ctx.strokeStyle = colors.hot; ctx.lineWidth = 1.4;
+      for (let j = 1; j < pts.length; j++) {
+        const f = Math.max(pts[j][2], pts[j - 1][2]);
+        if (f < 0.02) continue;
+        ctx.globalAlpha = Math.min(0.85, f * 1.6);
+        ctx.beginPath(); ctx.moveTo(pts[j - 1][0], pts[j - 1][1]); ctx.lineTo(pts[j][0], pts[j][1]); ctx.stroke();
+      }
+    }
+    ctx.globalAlpha = 1;
+  }
+  function loop() { if (!running) return; t += 0.016; frame(); requestAnimationFrame(loop); }
+  addEventListener("pointermove", e => { mouse.x = e.clientX; mouse.y = e.clientY; mouse.tk = 1; }, { passive: true });
+  document.addEventListener("pointerleave", () => { mouse.tk = 0; });
+  addEventListener("resize", () => { resize(); if (reduceMotion) frame(); });
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", readColors);
+  document.addEventListener("visibilitychange", () => { running = !document.hidden && !reduceMotion; if (running) loop(); });
+  readColors(); resize();
+  if (reduceMotion) { running = false; frame(); } else loop();
+})();
+
+// ---- Logo eléctrico: contorno de rayo con chispas que saltan de los bordes ----
+(() => {
+  const box = document.querySelector(".elogo"); if (!box) return;
+  const svg = box.querySelector("svg"), cv = box.querySelector("canvas"), ctx = cv.getContext("2d");
+  const shapes = [...svg.querySelectorAll("rect, path")].map(el => {
+    let p = el;
+    if (el.tagName === "rect") {           // rect → path para poder recorrer el contorno
+      const x = +el.getAttribute("x"), y = +el.getAttribute("y"), w = +el.getAttribute("width"), h = +el.getAttribute("height"), r = +(el.getAttribute("rx") || 0);
+      p = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      p.setAttribute("d", `M${x + r} ${y}H${x + w - r}Q${x + w} ${y} ${x + w} ${y + r}V${y + h - r}Q${x + w} ${y + h} ${x + w - r} ${y + h}H${x + r}Q${x} ${y + h} ${x} ${y + h - r}V${y + r}Q${x} ${y} ${x + r} ${y}Z`);
+      svg.appendChild(p); p.style.display = "none";
+    }
+    const L = p.getTotalLength(), pts = [];
+    for (let s = 0; s < L; s += 3) { const q = p.getPointAtLength(s); pts.push([q.x, q.y]); }
+    return { pts, outer: el.classList.contains("l-box") };
+  });
+  let S, dpr, color, core, sparks = [];
+  const readColors = () => { color = css("--accent"); core = css("--surface"); };
+  const resize = () => {
+    dpr = Math.min(devicePixelRatio || 1, 2); const r = cv.getBoundingClientRect();
+    cv.width = r.width * dpr; cv.height = r.height * dpr; S = r.width;
+  };
+  const map = ([x, y]) => { const k = (S / 1.44) / 128, o = S * 0.22 / 1.44; return [o + x * k, o + y * k]; };
+  const jag = (a, b, segs, amp) => {
+    const out = [a];
+    for (let i = 1; i < segs; i++) {
+      const u = i / segs, nx = -(b[1] - a[1]), ny = b[0] - a[0], l = Math.hypot(nx, ny) || 1, o = (Math.random() - .5) * amp;
+      out.push([a[0] + (b[0] - a[0]) * u + nx / l * o, a[1] + (b[1] - a[1]) * u + ny / l * o]);
+    }
+    out.push(b); return out;
+  };
+  const stroke = (pts, w, c, blur, alpha) => {
+    ctx.lineWidth = w; ctx.strokeStyle = c; ctx.shadowColor = color; ctx.shadowBlur = blur; ctx.globalAlpha = alpha;
+    ctx.beginPath(); pts.forEach(([x, y], i) => i ? ctx.lineTo(x, y) : ctx.moveTo(x, y)); ctx.stroke();
+  };
+  function draw() {
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0); ctx.clearRect(0, 0, S, S); ctx.lineJoin = "round";
+    const k = S / 1.44 / 128, c = map([64, 64]);
+    shapes.forEach(sh => {
+      const p = sh.pts.map(q => { const [x, y] = map(q); const j = (sh.outer ? 4 : 1.2) * k; return [x + (Math.random() - .5) * j, y + (Math.random() - .5) * j]; });
+      p.push(p[0]);
+      const w = sh.outer ? 2 : 1.2;
+      stroke(p, w * 2.4, color, 18, sh.outer ? 0.55 : 0.35);
+      stroke(p, w * 0.7, core, 6, sh.outer ? 0.9 : 0.5);
+    });
+    if (Math.random() < 0.55) {
+      const src = shapes.find(s => s.outer).pts, a = map(src[(Math.random() * src.length) | 0]);
+      const dx = a[0] - c[0], dy = a[1] - c[1], l = Math.hypot(dx, dy), len = S * (0.06 + Math.random() * 0.12);
+      const ang = Math.atan2(dy, dx) + (Math.random() - .5) * 1.2;
+      sparks.push({ pts: jag(a, [a[0] + Math.cos(ang) * len, a[1] + Math.sin(ang) * len], 6, len * 0.5), life: 3 });
+    }
+    sparks = sparks.filter(s => s.life-- > 0);
+    sparks.forEach(s => { stroke(s.pts, 2.2, color, 14, 0.4 + s.life * 0.2); stroke(s.pts, 0.8, core, 4, 0.9); });
+    ctx.globalAlpha = 1; ctx.shadowBlur = 0;
+  }
+  let last = 0;
+  function loop(ts) { if (ts - last > 55) { draw(); last = ts; } requestAnimationFrame(loop); }
+  addEventListener("resize", resize);
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", readColors);
+  readColors(); resize();
+  if (reduceMotion) draw(); else requestAnimationFrame(loop);
+})();
+
+// Carpetas del portfolio: en celular se abren con un toque
+document.querySelectorAll(".folder").forEach(f => {
+  const hit = f.querySelector(".f-hit");
+  hit.addEventListener("click", () => {
+    const open = !f.classList.contains("open");
+    document.querySelectorAll(".folder.open").forEach(o => { o.classList.remove("open"); o.querySelector(".f-hit").setAttribute("aria-expanded", "false"); });
+    f.classList.toggle("open", open);
+    hit.setAttribute("aria-expanded", String(open));
+  });
+});
 
 // Cada servicio recomendado lleva su propio número en data-wa
 document.querySelectorAll(".js-partner").forEach(a => {
