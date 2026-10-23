@@ -14,19 +14,37 @@ const spring = (state, goal, stiffness, damping, dt) => {
 
 const resolveElement = value => (value && 'current' in value ? value.current : value) || null;
 
+const DEFAULT_TARGET_SELECTOR = [
+  'a',
+  'button',
+  'input',
+  'textarea',
+  'select',
+  'label',
+  '[role="button"]',
+  '.plan',
+  '.friend',
+  '.folder',
+  '.note',
+  '.card-nav__card',
+  '.card-nav__link',
+  '.cursor-target',
+  '[data-cursor-label]'
+].join(', ');
+
 const DEFAULTS = {
-  targetSelector: '.cursor-target',
+  targetSelector: DEFAULT_TARGET_SELECTOR,
   cursorColor: '#ffffff',
   cursorColorOnTarget: undefined,
-  spinDuration: 2,
+  spinDuration: 0,
   hoverDuration: 0.2,
   parallaxOn: true,
   hideDefaultCursor: true,
-  size: 36,
-  cornerSize: 12,
-  thickness: 3,
-  padding: 6,
-  matchRadius: true,
+  size: 32,
+  cornerSize: 10,
+  thickness: 2,
+  padding: 8,
+  matchRadius: false,
   dotSize: 4,
   blendMode: 'difference',
   showLabel: true,
@@ -42,6 +60,31 @@ const normalize = o => ({
   thickness: Math.max(0.5, o.thickness),
   dotSize: Math.max(0, o.dotSize)
 });
+
+const getTargetLabel = el => {
+  if (!el) return '';
+  const explicit = el.getAttribute('data-cursor-label');
+  if (explicit) return explicit;
+  const hit = el.closest(
+    'a, button, input, textarea, select, label, [role="button"], .plan, .friend, .folder, .note, .card-nav__card, .card-nav__link, .cursor-target'
+  );
+  if (!hit) return '';
+  if (hit.matches('.btn-wa, .js-wa, .js-partner, .fab')) return 'WhatsApp';
+  if (hit.matches('.plan-cta')) return 'Elegir';
+  if (hit.matches('.f-hit')) return 'Abrir';
+  if (hit.matches('.n3')) return 'Ver';
+  if (hit.matches('.copy')) return 'Copiar';
+  if (hit.matches('.brand')) return 'Inicio';
+  if (hit.matches('.nav-toggle')) return 'Menú';
+  if (hit.matches('.card-nav__link')) return 'Ir';
+  if (hit.matches('a[target="_blank"]')) return 'Abrir';
+  if (hit.matches('a[href^="#"]')) return 'Ir';
+  if (hit.matches('button[type="submit"]')) return 'Enviar';
+  if (hit.matches('input, textarea')) return 'Escribir';
+  if (hit.matches('.chips label, select')) return 'Elegir';
+  if (hit.matches('button, [role="button"]')) return 'Clic';
+  return '';
+};
 
 // Solo se activa con mouse (hover + puntero fino). Devuelve una función para desmontarlo.
 export function mountTargetCursor(options = {}) {
@@ -122,7 +165,7 @@ export function mountTargetCursor(options = {}) {
       target = next;
       if (target) {
         const angle = turn.x;
-        quarter = Math.round(angle / QUARTER);
+        quarter = s.spinDuration > 0 ? Math.round(angle / QUARTER) : 0;
         const corner = parseFloat(getComputedStyle(target).borderTopLeftRadius) || 0;
         targetRadius = corner;
         spinSpeed = 0;
@@ -135,9 +178,9 @@ export function mountTargetCursor(options = {}) {
       const dt = last ? Math.min(0.05, (now - last) / 1000) : 1 / 60;
       last = now;
 
-      if (target && !target.isConnected) lockOn(null);
+      if (target && (!target.isConnected || (target.offsetParent === null && target.tagName !== 'BODY'))) lockOn(null);
       const rect = target ? target.getBoundingClientRect() : null;
-      const locked = !!rect && pointer.inside;
+      const locked = !!rect && rect.width > 0 && rect.height > 0 && pointer.inside;
       const snapW = 4.6 / s.hoverDuration;
       const snapK = snapW * snapW;
       const snapC = 2 * 0.62 * snapW;
@@ -182,10 +225,14 @@ export function mountTargetCursor(options = {}) {
       spring(halfH, goalH, snapK, snapC, dt);
       spring(radius, goalR, snapK, 2 * snapW, dt);
 
-      if (locked) {
+      if (s.spinDuration <= 0) {
+        turn.x = 0;
+        turn.v = 0;
+        quarter = 0;
+      } else if (locked) {
         spring(turn, quarter * QUARTER, snapK, snapC, dt);
       } else {
-        const speed = s.spinDuration > 0 && !reduce ? (Math.PI * 2) / s.spinDuration : 0;
+        const speed = !reduce ? (Math.PI * 2) / s.spinDuration : 0;
         spinSpeed += (speed - spinSpeed) * (1 - Math.exp(-dt * 3));
         turn.v = spinSpeed;
         turn.x += spinSpeed * dt;
@@ -224,11 +271,15 @@ export function mountTargetCursor(options = {}) {
       dot.style.width = `${s.dotSize}px`;
       dot.style.height = `${s.dotSize}px`;
 
-      const text = s.showLabel && target ? target.getAttribute('data-cursor-label') || '' : '';
+      const text = s.showLabel && target ? getTargetLabel(target) : '';
       if (text && text !== lastLabel) label.textContent = text;
       if (text) lastLabel = text;
       const shown = text ? Math.max(0, Math.min(1, lock.x)) : 0;
-      label.style.transform = `translate3d(${left.toFixed(2)}px, ${(top - 8).toFixed(2)}px, 0) translateY(-100%) translateY(${((1 - shown) * 4).toFixed(2)}px)`;
+      const isNearTop = top < 26;
+      const labelY = isNearTop ? '0%' : '-100%';
+      const labelOffset = isNearTop ? ((1 - shown) * -4) : ((1 - shown) * 4);
+      const labelTargetY = isNearTop ? (top + h * 2 + 8) : (top - 8);
+      label.style.transform = `translate3d(${left.toFixed(2)}px, ${labelTargetY.toFixed(2)}px, 0) translateY(${labelY}) translateY(${labelOffset.toFixed(2)}px)`;
       label.style.opacity = shown.toFixed(3);
 
       const mix = s.cursorColorOnTarget ? Math.round(Math.max(0, Math.min(1, lock.x)) * 100) : 0;

@@ -196,22 +196,17 @@ document.querySelectorAll('.btn').forEach(btn => {
   }
 });
 
-// ---- Cursor de mira en compu ----
-const labels = [
-  ['.btn-wa', 'WhatsApp'],
-  ['.f-hit', 'Abrir'],
-  ['.n3', 'Ver'],
-  ['.copy', 'Copiar']
-];
-document.querySelectorAll('.btn, .plan-cta, .f-hit, .n3, .copy, .card-nav__link, .chips label').forEach(el => el.classList.add('cursor-target'));
-labels.forEach(([sel, text]) => document.querySelectorAll(sel).forEach(el => el.setAttribute('data-cursor-label', text)));
+// ---- Cursor de mira (TargetCursor) en toda la página ----
 mountTargetCursor({
-  spinDuration: 2,
-  hideDefaultCursor: false,
+  targetSelector: 'a, button, input, textarea, select, label, [role="button"], .plan, .friend, .folder, .note, .card-nav__card, .card-nav__link, .cursor-target, [data-cursor-label]',
+  spinDuration: 0,
+  hideDefaultCursor: true,
   matchRadius: false,
-  padding: 10,
+  padding: 8,
   cornerSize: 10,
   thickness: 2,
+  size: 32,
+  dotSize: 4,
   parallaxOn: true,
   cursorColor: '#ffffff'
 });
