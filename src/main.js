@@ -22,20 +22,11 @@ const LOGO_SRC = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
 // ---- Tarjeta de presentación (ProfileCard) en el inicio ----
 const heroCard = document.getElementById('hero-card');
 if (heroCard) {
-  const bio = document.createElement('div');
-  // Resumen de lo que hace, en chips
-  bio.innerHTML =
-    '<ul class="pc-skills" aria-label="Qué hago">' +
-    ['Landing pages', 'Sitios web', 'Tiendas online', 'Sistemas con panel', 'Turnos y pagos', 'Mercado Pago']
-      .map(s => `<li>${s}</li>`)
-      .join('') +
-    '</ul>';
   mountProfileCard(heroCard, {
     avatarUrl: 'assets/mate.jpg',
-    body: bio,
     name: 'Mate',
     title: 'Futuro Desarrollador de Software',
-    handle: 'mateoacksbenitez-wq',
+    handle: '',
     status: 'Santa Fe, Argentina',
     statusColor: TINT,
     contactText: 'GitHub',
