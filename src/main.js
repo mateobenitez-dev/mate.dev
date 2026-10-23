@@ -58,11 +58,9 @@ const header = document.querySelector('.top');
 if (header) {
   const waHref = document.querySelector('.js-wa')?.href || '#contacto';
   const logoSvg = header.querySelector('.brand svg')?.cloneNode(true);
-  const slot = document.createElement('div');
-  slot.className = 'top-cardnav';
-  header.replaceChildren(slot);
+  header.replaceChildren();
   header.classList.add('has-cardnav');
-  mountCardNav(slot, {
+  mountCardNav(header, {
     logo: logoSvg,
     logoAlt: 'mate.dev, inicio',
     logoHref: '#inicio',
@@ -75,6 +73,7 @@ if (header) {
     speed: 1.8,
     stagger: 0.08,
     bounce: 0.12,
+    intro: false,
     maxWidth: 760,
     accentColor: '#c94848',
     vars: {
