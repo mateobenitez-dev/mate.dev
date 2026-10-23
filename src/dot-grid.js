@@ -10,7 +10,9 @@ const DEFAULTS = {
   baseAlpha: 0.13,
   activeColor: [201, 72, 72],
   activeAlpha: 0.85,
-  dampening: 0.12
+  dampening: 0.12,
+  aura: 260,
+  auraAlpha: 0.22
 };
 
 // Devuelve una función para desmontarlo.
@@ -21,7 +23,6 @@ export function mountDotGrid(container, options = {}) {
   canvas.setAttribute('aria-hidden', 'true');
   container.appendChild(canvas);
   const ctx = canvas.getContext('2d');
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const pointer = { x: -9999, y: -9999, inside: false };
   const glow = { x: -9999, y: -9999, k: 0 };
   let W = 0, H = 0, dpr = 1, raf = 0, last = 0;
@@ -43,6 +44,11 @@ export function mountDotGrid(container, options = {}) {
     }
     ctx.fill();
     if (glow.k <= 0) return;
+    const aura = ctx.createRadialGradient(glow.x, glow.y, 0, glow.x, glow.y, o.aura);
+    aura.addColorStop(0, `rgba(${ar}, ${ag}, ${ab}, ${o.auraAlpha * glow.k})`);
+    aura.addColorStop(1, `rgba(${ar}, ${ag}, ${ab}, 0)`);
+    ctx.fillStyle = aura;
+    ctx.fillRect(glow.x - o.aura, glow.y - o.aura, o.aura * 2, o.aura * 2);
     for (let y = half; y < H; y += o.gap) {
       if (Math.abs(y - glow.y) >= o.radius) continue;
       for (let x = half; x < W; x += o.gap) {
@@ -93,7 +99,7 @@ export function mountDotGrid(container, options = {}) {
   };
 
   const onMove = event => {
-    if (event.pointerType !== 'mouse' || reduce) return;
+    if (event.pointerType === 'touch') return;
     const rect = container.getBoundingClientRect();
     pointer.x = event.clientX - rect.left;
     pointer.y = event.clientY - rect.top;
