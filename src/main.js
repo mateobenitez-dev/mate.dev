@@ -75,12 +75,12 @@ if (header) {
     speed: 1.8,
     stagger: 0.08,
     bounce: 0.12,
-    maxWidth: 1088,
+    maxWidth: 760,
     accentColor: '#c94848',
     vars: {
-      '--cn-panel': 'rgba(43, 44, 47, 0.42)',
+      '--cn-panel': 'rgba(22, 23, 26, 0.6)',
       '--cn-solid': '#2b2c2f',
-      '--cn-tile': 'linear-gradient(180deg, rgba(64, 65, 70, 0.62) 0%, rgba(48, 49, 53, 0.55) 100%)',
+      '--cn-tile': 'linear-gradient(180deg, rgba(64, 65, 70, 0.45) 0%, rgba(38, 39, 43, 0.4) 100%)',
       '--cn-text': '#f3f2f1',
       '--cn-muted': 'rgba(199, 199, 201, 0.7)',
       '--cn-ring': 'rgba(201, 72, 72, 0.8)'
