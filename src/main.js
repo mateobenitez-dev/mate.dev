@@ -24,14 +24,14 @@ const heroCard = document.getElementById('hero-card');
 if (heroCard) {
   const bio = document.createElement('div');
   bio.innerHTML =
-    '<p>Construyo productos reales: tiendas online, sistemas con panel de administración y landings con animaciones. Mis últimos trabajos: BuildFit y Tesla Computación.</p>';
+    '<p>Hago tiendas online, sistemas con panel y landings.</p>';
   mountProfileCard(heroCard, {
     avatarUrl: 'assets/mate.jpg',
     body: bio,
     name: 'Mate',
     title: 'Futuro Desarrollador de Software',
     handle: 'mateoacksbenitez-wq',
-    status: 'Argentina',
+    status: 'Santa Fe, Argentina',
     statusColor: TINT,
     contactText: 'GitHub',
     contactHref: 'https://github.com/mateoacksbenitez-wq',
@@ -106,7 +106,7 @@ if (header) {
       },
       {
         label: 'Contacto',
-        description: 'Escribime y arrancamos.',
+        description: 'Escribime por WhatsApp.',
         links: [
           { label: 'Armar mi mensaje', href: '#contacto' },
           { label: 'WhatsApp directo', href: waHref, external: true }
