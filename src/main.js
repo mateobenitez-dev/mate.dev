@@ -58,9 +58,9 @@ if (header) {
     maxWidth: 1088,
     accentColor: '#c94848',
     vars: {
-      '--cn-panel': 'rgba(43, 44, 47, 0.72)',
+      '--cn-panel': 'rgba(43, 44, 47, 0.42)',
       '--cn-solid': '#2b2c2f',
-      '--cn-tile': 'linear-gradient(180deg, #3a3b40 0%, #303135 100%)',
+      '--cn-tile': 'linear-gradient(180deg, rgba(64, 65, 70, 0.62) 0%, rgba(48, 49, 53, 0.55) 100%)',
       '--cn-text': '#f3f2f1',
       '--cn-muted': 'rgba(199, 199, 201, 0.7)',
       '--cn-ring': 'rgba(201, 72, 72, 0.8)'
@@ -86,7 +86,7 @@ if (header) {
       {
         label: 'Contacto',
         description: 'Escribime y te respondo en el día.',
-        bgColor: '#b23a3a',
+        bgColor: 'rgba(178, 58, 58, 0.82)',
         textColor: '#ffffff',
         links: [
           { label: 'Armar mi mensaje', href: '#contacto' },
