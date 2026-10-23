@@ -116,7 +116,7 @@ const fold = {
 };
 const heroTitle = document.querySelector('.hero h1');
 if (heroTitle) mountFoldText(heroTitle, { ...fold, trigger: 'mount', stagger: 0.09 });
-document.querySelectorAll('main h2').forEach(title => mountFoldText(title, { ...fold, trigger: 'scroll' }));
+document.querySelectorAll('main h2, .steps h3').forEach(title => mountFoldText(title, { ...fold, trigger: 'scroll' }));
 
 // ---- Gente de confianza: tarjetas ReflectiveCard (antes que los botones, así el de WhatsApp queda adentro) ----
 document.querySelectorAll('.friend-grid .friend').forEach(card => {
