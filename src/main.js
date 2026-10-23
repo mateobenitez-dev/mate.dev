@@ -105,8 +105,6 @@ if (header) {
       {
         label: 'Contacto',
         description: 'Escribime y te respondo en el día.',
-        bgColor: 'rgba(178, 58, 58, 0.82)',
-        textColor: '#ffffff',
         links: [
           { label: 'Armar mi mensaje', href: '#contacto' },
           { label: 'WhatsApp directo', href: waHref, external: true }
