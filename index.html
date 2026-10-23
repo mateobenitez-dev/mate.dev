@@ -546,6 +546,52 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 }
 .fab:hover { transform: scale(1.06); }
 .fab svg { width: 28px; height: 28px; }
+
+/* Asistente (chat con preguntas frecuentes) en lugar del botón flotante de WhatsApp */
+.cb-fab { z-index: 31; border: 0; cursor: pointer; background: linear-gradient(180deg, #d45454, #a23434); box-shadow: 0 16px 30px -12px rgba(201, 72, 72, .9); }
+.cb-fab svg { position: absolute; width: 26px; height: 26px; transition: transform .35s cubic-bezier(.2, .8, .2, 1), opacity .25s; }
+.cb-fab .cb-ic-close { opacity: 0; transform: rotate(-90deg) scale(.6); }
+.cb-fab[aria-expanded="true"] .cb-ic-open { opacity: 0; transform: rotate(90deg) scale(.6); }
+.cb-fab[aria-expanded="true"] .cb-ic-close { opacity: 1; transform: none; }
+.cb-ping { position: absolute; top: 2px; right: 2px; width: 14px; height: 14px; border-radius: 50%; background: #f3f2f1; border: 3px solid var(--bg); transition: transform .3s; }
+.cb-fab[aria-expanded="true"] .cb-ping, .cb-fab.seen .cb-ping { transform: scale(0); }
+.cb { margin: 0; padding: 0; border-top: 1px solid rgba(199, 199, 201, .14); position: fixed; z-index: 30; right: calc(20px + env(safe-area-inset-right, 0px)); bottom: calc(92px + env(safe-area-inset-bottom, 0px)); width: min(380px, calc(100vw - 32px)); height: min(580px, calc(100dvh - 130px)); display: grid; grid-template-rows: auto 1fr auto; border-radius: 22px; overflow: hidden; color: var(--ink); font-family: var(--f-body);
+  background: linear-gradient(180deg, rgba(58, 59, 64, .8), rgba(43, 44, 47, .92)); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
+  border: 1px solid rgba(199, 199, 201, .14); box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .85), inset 0 1px 0 rgba(243, 242, 241, .06); transform-origin: 100% 100%; }
+.cb[hidden] { display: none; }
+.cb.is-in { animation: cb-pop .5s cubic-bezier(.2, .8, .2, 1); }
+@keyframes cb-pop { from { opacity: 0; transform: translateY(14px) scale(.95); } }
+.cb::after { content: ""; position: absolute; top: 0; left: 12%; right: 12%; height: 1px; background: linear-gradient(90deg, transparent, rgba(201, 72, 72, .9), transparent); pointer-events: none; }
+.cb-head { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-bottom: 1px solid rgba(199, 199, 201, .1); background: rgba(23, 24, 26, .25); }
+.cb-av { width: 40px; height: 40px; flex: none; border-radius: 11px; background: #1d1e21; border: 1px solid rgba(199, 199, 201, .14); display: flex; align-items: center; justify-content: center; padding-bottom: 3px; font-family: var(--f-display); font-weight: 800; font-size: 20px; white-space: nowrap; }
+.cb-av i { color: var(--accent); font-style: normal; }
+.cb-who { display: grid; gap: 2px; min-width: 0; }
+.cb-who strong { font-size: 15.5px; }
+.cb-who span { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); }
+.cb-who span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #4cc38a; box-shadow: 0 0 0 3px rgba(76, 195, 138, .18); }
+.cb-x { margin-left: auto; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; border: 1px solid rgba(199, 199, 201, .14); background: none; color: var(--muted); cursor: pointer; transition: color .2s, border-color .2s; }
+.cb-x:hover { color: var(--ink); border-color: rgba(201, 72, 72, .6); }
+.cb-x svg { width: 16px; height: 16px; }
+.cb-log { overflow-y: auto; overscroll-behavior: contain; padding: 18px 16px 10px; display: flex; flex-direction: column; gap: 10px; scrollbar-width: thin; }
+.cb-msg { max-width: 86%; padding: 11px 14px; border-radius: 16px; font-size: 14.5px; line-height: 1.5; animation: cb-in .45s cubic-bezier(.2, .8, .2, 1); }
+@keyframes cb-in { from { opacity: 0; transform: translateY(8px); } }
+.cb-bot { align-self: flex-start; background: rgba(23, 24, 26, .5); border: 1px solid rgba(199, 199, 201, .1); border-bottom-left-radius: 4px; color: #e9e8e7; }
+.cb-bot b { color: var(--ink); }
+.cb-me { align-self: flex-end; background: linear-gradient(180deg, #5a2a2c, #4a2426); border: 1px solid rgba(201, 72, 72, .35); border-bottom-right-radius: 4px; color: #f6e9e9; }
+.cb-typing { align-self: flex-start; display: flex; gap: 4px; padding: 14px; border-radius: 16px 16px 16px 4px; background: rgba(23, 24, 26, .5); }
+.cb-typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: cb-dot 1s infinite; }
+.cb-typing i:nth-child(2) { animation-delay: .15s; }
+.cb-typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes cb-dot { 50% { transform: translateY(-4px); opacity: .5; } }
+.cb-foot { padding: 12px 14px 14px; border-top: 1px solid rgba(199, 199, 201, .08); display: grid; gap: 10px; }
+.cb-label { font-family: var(--f-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
+.cb-chips { display: flex; flex-wrap: wrap; gap: 6px; max-height: 118px; overflow-y: auto; scrollbar-width: thin; }
+.cb-chip { font: inherit; font-size: 13px; text-align: left; color: var(--ink); padding: 7px 12px; border-radius: 999px; border: 1px solid rgba(199, 199, 201, .18); background: rgba(23, 24, 26, .3); cursor: pointer; transition: border-color .2s, background .2s, opacity .2s; }
+.cb-chip:hover { border-color: rgba(201, 72, 72, .6); background: rgba(178, 58, 58, .14); }
+.cb-chip.done { opacity: .55; }
+.cb-wa { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 12px; border-radius: 999px; background: linear-gradient(180deg, #c94848, #a23434); color: #fff; font-weight: 600; font-size: 14.5px; text-decoration: none; box-shadow: 0 12px 24px -12px rgba(201, 72, 72, .9); }
+.cb-wa svg { width: 17px; height: 17px; }
+@media (max-width: 520px) { .cb { right: 12px; left: 12px; width: auto; bottom: calc(88px + env(safe-area-inset-bottom, 0px)); height: min(560px, calc(100dvh - 120px)); } }
 </style>
 <style>
 body { margin: 0; }
@@ -803,7 +849,20 @@ img { max-width: 100%; }
   </div>
 </footer>
 
-<a class="fab js-wa" href="#contacto" aria-label="Escribime por WhatsApp"><svg><use href="#wa"/></svg></a>
+<section class="cb" id="cb" aria-label="Asistente de Mate" hidden>
+  <div class="cb-head">
+    <span class="cb-av" aria-hidden="true">m<i>.</i></span>
+    <div class="cb-who"><strong>Asistente de Mate</strong><span>Responde al instante</span></div>
+    <button class="cb-x" type="button" id="cb-x" aria-label="Cerrar asistente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  </div>
+  <div class="cb-log" id="cb-log" aria-live="polite"></div>
+  <div class="cb-foot">
+    <span class="cb-label">Preguntas frecuentes</span>
+    <div class="cb-chips" id="cb-chips"></div>
+    <a class="cb-wa" id="cb-wa" href="#" target="_blank" rel="noopener"><svg><use href="#wa"/></svg>Seguir por WhatsApp</a>
+  </div>
+</section>
+<button class="fab cb-fab" id="cb-fab" type="button" aria-label="Abrir asistente" aria-expanded="false" aria-controls="cb" data-cursor-label="Chat"><svg class="cb-ic-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg><svg class="cb-ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span class="cb-ping" aria-hidden="true"></span></button>
 
 <script>
 // Reemplazar por el número real, en formato internacional sin + ni espacios
@@ -868,6 +927,66 @@ update();
 const generic = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent("Hola Mate! Vi tu web y quiero consultarte por un proyecto.")}`;
 document.querySelectorAll(".js-wa").forEach(a => { a.href = generic; a.target = "_blank"; a.rel = "noopener"; });
 
+// Asistente: preguntas frecuentes con respuestas armadas, y de ahí a WhatsApp
+(() => {
+  const QA = [
+    ["¿Cuánto sale una página web?", "Depende de lo que necesites. Una <b>landing</b> (una sola página para mostrar tu negocio) es lo más económico; un sitio con varias secciones o una app con usuarios lleva más trabajo. Contame qué querés hacer y te paso un presupuesto <b>por escrito y sin compromiso</b>."],
+    ["¿Qué diferencia hay entre landing, sitio y app?", "<b>Landing:</b> una sola página que presenta lo que hacés y lleva a la gente a tu WhatsApp.<br><b>Sitio completo:</b> varias secciones (inicio, servicios, catálogo, contacto) que podés actualizar.<br><b>App a medida:</b> cuando la web tiene que <i>hacer</i> cosas: turnos, pagos, stock, usuarios."],
+    ["No sé qué necesito, ¿me ayudás?", "¡Para eso estoy! Contame en una línea a qué te dedicás y qué te gustaría lograr (más clientes, vender online, sacar turnos…). Con eso te digo qué te conviene y qué no hace falta."],
+    ["¿Qué tengo que mandarte para empezar?", "Con poco arrancamos: tu <b>logo</b> (si tenés), algunas <b>fotos</b> de tu trabajo o productos, y qué querés que diga la web. Si no tenés textos, te ayudo a escribirlos."],
+    ["¿Necesito dominio y hosting? ¿Qué es eso?", "El <b>dominio</b> es la dirección de tu web (por ejemplo tunegocio.com.ar) y el <b>hosting</b> es dónde \"vive\". No te preocupes: te ayudo a elegirlos y te dejo todo configurado."],
+    ["¿Se va a ver bien en el celular?", "Sí, siempre. La mayoría de la gente entra desde el celu, así que lo diseño y lo pruebo primero en teléfono."],
+    ["¿Voy a poder cambiar textos y fotos yo?", "En los sitios completos te dejo un <b>panel</b> para editar textos e imágenes sin tocar código. En una landing, cualquier cambio me lo pedís y lo hago."],
+    ["¿Y si después algo falla?", "No te dejo solo: después de publicarla te acompaño, y si algo no anda lo resolvemos."]
+  ];
+  const box = document.getElementById("cb"), fab = document.getElementById("cb-fab"), log = document.getElementById("cb-log");
+  const chips = document.getElementById("cb-chips"), wa = document.getElementById("cb-wa");
+  if (!box || !fab) return;
+  const waLink = text => `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(text)}`;
+  wa.href = waLink("Hola Mate! Vengo de tu web y quiero consultarte por un proyecto.");
+  const add = (cls, html) => {
+    const d = document.createElement("div");
+    d.className = `cb-msg ${cls}`;
+    d.innerHTML = html;
+    log.append(d);
+    log.scrollTop = log.scrollHeight;
+  };
+  let busy = false;
+  const ask = (i, chip) => {
+    if (busy) return;
+    busy = true;
+    const [q, a] = QA[i];
+    chip.classList.add("done");
+    add("cb-me", q);
+    const t = document.createElement("div");
+    t.className = "cb-typing";
+    t.innerHTML = "<i></i><i></i><i></i>";
+    log.append(t);
+    log.scrollTop = log.scrollHeight;
+    setTimeout(() => { t.remove(); add("cb-bot", a); busy = false; }, 750);
+    wa.href = waLink(`Hola Mate! Vengo de tu web. Te quería consultar: ${q}`);
+  };
+  QA.forEach(([q], i) => {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "cb-chip";
+    b.textContent = q;
+    b.addEventListener("click", () => ask(i, b));
+    chips.append(b);
+  });
+  add("cb-bot", "¡Hola! 👋 Soy el asistente de <b>Mate</b>. ¿Tenés dudas sobre cómo hacer tu web? Elegí una pregunta o escribile directo por WhatsApp.");
+  const setOpen = open => {
+    box.hidden = !open;
+    box.classList.toggle("is-in", open);
+    fab.setAttribute("aria-expanded", String(open));
+    fab.setAttribute("aria-label", open ? "Cerrar asistente" : "Abrir asistente");
+    if (open) fab.classList.add("seen");
+  };
+  fab.addEventListener("click", () => setOpen(box.hidden));
+  document.getElementById("cb-x").addEventListener("click", () => { setOpen(false); fab.focus(); });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !box.hidden) { setOpen(false); fab.focus(); } });
+})();
+
 // Carpetas del portfolio: se abren solas una vez al aparecer en pantalla (PC y celular), y con toque o clic
 if (true) {
   const seen = new IntersectionObserver(entries => {
@@ -918,6 +1037,6 @@ document.getElementById("copy").addEventListener("click", e => {
   });
 });
 </script>
-<script src="assets/app.js?v=46" defer></script>
+<script src="assets/app.js?v=47" defer></script>
 </body>
 </html>
