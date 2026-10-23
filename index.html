@@ -3,12 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>mate.dev · Desarrollo web</title>
-<meta name="description" content="Landing pages, sitios web y apps a medida con front y back. Hablás directo conmigo por WhatsApp.">
-<meta property="og:title" content="mate.dev · Desarrollo web">
-<meta property="og:description" content="Landing pages, sitios web y apps a medida con front y back.">
+<title>Mate · Desarrollo web a medida en Santa Fe | mate.dev</title>
+<meta name="description" content="Soy Mate, desarrollador web en Santa Fe, Argentina. Hago landing pages, sitios y apps a medida con front y back. Hablás directo conmigo por WhatsApp.">
+<!-- Cuando esté activo matedev.com.ar, cambiar la URL base de canonical, og:url, og:image, JSON-LD, robots.txt y sitemap.xml -->
+<link rel="canonical" href="https://mateoacksbenitez-wq.github.io/mate.dev/">
+<meta property="og:title" content="Mate · Desarrollo web a medida">
+<meta property="og:description" content="Landing pages, sitios y apps a medida con front y back. Hablás directo conmigo por WhatsApp.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="assets/favicon-512.png">
+<meta property="og:locale" content="es_AR">
+<meta property="og:url" content="https://mateoacksbenitez-wq.github.io/mate.dev/">
+<meta property="og:image" content="https://mateoacksbenitez-wq.github.io/mate.dev/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="mate.dev, desarrollo web a medida">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"mate.dev","url":"https://mateoacksbenitez-wq.github.io/mate.dev/","image":"https://mateoacksbenitez-wq.github.io/mate.dev/assets/og-image.png","description":"Landing pages, sitios web y apps a medida con front y back.","telephone":"+5493425772820","areaServed":"AR","address":{"@type":"PostalAddress","addressLocality":"Santa Fe","addressRegion":"Santa Fe","addressCountry":"AR"},"founder":{"@type":"Person","name":"Mate","url":"https://github.com/mateoacksbenitez-wq","sameAs":["https://github.com/mateoacksbenitez-wq"]}}
+</script>
 <meta name="theme-color" content="#2b2c2f">
 <link rel="icon" href="assets/favicon.ico" sizes="48x48">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
@@ -52,6 +63,17 @@
   color-scheme: dark;
 }
 
+
+/* Tokens de componentes: mismas alturas, radios y colores derivados en toda la web */
+:root {
+  --control-h: 44px;
+  --control-h-sm: 36px;
+  --radius-pill: 999px;
+  --radius-field: 12px;
+  --accent-strong: color-mix(in srgb, var(--accent) 80%, #000);
+  --accent-text: color-mix(in srgb, var(--accent) 55%, #fff);
+  --field-border: rgba(199, 199, 201, .14);
+}
 * { box-sizing: border-box; }
 html, body { overflow-x: clip; }
 html { scroll-behavior: smooth; scroll-padding-top: 80px; }
@@ -100,7 +122,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .btn {
   display: inline-flex; align-items: center; gap: 10px;
   font-family: var(--f-body); font-weight: 600; font-size: 15px;
-  padding: 12px 18px; border-radius: 999px; border: 1px solid transparent;
+  min-height: var(--control-h); padding: 0 18px; border-radius: var(--radius-pill); border: 1px solid transparent;
   text-decoration: none; cursor: pointer; transition: transform .15s ease, background .15s ease;
 }
 .btn:hover { transform: translateY(-1px); }
@@ -108,7 +130,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .btn-ghost { border-color: var(--line); color: var(--ink); background: transparent; }
 .btn-ghost:hover { border-color: var(--ink); }
 .btn svg { width: 18px; height: 18px; flex: none; }
-.nav .btn { padding: 9px 14px; color: #fff; }
+.nav .btn { min-height: var(--control-h-sm); padding: 0 14px; color: var(--accent-ink); }
 
 /* Hero */
 .hero { border-bottom: 1px solid var(--line); }
@@ -168,6 +190,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .card-nav__links { display: flex; flex-direction: column; gap: 2px; margin: auto 0 0; padding: 0; list-style: none; }
 .card-nav__link { display: inline-flex; align-items: center; gap: 8px; padding: 3px 0; border: 0; border-radius: 6px; background: none; color: inherit; font-family: inherit; font-size: 14px; font-weight: 500; text-decoration: none; cursor: pointer; outline: none; opacity: 0.82; transition: opacity 0.2s ease; }
 .card-nav__link:hover { opacity: 1; }
+@media (pointer: coarse) { .card-nav__link { min-height: 44px; } }
 .card-nav__arrow { position: relative; display: inline-block; flex: none; width: 14px; height: 14px; overflow: hidden; }
 .card-nav__arrow-icon { position: absolute; inset: 0; width: 100%; height: 100%; transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
 .card-nav__arrow-icon--in { transform: translate(-110%, 110%); }
@@ -189,8 +212,8 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .top.has-cardnav .card-nav[data-open] .card-nav__card:nth-child(2)::after { animation-delay: 0.22s; }
 .top.has-cardnav .card-nav[data-open] .card-nav__card:nth-child(3)::after { animation-delay: 0.32s; }
 @keyframes cn-sheen { to { transform: translateX(120%); } }
-.top.has-cardnav .card-nav__card:hover { box-shadow: inset 0 0 0 1px rgba(201, 72, 72, .55), 0 14px 30px -14px rgba(201, 72, 72, .55); }
-.top.has-cardnav .card-nav__card[data-tinted]:hover { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .35), 0 14px 30px -12px rgba(201, 72, 72, .8); }
+.top.has-cardnav .card-nav__card:hover { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 55%, transparent), 0 14px 30px -14px color-mix(in srgb, var(--accent) 55%, transparent); }
+.top.has-cardnav .card-nav__card[data-tinted]:hover { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .35), 0 14px 30px -12px color-mix(in srgb, var(--accent) 80%, transparent); }
 .top.has-cardnav .card-nav__card-head, .top.has-cardnav .card-nav__links li { opacity: 0; transform: translateY(8px); transition: opacity .18s ease, transform .18s ease; }
 .top.has-cardnav .card-nav[data-open] .card-nav__card-head, .top.has-cardnav .card-nav[data-open] .card-nav__links li { opacity: 1; transform: none; transition: opacity .32s ease, transform .35s cubic-bezier(.2, .8, .2, 1); }
 .top.has-cardnav .card-nav[data-open] .card-nav__card-head { transition-delay: .08s; }
@@ -274,16 +297,16 @@ main, footer { position: relative; z-index: 1; }
 .hero-card .profile-card { width: 100%; font-family: var(--f-body); }
 .hero-card .profile-card__tile { aspect-ratio: 4 / 5; }
 .hero-card .profile-card__photo { object-position: 50% 30%; }
-.profile-card__art { position: absolute; inset: calc(var(--pc-parallax) * -1); display: grid; place-items: center; transform: translate3d(var(--pc-shift-x), var(--pc-shift-y), 0); background: radial-gradient(60% 55% at 50% 42%, rgba(201, 72, 72, .38), transparent 70%); pointer-events: none; }
+.profile-card__art { position: absolute; inset: calc(var(--pc-parallax) * -1); display: grid; place-items: center; transform: translate3d(var(--pc-shift-x), var(--pc-shift-y), 0); background: radial-gradient(60% 55% at 50% 42%, color-mix(in srgb, var(--accent) 38%, transparent), transparent 70%); pointer-events: none; }
 .profile-card__art svg { width: 54%; height: auto; filter: drop-shadow(0 18px 30px rgba(0, 0, 0, .55)); }
 .hero-card .profile-card__name { font-family: var(--f-display); font-size: 26px; font-weight: 800; letter-spacing: -.01em; }
 .profile-card__extra { display: grid; gap: 12px; padding: 6px 12px 2px; }
 .profile-card__extra p { margin: 0; font-size: 14.5px; line-height: 1.55; color: var(--pc-muted); text-wrap: pretty; }
 .profile-card__extra p strong { color: var(--pc-ink); font-weight: 600; }
 .pc-stack { display: flex; flex-wrap: wrap; gap: 6px; }
-.pc-stack span { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; padding: 4px 9px; border-radius: 999px; color: #f0b0b0; background: rgba(178, 58, 58, .14); border: 1px solid rgba(201, 72, 72, .35); }
+.pc-stack span { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; padding: 4px 9px; border-radius: 999px; color: var(--accent-text); background: rgba(178, 58, 58, .14); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); }
 .hero-card .profile-card__footer { padding: 4px 8px 4px 12px; border-top: 1px solid rgba(255, 255, 255, .06); padding-top: 12px; }
-.hero-card .profile-card__contact:hover { box-shadow: inset 0 0 0 1px rgba(201, 72, 72, .6), inset 0 1px 0 var(--pc-tile-highlight), 0 8px 18px -8px rgba(201, 72, 72, .7); }
+.hero-card .profile-card__contact:hover { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--accent) 60%, transparent), inset 0 1px 0 var(--pc-tile-highlight), 0 8px 18px -8px color-mix(in srgb, var(--accent) 70%, transparent); }
 
 /* Componentes portados de React Bits */
 .target-cursor { position: fixed; inset: 0; z-index: 2147483647; pointer-events: none; }
@@ -304,9 +327,12 @@ main, footer { position: relative; z-index: 1; }
 .specular-button__light { position: absolute; inset: -24px; z-index: 1; display: block; width: calc(100% + 48px); height: calc(100% + 48px); pointer-events: none; }
 .specular-button__label { position: relative; z-index: 2; display: inline-flex; align-items: center; gap: inherit; }
 .hero h1 {
-  font-size: clamp(44px, 9.5vw, 124px); font-weight: 900; font-stretch: 125%;
+  font-size: clamp(30px, 10.4vw, 124px); font-weight: 900; font-stretch: 125%;
   line-height: .9; letter-spacing: -.025em;
 }
+/* El tamaño sale del ancho de la columna, para que "desarrollador" entre entero en PC, tablet y celu */
+.hero h1 { container-type: inline-size; }
+.hero h1 > .fold-text { font-size: min(11.4cqi, 124px); }
 .hero h1 em { font-style: normal; color: var(--accent); }
 .hero h1 .thin { font-weight: 400; font-stretch: 62%; letter-spacing: 0; }
 .hero-row { display: flex; flex-wrap: wrap; gap: 24px 48px; align-items: end; justify-content: space-between; }
@@ -324,17 +350,17 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 .plans { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; align-items: stretch; }
 @media (max-width: 900px) { .plans { grid-template-columns: minmax(0, 1fr); gap: 16px; } }
 .plan { --mx: 50%; --my: 0%; position: relative; isolation: isolate; padding: 26px 24px 24px; display: grid; grid-template-rows: auto auto auto 1fr auto auto; gap: 18px; min-width: 0; border-radius: 16px; background: color-mix(in srgb, var(--surface) 88%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); color: var(--ink); border: 1px solid var(--line); box-shadow: 0 30px 60px -24px rgba(0, 0, 0, .7), 0 8px 20px -10px rgba(0, 0, 0, .5); overflow: hidden; transition: transform .25s cubic-bezier(.2, .8, .2, 1), border-color .25s, box-shadow .25s; }
-.plan::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: radial-gradient(420px circle at var(--mx) var(--my), rgba(201, 72, 72, .12), transparent 60%); opacity: 0; transition: opacity .45s; pointer-events: none; }
-.plan::after { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: radial-gradient(260px circle at var(--mx) var(--my), rgba(201, 72, 72, .9), transparent 70%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); opacity: 0; transition: opacity .45s; pointer-events: none; }
+.plan::before { content: ""; position: absolute; inset: 0; z-index: -1; border-radius: inherit; background: radial-gradient(420px circle at var(--mx) var(--my), color-mix(in srgb, var(--accent) 12%, transparent), transparent 60%); opacity: 0; transition: opacity .45s; pointer-events: none; }
+.plan::after { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: radial-gradient(260px circle at var(--mx) var(--my), color-mix(in srgb, var(--accent) 90%, transparent), transparent 70%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); opacity: 0; transition: opacity .45s; pointer-events: none; }
 .plan:hover { transform: translateY(-6px); box-shadow: 0 40px 70px -28px rgba(0, 0, 0, .8), 0 10px 24px -10px rgba(0, 0, 0, .55); }
 .plan:hover::before, .plan:hover::after { opacity: 1; }
 .plan-num { position: absolute; top: 12px; right: 20px; z-index: -1; font-family: var(--f-display); font-weight: 800; font-size: 88px; line-height: 1; letter-spacing: -.04em; color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--line) 80%, transparent); pointer-events: none; transition: -webkit-text-stroke-color .45s; }
-.plan:hover .plan-num { -webkit-text-stroke-color: rgba(201, 72, 72, .4); }
+.plan:hover .plan-num { -webkit-text-stroke-color: color-mix(in srgb, var(--accent) 40%, transparent); }
 .plan-icon { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--bg)); border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line)); }
 .plan-icon svg { width: 24px; height: 24px; }
 .plan-top { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
 .plan-top h3 { font-size: 26px; letter-spacing: -.01em; }
-.tag { font-family: var(--f-body); font-size: 13.5px; padding: 5px 12px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink); }
+.tag { font-family: var(--f-body); font-size: 12.5px; line-height: 1.4; padding: 3px 10px; border-radius: var(--radius-pill); border: 1px solid var(--line); color: var(--ink); }
 .desc { color: var(--muted); font-size: 16px; }
 .plan ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; font-size: 15.5px; align-content: start; }
 .plan li { display: grid; grid-template-columns: 20px 1fr; gap: 10px; align-items: start; }
@@ -343,16 +369,15 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 .spec div { display: grid; gap: 6px; padding: 12px 14px; border-radius: 10px; background: color-mix(in srgb, var(--bg) 80%, transparent); border: 1px solid var(--line); }
 .spec dt { font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
 .spec dd { margin: 0; font-weight: 600; font-size: 15px; font-variant-numeric: tabular-nums; }
-.plan-cta { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 13px 18px; border-radius: 999px; border: 1px solid var(--line); color: var(--ink); text-decoration: none; font-weight: 600; font-size: 15px; transition: background .3s, border-color .3s, color .3s; }
+.plan-cta { display: flex; justify-content: center; align-items: center; gap: 8px; min-height: var(--control-h); padding: 0 18px; border-radius: var(--radius-pill); border: 1px solid var(--line); color: var(--ink); text-decoration: none; font-weight: 600; font-size: 15px; transition: background .3s, border-color .3s, color .3s; }
 .plan-cta svg { width: 18px; height: 18px; transition: transform .3s; }
 .plan-cta:hover { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, transparent); }
 .plan-cta:hover svg { transform: translate(2px, -2px); }
 .plan.featured { border-color: color-mix(in srgb, var(--accent) 55%, var(--line)); }
 .plan.featured .tag { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
-.plan.featured .plan-cta { background: var(--wa); border-color: var(--wa); color: var(--accent-ink); box-shadow: 0 12px 26px -12px rgba(201, 72, 72, .85); }
+.plan.featured .plan-cta { background: var(--wa); border-color: var(--wa); color: var(--accent-ink); box-shadow: 0 12px 26px -12px color-mix(in srgb, var(--accent) 85%, transparent); }
 .plan.featured .plan-cta:hover { background: color-mix(in srgb, var(--wa) 88%, #fff); }
-.plan-badge { position: absolute; top: 22px; right: 20px; font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; padding: 5px 10px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 18%, var(--bg)); border: 1px solid color-mix(in srgb, var(--accent) 50%, var(--line)); color: #f0b0b0; }
-.plan.featured .plan-num { top: 52px; }
+.plan-badge { position: absolute; top: 22px; right: 20px; font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; padding: 5px 10px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 18%, var(--bg)); border: 1px solid color-mix(in srgb, var(--accent) 50%, var(--line)); color: var(--accent-text); }
 
 /* Trabajos: carpetas que se abren y largan sus notas flotando */
 .work { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 24px; }
@@ -366,7 +391,7 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 /* Área activa extendida durante hover para que el cursor no pierda el hover al subir hacia las notas en PC */
 .folder::before { content: ""; position: absolute; top: -190px; bottom: -20px; left: -130px; right: -130px; z-index: 1; pointer-events: none; }
 .folder:hover::before, .folder.open::before { pointer-events: auto; }
-.folder::after { content: ""; position: absolute; left: 8%; right: 8%; bottom: -18px; height: 26px; border-radius: 50%; background: radial-gradient(closest-side, rgba(201, 72, 72, .45), transparent); opacity: 0; transform: scaleX(.6); transition: opacity .4s ease, transform .4s cubic-bezier(.22, 1, .36, 1); pointer-events: none; }
+.folder::after { content: ""; position: absolute; left: 8%; right: 8%; bottom: -18px; height: 26px; border-radius: 50%; background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 45%, transparent), transparent); opacity: 0; transform: scaleX(.6); transition: opacity .4s ease, transform .4s cubic-bezier(.22, 1, .36, 1); pointer-events: none; }
 .folder:hover::after, .folder:focus-within::after, .folder.open::after { opacity: 1; transform: scaleX(1); }
 .f-back::after { content: ""; position: absolute; inset: 10px 10px 0; border-radius: 10px 10px 0 0; background: linear-gradient(rgba(0, 0, 0, .28), rgba(0, 0, 0, 0)); opacity: 0; transition: opacity .4s ease; }
 .f-back { position: absolute; inset: 0; background: var(--steel); border-radius: 4px 14px 14px 14px; }
@@ -475,7 +500,7 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 @media (max-width: 900px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .steps { grid-template-columns: minmax(0, 1fr); } }
 .step { display: grid; gap: 10px; align-content: start; border-top: 2px solid var(--ink); padding-top: 16px; min-width: 0; }
-.step .n { font-family: var(--f-mono); font-size: 13px; color: var(--accent); }
+.step .n { font-family: var(--f-mono); font-size: 13px; color: var(--accent-text); }
 .step p { color: var(--muted); font-size: 15.5px; }
 
 /* Contacto */
@@ -487,53 +512,56 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 .contact .lead { color: var(--muted); margin-top: 18px; max-width: 42ch; }
 .number { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
 .number strong { font-family: var(--f-mono); font-weight: 500; font-size: 20px; user-select: all; }
-.copy { font: inherit; font-size: 13px; padding: 6px 12px; border-radius: 999px; background: transparent; color: var(--ink); border: 1px solid var(--line); cursor: pointer; }
+.copy { font: inherit; font-size: 13px; min-height: var(--control-h-sm); padding: 0 14px; border-radius: var(--radius-pill); background: transparent; color: var(--ink); border: 1px solid var(--line); cursor: pointer; }
 
-.composer { --mx: 50%; --my: 0%; position: relative; isolation: isolate; overflow: hidden; background: linear-gradient(180deg, rgba(58, 59, 64, .72), rgba(43, 44, 47, .86)); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); color: var(--ink); border: 1px solid rgba(199, 199, 201, .14); border-radius: 22px; padding: 0 26px 24px; display: grid; gap: 20px; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .8), 0 10px 24px -12px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(243, 242, 241, .06); }
-.composer::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(520px circle at var(--mx) var(--my), rgba(201, 72, 72, .13), transparent 60%); pointer-events: none; }
-.composer::after { content: ""; position: absolute; top: 0; left: 12%; right: 12%; height: 1px; background: linear-gradient(90deg, transparent, rgba(201, 72, 72, .9), transparent); pointer-events: none; }
+.composer { --mx: 50%; --my: 0%; position: relative; isolation: isolate; overflow: hidden; background: linear-gradient(180deg, rgba(58, 59, 64, .72), rgba(43, 44, 47, .86)); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); color: var(--ink); border: 1px solid var(--field-border); border-radius: 22px; padding: 0 26px 24px; display: grid; gap: 20px; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .8), 0 10px 24px -12px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(243, 242, 241, .06); }
+.composer::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(520px circle at var(--mx) var(--my), color-mix(in srgb, var(--accent) 13%, transparent), transparent 60%); pointer-events: none; }
+.composer::after { content: ""; position: absolute; top: 0; left: 12%; right: 12%; height: 1px; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 90%, transparent), transparent); pointer-events: none; }
 .cmp-head { display: flex; align-items: center; gap: 12px; margin-inline: -26px; padding: 18px 26px 16px; border-bottom: 1px solid rgba(199, 199, 201, .1); background: rgba(23, 24, 26, .25); }
-.cmp-avatar { width: 40px; height: 40px; flex: none; border-radius: 11px; display: flex; align-items: center; justify-content: center; padding-bottom: 3px; white-space: nowrap; background: #1d1e21; border: 1px solid rgba(199, 199, 201, .14); font-family: var(--f-display); font-weight: 800; font-size: 20px; line-height: 1; color: #f3f2f1; letter-spacing: -.02em; }
+.cmp-avatar { width: 40px; height: 40px; flex: none; border-radius: 11px; display: flex; align-items: center; justify-content: center; padding-bottom: 3px; white-space: nowrap; background: #1d1e21; border: 1px solid var(--field-border); font-family: var(--f-display); font-weight: 800; font-size: 20px; line-height: 1; color: #f3f2f1; letter-spacing: -.02em; }
 .cmp-avatar i { color: var(--accent); font-style: normal; }
 .cmp-who { display: grid; gap: 2px; min-width: 0; }
 .cmp-who strong { font-size: 15.5px; }
 .cmp-who span { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
 .cmp-live { width: 7px; height: 7px; border-radius: 50%; background: #4cc38a; box-shadow: 0 0 0 3px rgba(76, 195, 138, .18); animation: cmp-live 2.4s ease-in-out infinite; }
 @keyframes cmp-live { 50% { box-shadow: 0 0 0 6px rgba(76, 195, 138, 0); } }
-.cmp-step { margin-left: auto; font-family: var(--f-mono); font-size: 12px; letter-spacing: .06em; color: var(--muted); padding: 5px 10px; border-radius: 999px; border: 1px solid rgba(199, 199, 201, .14); transition: color .3s, border-color .3s; }
-.composer.is-ready .cmp-step { color: #f0b0b0; border-color: rgba(201, 72, 72, .5); }
+.cmp-step { margin-left: auto; font-family: var(--f-mono); font-size: 12px; letter-spacing: .06em; color: var(--muted); padding: 5px 10px; border-radius: 999px; border: 1px solid var(--field-border); transition: color .3s, border-color .3s; }
+.composer.is-ready .cmp-step { color: var(--accent-text); border-color: color-mix(in srgb, var(--accent) 50%, transparent); }
 .cmp-progress { height: 3px; margin: -20px -26px 0; background: rgba(199, 199, 201, .06); }
-.cmp-progress i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #7a2626, #c94848); box-shadow: 0 0 12px rgba(201, 72, 72, .7); transition: width .5s cubic-bezier(.2, .8, .2, 1); }
+.cmp-progress i { display: block; height: 100%; width: 0; background: linear-gradient(90deg, #7a2626, var(--accent)); box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 70%, transparent); transition: width .5s cubic-bezier(.2, .8, .2, 1); }
 .composer label, .composer legend { display: flex; align-items: center; gap: 10px; font-family: var(--f-mono); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
 .composer legend b, .composer label b { font-weight: 500; color: var(--accent); }
 .composer fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 10px; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
 .chips input { position: absolute; opacity: 0; pointer-events: none; }
-.chips label { display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-body); font-size: 15px; text-transform: none; letter-spacing: 0; color: var(--ink); padding: 9px 15px 9px 12px; border: 1px solid rgba(199, 199, 201, .16); background: rgba(23, 24, 26, .3); border-radius: 999px; cursor: pointer; transition: border-color .25s, background .25s, box-shadow .25s, transform .25s; }
+.chips label { display: inline-flex; align-items: center; gap: 8px; font-family: var(--f-body); font-size: 15px; text-transform: none; letter-spacing: 0; color: var(--ink); min-height: var(--control-h); padding: 0 15px 0 12px; border: 1px solid rgba(199, 199, 201, .16); background: rgba(23, 24, 26, .3); border-radius: 999px; cursor: pointer; transition: border-color .25s, background .25s, box-shadow .25s, transform .25s; }
 .chips label svg { width: 16px; height: 16px; color: var(--accent); transition: color .25s; }
-.chips label:hover { border-color: rgba(201, 72, 72, .55); transform: translateY(-1px); }
-.chips input:checked + label { background: linear-gradient(180deg, #c94848, #a23434); border-color: transparent; color: #fff; box-shadow: 0 10px 22px -10px rgba(201, 72, 72, .9), inset 0 1px 0 rgba(255, 255, 255, .2); }
+.chips label:hover { border-color: color-mix(in srgb, var(--accent) 55%, transparent); transform: translateY(-1px); }
+.chips input:checked + label { background: linear-gradient(180deg, var(--accent), var(--accent-strong)); border-color: transparent; color: #fff; box-shadow: 0 10px 22px -10px color-mix(in srgb, var(--accent) 90%, transparent), inset 0 1px 0 rgba(255, 255, 255, .2); }
 .chips input:checked + label svg { color: #fff; }
 .chips input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; }
 .field { display: grid; gap: 8px; }
-.field input, .field textarea { font: inherit; font-size: 16px; color: var(--ink); background: rgba(23, 24, 26, .45); border: 1px solid rgba(199, 199, 201, .14); border-radius: 12px; padding: 13px 15px; width: 100%; resize: vertical; box-shadow: inset 0 2px 6px rgba(0, 0, 0, .25); transition: border-color .25s, box-shadow .25s, background .25s; }
-.field input:focus, .field textarea:focus { outline: none; border-color: rgba(201, 72, 72, .7); background: rgba(23, 24, 26, .6); box-shadow: inset 0 2px 6px rgba(0, 0, 0, .25), 0 0 0 4px rgba(201, 72, 72, .15); }
+.field input, .field textarea { font: inherit; font-size: 16px; color: var(--ink); background: rgba(23, 24, 26, .45); border: 1px solid var(--field-border); border-radius: var(--radius-field); padding: 11px 15px; width: 100%; resize: vertical; box-shadow: inset 0 2px 6px rgba(0, 0, 0, .25); transition: border-color .25s, box-shadow .25s, background .25s; }
+.field input:focus, .field textarea:focus { outline: none; border-color: color-mix(in srgb, var(--accent) 70%, transparent); background: rgba(23, 24, 26, .6); box-shadow: inset 0 2px 6px rgba(0, 0, 0, .25), 0 0 0 4px color-mix(in srgb, var(--accent) 15%, transparent); }
 .preview-field[hidden] { display: none; }
 .preview-field:not([hidden]) { animation: preview-in .45s cubic-bezier(.2, .8, .2, 1); }
 @keyframes preview-in { from { opacity: 0; transform: translateY(-6px); } }
 .composer .btn-wa.is-off { opacity: .45; filter: saturate(.6); cursor: not-allowed; }
-.composer.tried input:invalid, .composer.tried textarea:invalid { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
+.field input { padding-block: 9px; }
+.composer [aria-invalid="true"] { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
 .composer input::placeholder, .composer textarea::placeholder { color: var(--muted); opacity: .7; }
-.chat { justify-self: end; max-width: 92%; position: relative; background: linear-gradient(180deg, #5a2a2c, #4a2426); border: 1px solid rgba(201, 72, 72, .35); border-radius: 16px 16px 4px 16px; padding: 12px 14px 8px; box-shadow: 0 14px 30px -16px rgba(0, 0, 0, .8); }
+.chat { justify-self: end; max-width: 92%; position: relative; background: linear-gradient(180deg, #5a2a2c, #4a2426); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); border-radius: 16px 16px 4px 16px; padding: 12px 14px 8px; box-shadow: 0 14px 30px -16px rgba(0, 0, 0, .8); }
 .preview { font-family: var(--f-body); font-size: 15px; line-height: 1.5; color: #f6e9e9; white-space: pre-wrap; overflow-wrap: anywhere; }
 .chat-meta { display: flex; justify-content: flex-end; align-items: center; gap: 5px; margin-top: 4px; font-family: var(--f-mono); font-size: 11px; color: rgba(246, 233, 233, .6); }
 .chat-meta svg { width: 16px; height: 11px; color: #7fc7ff; }
 .preview-field .eyebrow { justify-self: start; }
 .composer .btn-wa { justify-content: center; font-size: 16px; padding: 15px 18px; border-radius: 999px; transition: opacity .3s, filter .3s, box-shadow .3s; }
-.composer.is-ready .btn-wa { box-shadow: 0 16px 30px -14px rgba(201, 72, 72, .95); }
+.composer.is-ready .btn-wa { box-shadow: 0 16px 30px -14px color-mix(in srgb, var(--accent) 95%, transparent); }
 .hint { font-size: 13px; color: var(--muted); text-align: center; margin-top: -6px; }
 
 footer { border-top: 1px solid var(--line); }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--ink); }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 28px; color: var(--muted); font-size: 14px; }
 
 .fab {
@@ -548,38 +576,37 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 .fab svg { width: 28px; height: 28px; }
 
 /* Asistente (chat con preguntas frecuentes) en lugar del botón flotante de WhatsApp */
-.cb-fab { z-index: 31; border: 0; cursor: pointer; background: linear-gradient(180deg, #d45454, #a23434); box-shadow: 0 16px 30px -12px rgba(201, 72, 72, .9); }
+.cb-fab { z-index: 31; border: 0; cursor: pointer; background: linear-gradient(180deg, #d45454, var(--accent-strong)); box-shadow: 0 16px 30px -12px color-mix(in srgb, var(--accent) 90%, transparent); }
 .cb-fab svg { position: absolute; width: 26px; height: 26px; transition: transform .35s cubic-bezier(.2, .8, .2, 1), opacity .25s; }
 .cb-fab .cb-ic-close { opacity: 0; transform: rotate(-90deg) scale(.6); }
 .cb-fab[aria-expanded="true"] .cb-ic-open { opacity: 0; transform: rotate(90deg) scale(.6); }
 .cb-fab[aria-expanded="true"] .cb-ic-close { opacity: 1; transform: none; }
 .cb-ping { position: absolute; top: 2px; right: 2px; width: 14px; height: 14px; border-radius: 50%; background: #f3f2f1; border: 3px solid var(--bg); transition: transform .3s; }
 .cb-fab[aria-expanded="true"] .cb-ping, .cb-fab.seen .cb-ping { transform: scale(0); }
-.cb { margin: 0; padding: 0; border-top: 1px solid rgba(199, 199, 201, .14); position: fixed; z-index: 30; right: calc(20px + env(safe-area-inset-right, 0px)); bottom: calc(92px + env(safe-area-inset-bottom, 0px)); width: min(380px, calc(100vw - 32px)); height: min(580px, calc(100dvh - 130px)); display: grid; grid-template-rows: auto 1fr auto; border-radius: 22px; overflow: hidden; color: var(--ink); font-family: var(--f-body);
+.cb { margin: 0; padding: 0; border-top: 1px solid var(--field-border); position: fixed; z-index: 30; right: calc(20px + env(safe-area-inset-right, 0px)); bottom: calc(92px + env(safe-area-inset-bottom, 0px)); width: min(380px, calc(100vw - 32px)); height: min(580px, calc(100dvh - 130px)); display: grid; grid-template-rows: auto 1fr auto; border-radius: 22px; overflow: hidden; color: var(--ink); font-family: var(--f-body);
   background: linear-gradient(180deg, rgba(58, 59, 64, .8), rgba(43, 44, 47, .92)); -webkit-backdrop-filter: blur(16px); backdrop-filter: blur(16px);
-  border: 1px solid rgba(199, 199, 201, .14); box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .85), inset 0 1px 0 rgba(243, 242, 241, .06); transform-origin: 100% 100%; }
+  border: 1px solid var(--field-border); box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .85), inset 0 1px 0 rgba(243, 242, 241, .06); transform-origin: 100% 100%; }
 .cb[hidden] { display: none; }
 .cb.is-in { animation: cb-pop .5s cubic-bezier(.2, .8, .2, 1); }
 @keyframes cb-pop { from { opacity: 0; transform: translateY(14px) scale(.95); } }
 .cb.is-out { animation: cb-close .32s cubic-bezier(.4, 0, .7, .2) forwards; pointer-events: none; }
 @keyframes cb-close { to { opacity: 0; transform: translateY(16px) scale(.92); filter: blur(4px); } }
-.cb::after { content: ""; position: absolute; top: 0; left: 12%; right: 12%; height: 1px; background: linear-gradient(90deg, transparent, rgba(201, 72, 72, .9), transparent); pointer-events: none; }
+.cb::after { content: ""; position: absolute; top: 0; left: 12%; right: 12%; height: 1px; background: linear-gradient(90deg, transparent, color-mix(in srgb, var(--accent) 90%, transparent), transparent); pointer-events: none; }
 .cb-head { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-bottom: 1px solid rgba(199, 199, 201, .1); background: rgba(23, 24, 26, .25); }
-.cb-av { width: 40px; height: 40px; flex: none; border-radius: 11px; background: #1d1e21; border: 1px solid rgba(199, 199, 201, .14); display: flex; align-items: center; justify-content: center; padding-bottom: 3px; font-family: var(--f-display); font-weight: 800; font-size: 20px; white-space: nowrap; }
+.cb-av { width: 40px; height: 40px; flex: none; border-radius: 11px; background: #1d1e21; border: 1px solid var(--field-border); display: flex; align-items: center; justify-content: center; padding-bottom: 3px; font-family: var(--f-display); font-weight: 800; font-size: 20px; white-space: nowrap; }
 .cb-av i { color: var(--accent); font-style: normal; }
 .cb-who { display: grid; gap: 2px; min-width: 0; }
 .cb-who strong { font-size: 15.5px; }
 .cb-who span { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); }
-.cb-who span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #4cc38a; box-shadow: 0 0 0 3px rgba(76, 195, 138, .18); }
-.cb-x { margin-left: auto; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; border: 1px solid rgba(199, 199, 201, .14); background: none; color: var(--muted); cursor: pointer; transition: color .2s, border-color .2s; }
-.cb-x:hover { color: var(--ink); border-color: rgba(201, 72, 72, .6); }
+.cb-x { margin-left: auto; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; border: 1px solid var(--field-border); background: none; color: var(--muted); cursor: pointer; transition: color .2s, border-color .2s; }
+.cb-x:hover { color: var(--ink); border-color: color-mix(in srgb, var(--accent) 60%, transparent); }
 .cb-x svg { width: 16px; height: 16px; }
 .cb-log { overflow-y: auto; overscroll-behavior: contain; padding: 18px 16px 10px; display: flex; flex-direction: column; gap: 10px; scrollbar-width: thin; }
 .cb-msg { max-width: 86%; padding: 11px 14px; border-radius: 16px; font-size: 14.5px; line-height: 1.5; animation: cb-in .45s cubic-bezier(.2, .8, .2, 1); }
 @keyframes cb-in { from { opacity: 0; transform: translateY(8px); } }
 .cb-bot { align-self: flex-start; background: rgba(23, 24, 26, .5); border: 1px solid rgba(199, 199, 201, .1); border-bottom-left-radius: 4px; color: #e9e8e7; }
 .cb-bot b { color: var(--ink); }
-.cb-me { align-self: flex-end; background: linear-gradient(180deg, #5a2a2c, #4a2426); border: 1px solid rgba(201, 72, 72, .35); border-bottom-right-radius: 4px; color: #f6e9e9; }
+.cb-me { align-self: flex-end; background: linear-gradient(180deg, #5a2a2c, #4a2426); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); border-bottom-right-radius: 4px; color: #f6e9e9; }
 .cb-typing { align-self: flex-start; display: flex; gap: 4px; padding: 14px; border-radius: 16px 16px 16px 4px; background: rgba(23, 24, 26, .5); }
 .cb-typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: cb-dot 1s infinite; }
 .cb-typing i:nth-child(2) { animation-delay: .15s; }
@@ -588,10 +615,10 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 .cb-foot { padding: 12px 14px 14px; border-top: 1px solid rgba(199, 199, 201, .08); display: grid; gap: 10px; }
 .cb-label { font-family: var(--f-mono); font-size: 10.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
 .cb-chips { display: flex; flex-wrap: wrap; gap: 6px; max-height: 118px; overflow-y: auto; scrollbar-width: thin; }
-.cb-chip { font: inherit; font-size: 13px; text-align: left; color: var(--ink); padding: 7px 12px; border-radius: 999px; border: 1px solid rgba(199, 199, 201, .18); background: rgba(23, 24, 26, .3); cursor: pointer; transition: border-color .2s, background .2s, opacity .2s; }
-.cb-chip:hover { border-color: rgba(201, 72, 72, .6); background: rgba(178, 58, 58, .14); }
+.cb-chip { font: inherit; font-size: 13px; text-align: left; color: var(--ink); min-height: var(--control-h-sm); padding: 7px 12px; border-radius: var(--radius-pill); border: 1px solid rgba(199, 199, 201, .18); background: rgba(23, 24, 26, .3); cursor: pointer; transition: border-color .2s, background .2s, opacity .2s; }
+.cb-chip:hover { border-color: color-mix(in srgb, var(--accent) 60%, transparent); background: rgba(178, 58, 58, .14); }
 .cb-chip.done { opacity: .55; }
-.cb-wa { display: flex; justify-content: center; align-items: center; gap: 8px; padding: 12px; border-radius: 999px; background: linear-gradient(180deg, #c94848, #a23434); color: #fff; font-weight: 600; font-size: 14.5px; text-decoration: none; box-shadow: 0 12px 24px -12px rgba(201, 72, 72, .9); }
+.cb-wa { display: flex; justify-content: center; align-items: center; gap: 8px; min-height: var(--control-h); padding: 0 12px; border-radius: var(--radius-pill); background: linear-gradient(180deg, var(--accent), var(--accent-strong)); color: var(--accent-ink); font-weight: 600; font-size: 14.5px; text-decoration: none; box-shadow: 0 12px 24px -12px color-mix(in srgb, var(--accent) 90%, transparent); }
 .cb-wa svg { width: 17px; height: 17px; }
 @media (max-width: 520px) { .cb { right: 12px; left: 12px; width: auto; bottom: calc(88px + env(safe-area-inset-bottom, 0px)); height: min(560px, calc(100dvh - 120px)); } }
 </style>
@@ -628,10 +655,10 @@ img { max-width: 100%; }
   <div class="hero">
     <div class="wrap">
       <div class="hero-card" id="hero-card"></div>
-      <span class="eyebrow status"><i></i>Tomando proyectos · Argentina, trabajo remoto</span>
-      <h1>Tu web, <em>hecha</em><br><span class="thin">de punta a punta.</span></h1>
+      <span class="eyebrow status"><i></i>Tomando proyectos · Santa Fe, Argentina</span>
+      <h1>Tu futuro <em>desarrollador</em><br><span class="thin">web y de software<br>a medida.</span></h1>
       <div class="hero-row">
-        <p>Soy Mate. Diseño y desarrollo webs a medida para negocios y emprendimientos: desde una landing que te traiga clientes hasta un sistema completo con tu propio panel. Hablás directo conmigo, sin intermediarios.</p>
+        <p>Soy Mateo, estudiante de Desarrollo de Software en Santa Fe capital. Hago webs y sistemas que le simplifican el día a día a comercios y emprendimientos.</p>
         <div class="ctas">
           <a class="btn btn-wa js-wa" href="#contacto"><svg><use href="#wa"/></svg>Escribime por WhatsApp</a>
           <a class="btn btn-ghost" href="#trabajos">Ver trabajos</a>
@@ -644,21 +671,18 @@ img { max-width: 100%; }
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <p class="eyebrow">Servicios</p>
-          <h2>Tres formas de<br>arrancar tu proyecto</h2>
+          <h2>Servicios</h2>
         </div>
-        <p>Cada proyecto se cotiza según lo que necesitás. Estas fichas te dan una idea de qué incluye cada uno para que sepas por dónde empezar.</p>
+        <p>No tengo precios fijos. Te paso uno cuando sé qué necesitás.</p>
       </div>
       <div class="plans">
         <article class="plan">
           <span class="plan-num" aria-hidden="true">01</span><span class="plan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18M7 13h6M7 16.5h10"/></svg></span>
           <div class="plan-top"><h3>Landing page</h3><span class="tag">1 página</span></div>
-          <p class="desc">Para lanzar un producto, un servicio o una campaña y llevar gente a tu WhatsApp.</p>
           <ul>
-            <li>Diseño a medida, una sola página con 5 a 7 secciones</li>
+            <li>Una página, de 5 a 7 secciones</li>
             <li>Adaptada a celular</li>
             <li>Botón y formulario directo a WhatsApp</li>
-            <li>SEO básico y vista previa linda al compartir el link</li>
           </ul>
           <dl class="spec">
             <div><dt>Ideal para</dt><dd>Emprendimientos</dd></div>
@@ -666,12 +690,12 @@ img { max-width: 100%; }
           <a class="plan-cta" href="#contacto" data-plan="Landing page">Consultar por esto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
         </article>
         <article class="plan featured">
-          <span class="plan-num" aria-hidden="true">02</span><span class="plan-badge">Más pedido</span><span class="plan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 17.5l9 5 9-5" opacity=".55"/></svg></span>
+          <span class="plan-num" aria-hidden="true">02</span><span class="plan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 17.5l9 5 9-5" opacity=".55"/></svg></span>
           <div class="plan-top"><h3>Sitio web completo</h3><span class="tag">Multi-página</span></div>
-          <p class="desc">La web de tu negocio o marca, con varias secciones que podés actualizar vos.</p>
           <ul>
-            <li>Inicio, servicios, nosotros, blog o catálogo, contacto</li>
+            <li>Varias secciones o catálogo</li>
             <li>Panel para editar textos e imágenes</li>
+            <li>Adaptado a celular</li>
           </ul>
           <dl class="spec">
             <div><dt>Ideal para</dt><dd>Pymes y marcas</dd></div>
@@ -681,12 +705,11 @@ img { max-width: 100%; }
         <article class="plan">
           <span class="plan-num" aria-hidden="true">03</span><span class="plan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg></span>
           <div class="plan-top"><h3>App web a medida</h3><span class="tag">Front + back</span></div>
-          <p class="desc">Cuando necesitás que la web haga cosas: usuarios, turnos, pagos, stock o un panel interno.</p>
           <ul>
             <li>Frontend y backend con base de datos</li>
             <li>Login de usuarios y roles</li>
             <li>Integraciones: Mercado Pago, mails, APIs</li>
-            <li>Entregas por etapas, con demo en cada una</li>
+            <li>Entregas por etapas</li>
           </ul>
           <dl class="spec">
             <div><dt>Ideal para</dt><dd>Sistemas y startups</dd></div>
@@ -701,10 +724,8 @@ img { max-width: 100%; }
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <p class="eyebrow">Trabajos</p>
-          <h2>Algunos proyectos</h2>
+          <h2>Trabajos</h2>
         </div>
-        <p>Cada carpeta es un proyecto: abrila y mirá qué hice, con qué tecnologías y el link para verlo.</p>
       </div>
       <div class="work">
         <article class="project">
@@ -729,7 +750,7 @@ img { max-width: 100%; }
             <button class="f-hit" type="button" aria-expanded="false" aria-label="Abrir carpeta: Tesla Computación"></button>
           </div>
           <h3><a href="https://tesla-computacion.vercel.app/" target="_blank" rel="noopener">Tesla Computación</a></h3>
-          <p class="desc">Web a medida para un local de PCs en Santa Fe: armador de PC en 10 pasos, catálogo con stock real y panel de administración.</p>
+          <p class="desc">Para un local de PCs de Santa Fe: armador de PC en 10 pasos con stock real y panel de administración.</p>
         </article>
         <article class="project">
           <div class="folder">
@@ -741,7 +762,7 @@ img { max-width: 100%; }
             <button class="f-hit" type="button" aria-expanded="false" aria-label="Abrir carpeta: mate.dev"></button>
           </div>
           <h3><a href="https://mateoacksbenitez-wq.github.io/mate.dev/" target="_blank" rel="noopener">mate.dev</a></h3>
-          <p class="desc">Esta misma landing: diseño a medida, animaciones con GSAP y WebGL, y un formulario que te arma el mensaje de WhatsApp.</p>
+          <p class="desc">Esta web. GSAP, WebGL y un formulario que arma el mensaje de WhatsApp.</p>
         </article>
       </div>
       <p class="work-hint">Pasá el mouse o tocá una carpeta para abrirla.</p>
@@ -752,38 +773,37 @@ img { max-width: 100%; }
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <p class="eyebrow">Servicios recomendados</p>
-          <h2>Gente de confianza<br>para tu compu</h2>
+          <h2>Gente de confianza</h2>
         </div>
-        <p>Servicios de amigos con los que trabajo y que recomiendo. Los contactás directo y les decís que venís de mi parte.</p>
+        <p>Amigos que recomiendo. Deciles que venís de mi parte.</p>
       </div>
       <div class="friend-grid">
         <article class="friend">
           <div class="friend-top"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v10H4z"/><path d="M9 19h6M12 15v4"/><path d="M8 11l2.5-2.5L13 11l3-3"/></svg></span><span class="tag">Remoto</span></div>
-          <div><h3>Optimización avanzada de PC</h3><p class="desc" style="margin-top:8px">Tu compu lenta vuelve a andar rápido, sin que la tengas que llevar a ningún lado.</p></div>
+          <div><h3>Optimización avanzada de PC</h3></div>
           <ul>
-            <li>Limpieza de programas y procesos que la frenan</li>
-            <li>Drivers y Windows actualizados</li>
-            <li>Ajustes para gaming y trabajo</li>
-            <li>Todo por acceso remoto, vos mirás en vivo</li>
+            <li>Ajuste a fondo de Windows: servicios, procesos y registro</li>
+            <li>Drivers instalados limpios y BIOS configurado</li>
+            <li>Menos latencia e input lag para jugar</li>
+            <li>Pruebas de rendimiento antes y después</li>
           </ul>
           <div class="friend-foot">
             <div class="who"><img class="partner-badge" src="assets/partners/bytefix.png" alt="Logo de ByteFix" width="120" height="120"><span>ByteFix<small>Optimización remota</small></span></div>
-            <a class="btn btn-wa js-partner" href="#recomendados" data-wa="5492914380467" data-msg="Hola ByteFix! Vengo de mate.web, quiero optimizar mi PC de forma remota."><svg><use href="#wa"/></svg>Consultar</a>
+            <a class="btn btn-wa js-partner" href="#recomendados" data-wa="5492914380467" data-msg="Hola ByteFix! Vengo de mate.dev, quiero optimizar mi PC de forma remota."><svg><use href="#wa"/></svg>Consultar</a>
           </div>
         </article>
         <article class="friend">
           <div class="friend-top"><span class="glyph"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="3" width="12" height="18" rx="2"/><circle cx="12" cy="14" r="3"/><path d="M9 7h6"/></svg></span><span class="tag">Santa Fe</span></div>
-          <div><h3>Armado y reparación de PC</h3><p class="desc" style="margin-top:8px">Una PC pensada para lo que hacés y para tu presupuesto, armada y probada. Y si la tuya falla, la reparan.</p></div>
+          <div><h3>Armado y reparación de PC</h3></div>
           <ul>
-            <li>Asesoramiento para elegir cada componente</li>
-            <li>Armado prolijo, con buen manejo de cables</li>
-            <li>Instalación de sistema y pruebas de rendimiento</li>
-            <li>Reparación y service de PCs</li>
+            <li>PC armada según tu uso y presupuesto</li>
+            <li>Armado prolijo y probado</li>
+            <li>Windows y drivers instalados</li>
+            <li>Diagnóstico, reparación y service</li>
           </ul>
           <div class="friend-foot">
             <div class="who"><img class="partner-logo" src="assets/partners/tesla.png" alt="Tesla Computación" width="242" height="77"><small>Armado y reparación</small></div>
-            <a class="btn btn-wa js-partner" href="#recomendados" data-wa="5493425117356" data-msg="Hola Tesla Computación! Vengo de mate.web, quiero armar o reparar una PC."><svg><use href="#wa"/></svg>Consultar</a>
+            <a class="btn btn-wa js-partner" href="#recomendados" data-wa="5493425117356" data-msg="Hola Tesla Computación! Vengo de mate.dev, quiero armar o reparar una PC."><svg><use href="#wa"/></svg>Consultar</a>
           </div>
         </article>
       </div>
@@ -794,15 +814,14 @@ img { max-width: 100%; }
     <div class="wrap">
       <div class="sec-head">
         <div>
-          <p class="eyebrow">Cómo trabajo</p>
-          <h2>De la charla<br>al proyecto</h2>
+          <h2>Cómo trabajo</h2>
         </div>
       </div>
       <div class="steps">
-        <div class="step"><span class="n">01 · Charla</span><h3>Me contás tu idea</h3><p>Por mensaje. Definimos qué necesitás y para cuándo.</p></div>
-        <div class="step"><span class="n">02 · Propuesta</span><h3>Presupuesto claro</h3><p>Alcance y precio por escrito, sin letra chica.</p></div>
-        <div class="step"><span class="n">03 · Construcción</span><h3>Avances que ves</h3><p>Te comparto un link con la web en progreso para que opines.</p></div>
-        <div class="step"><span class="n">04 · Lanzamiento</span><h3>Online y con soporte</h3><p>Publico la web en tu dominio y te acompaño después.</p></div>
+        <div class="step"><span class="n">01 · Charla</span><h3>Me contás tu idea</h3><p>Por WhatsApp. Vemos qué necesitás.</p></div>
+        <div class="step"><span class="n">02 · Propuesta</span><h3>Te paso un precio</h3><p>Por escrito, con lo que incluye.</p></div>
+        <div class="step"><span class="n">03 · Construcción</span><h3>Lo ves mientras lo hago</h3><p>Te mando un link y lo vas mirando.</p></div>
+        <div class="step"><span class="n">04 · Lanzamiento</span><h3>La subo y sigo ahí</h3><p>La publico en tu dominio. Si algo falla, me escribís.</p></div>
       </div>
     </div>
   </section>
@@ -810,9 +829,8 @@ img { max-width: 100%; }
   <section id="contacto" class="contact">
     <div class="wrap contact-grid">
       <div>
-        <p class="eyebrow">Contacto</p>
-        <h2>¿Arrancamos?</h2>
-        <p class="lead">Elegí qué necesitás, contame en dos líneas y te llega el mensaje armado a mi WhatsApp.</p>
+        <h2>Escribime</h2>
+        <p class="lead">Completá esto y se arma el mensaje para WhatsApp.</p>
         <div class="number">
           <strong id="num">+54 9 342 577-2820</strong>
           <button class="copy" id="copy" type="button">Copiar número</button>
@@ -821,7 +839,7 @@ img { max-width: 100%; }
       <form class="composer" id="composer">
         <div class="cmp-head">
           <span class="cmp-avatar" aria-hidden="true">m<i>.</i></span>
-          <div class="cmp-who"><strong>Mate</strong><span><i class="cmp-live"></i>En línea</span></div>
+          <div class="cmp-who"><strong>Mate</strong><span>Te respondo por WhatsApp</span></div>
           <span class="cmp-step" id="cmp-step">0 / 2</span>
         </div>
         <div class="cmp-progress" aria-hidden="true"><i id="cmp-bar"></i></div>
@@ -834,8 +852,8 @@ img { max-width: 100%; }
             <input type="radio" name="tipo" id="t4" value="otra cosa"><label for="t4"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>Otra cosa</label>
           </div>
         </fieldset>
-        <div class="field"><label for="nombre"><b>02</b>Tu nombre</label><input id="nombre" required autocomplete="given-name" placeholder="Cómo te llamás"></div>
-        <div class="field"><label for="idea"><b>03</b>Contame en corto</label><textarea id="idea" rows="3" required placeholder="Qué querés hacer, en una o dos líneas"></textarea></div>
+        <div class="field"><label for="nombre"><b>02</b>Tu nombre</label><input id="nombre" required aria-describedby="hint" autocomplete="given-name" placeholder="Cómo te llamás"></div>
+        <div class="field"><label for="idea"><b>03</b>Contame en corto</label><textarea id="idea" rows="3" required aria-describedby="hint" placeholder="Qué querés hacer, en una o dos líneas"></textarea></div>
         <div class="field preview-field" id="preview-field" hidden><span class="eyebrow">Así me llega</span><div class="chat"><div class="preview" id="preview"></div><span class="chat-meta"><span id="chat-time"></span><svg viewBox="0 0 18 12" aria-hidden="true"><path d="M1 6.5l3.2 3.2L11 2.5M7.5 9.2l.5.5L15 2.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span></div></div>
         <a class="btn btn-wa" id="send" href="#" target="_blank" rel="noopener"><svg><use href="#wa"/></svg>Enviar por WhatsApp</a>
         <p class="hint" id="hint">Completá tu nombre y contame en corto para armar el mensaje.</p>
@@ -847,14 +865,14 @@ img { max-width: 100%; }
 <footer>
   <div class="wrap">
     <span>© 2026 mate.dev · Desarrollo web</span>
-    <span class="mono">Hecho a mano, sin plantillas</span>
+    <a class="mono" href="https://github.com/mateoacksbenitez-wq" target="_blank" rel="noopener">github.com/mateoacksbenitez-wq</a>
   </div>
 </footer>
 
-<section class="cb" id="cb" aria-label="Asistente de Mate" hidden>
+<section class="cb" id="cb" role="dialog" aria-labelledby="cb-title" hidden>
   <div class="cb-head">
     <span class="cb-av" aria-hidden="true">m<i>.</i></span>
-    <div class="cb-who"><strong>Asistente de Mate</strong><span>Responde al instante</span></div>
+    <div class="cb-who"><strong id="cb-title">Asistente de Mate</strong><span>Preguntas frecuentes</span></div>
     <button class="cb-x" type="button" id="cb-x" aria-label="Cerrar asistente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   </div>
   <div class="cb-log" id="cb-log" aria-live="polite"></div>
@@ -867,7 +885,7 @@ img { max-width: 100%; }
 <button class="fab cb-fab" id="cb-fab" type="button" aria-label="Abrir asistente" aria-expanded="false" aria-controls="cb" data-cursor-label="Chat"><svg class="cb-ic-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg><svg class="cb-ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span class="cb-ping" aria-hidden="true"></span></button>
 
 <script>
-// Reemplazar por el número real, en formato internacional sin + ni espacios
+// Número de WhatsApp en formato internacional, sin + ni espacios
 const WA_NUMBER = "5493425772820";
 
 const form = document.getElementById("composer");
@@ -884,6 +902,11 @@ function buildMessage() {
 }
 const nombreIn = document.getElementById("nombre"), ideaIn = document.getElementById("idea");
 const previewField = document.getElementById("preview-field"), hint = document.getElementById("hint");
+// Validación accesible: aria-invalid en los campos vacíos, solo después de intentar enviar
+function markInvalid() {
+  const tried = form.classList.contains("tried");
+  [nombreIn, ideaIn].forEach(el => el.setAttribute("aria-invalid", String(tried && el.value.trim() === "")));
+}
 function update() {
   const ready = nombreIn.value.trim() !== "" && ideaIn.value.trim() !== "";
   const msg = buildMessage();
@@ -894,6 +917,7 @@ function update() {
   send.href = ready ? `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}` : "#";
   hint.textContent = ready ? "Se abre WhatsApp con el mensaje listo. Lo mandás vos." : "Completá tu nombre y contame en corto para armar el mensaje.";
   if (ready) form.classList.remove("tried");
+  markInvalid();
   const done = (nombreIn.value.trim() !== "") + (ideaIn.value.trim() !== "");
   document.getElementById("cmp-step").textContent = `${done} / 2`;
   document.getElementById("cmp-bar").style.width = `${done * 50}%`;
@@ -910,6 +934,7 @@ send.addEventListener("click", e => {
   if (send.getAttribute("aria-disabled") !== "true") return;
   e.preventDefault();
   form.classList.add("tried");
+  markInvalid();
   (nombreIn.value.trim() ? ideaIn : nombreIn).focus();
 });
 form.addEventListener("input", update);
@@ -932,14 +957,14 @@ document.querySelectorAll(".js-wa").forEach(a => { a.href = generic; a.target = 
 // Asistente: preguntas frecuentes con respuestas armadas, y de ahí a WhatsApp
 (() => {
   const QA = [
-    ["¿Cuánto sale una página web?", "Depende de lo que necesites. Una <b>landing</b> (una sola página para mostrar tu negocio) es lo más económico; un sitio con varias secciones o una app con usuarios lleva más trabajo. Contame qué querés hacer y te paso un presupuesto <b>por escrito y sin compromiso</b>."],
-    ["¿Qué diferencia hay entre landing, sitio y app?", "<b>Landing:</b> una sola página que presenta lo que hacés y lleva a la gente a tu WhatsApp.<br><b>Sitio completo:</b> varias secciones (inicio, servicios, catálogo, contacto) que podés actualizar.<br><b>App a medida:</b> cuando la web tiene que <i>hacer</i> cosas: turnos, pagos, stock, usuarios."],
-    ["No sé qué necesito, ¿me ayudás?", "¡Para eso estoy! Contame en una línea a qué te dedicás y qué te gustaría lograr (más clientes, vender online, sacar turnos…). Con eso te digo qué te conviene y qué no hace falta."],
-    ["¿Qué tengo que mandarte para empezar?", "Con poco arrancamos: tu <b>logo</b> (si tenés), algunas <b>fotos</b> de tu trabajo o productos, y qué querés que diga la web. Si no tenés textos, te ayudo a escribirlos."],
-    ["¿Necesito dominio y hosting? ¿Qué es eso?", "El <b>dominio</b> es la dirección de tu web (por ejemplo tunegocio.com.ar) y el <b>hosting</b> es dónde \"vive\". No te preocupes: te ayudo a elegirlos y te dejo todo configurado."],
-    ["¿Se va a ver bien en el celular?", "Sí, siempre. La mayoría de la gente entra desde el celu, así que lo diseño y lo pruebo primero en teléfono."],
-    ["¿Voy a poder cambiar textos y fotos yo?", "En los sitios completos te dejo un <b>panel</b> para editar textos e imágenes sin tocar código. En una landing, cualquier cambio me lo pedís y lo hago."],
-    ["¿Y si después algo falla?", "No te dejo solo: después de publicarla te acompaño, y si algo no anda lo resolvemos."]
+    ["¿Cuánto sale una página web?", "Depende de lo que necesites. La <b>landing</b> es lo más barato; un sitio con varias secciones o una app llevan más trabajo. Contame qué querés y te paso un precio por escrito."],
+    ["¿Qué diferencia hay entre landing, sitio y app?", "<b>Landing:</b> una sola página que muestra lo tuyo y lleva a tu WhatsApp.<br><b>Sitio:</b> varias secciones que podés editar.<br><b>App:</b> cuando la web tiene que hacer cosas, como turnos, pagos o stock."],
+    ["No sé qué necesito, ¿me ayudás?", "Sí. Contame a qué te dedicás y qué querés lograr, y te digo qué te conviene."],
+    ["¿Qué tengo que mandarte para empezar?", "Tu <b>logo</b> si tenés, algunas <b>fotos</b> y qué querés que diga. Si no tenés textos, los escribimos juntos."],
+    ["¿Necesito dominio y hosting? ¿Qué es eso?", "El <b>dominio</b> es la dirección (tunegocio.com.ar) y el <b>hosting</b> es donde está guardada la web. Te ayudo a sacarlos y lo dejo configurado."],
+    ["¿Se va a ver bien en el celular?", "Sí. La pruebo primero en el celu, que es desde donde entra casi todo el mundo."],
+    ["¿Voy a poder cambiar textos y fotos yo?", "En los sitios, sí: te dejo un <b>panel</b> para editarlos. En una landing, me pedís el cambio y lo hago."],
+    ["¿Y si después algo falla?", "Me escribís y lo veo."]
   ];
   const box = document.getElementById("cb"), fab = document.getElementById("cb-fab"), log = document.getElementById("cb-log");
   const chips = document.getElementById("cb-chips"), wa = document.getElementById("cb-wa");
@@ -976,7 +1001,7 @@ document.querySelectorAll(".js-wa").forEach(a => { a.href = generic; a.target = 
     b.addEventListener("click", () => ask(i, b));
     chips.append(b);
   });
-  add("cb-bot", "¡Hola! 👋 Soy el asistente de <b>Mate</b>. ¿Tenés dudas sobre cómo hacer tu web? Elegí una pregunta o escribile directo por WhatsApp.");
+  add("cb-bot", "Estas son las preguntas que más me hacen. Si no está la tuya, escribime por WhatsApp.");
   let closing = 0;
   const setOpen = open => {
     clearTimeout(closing);
@@ -1048,6 +1073,6 @@ document.getElementById("copy").addEventListener("click", e => {
   });
 });
 </script>
-<script src="assets/app.js?v=48" defer></script>
+<script src="assets/app.js?v=53" defer></script>
 </body>
 </html>
