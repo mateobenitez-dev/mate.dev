@@ -198,7 +198,7 @@ document.querySelectorAll('.btn').forEach(btn => {
 
 // ---- Cursor de mira (TargetCursor) en toda la página ----
 mountTargetCursor({
-  targetSelector: 'a, button, input, textarea, select, label, [role="button"], .plan, .friend, .folder, .note, .card-nav__card, .card-nav__link, .cursor-target, [data-cursor-label]',
+  targetSelector: 'a, button, input, textarea, select, .chips label, [role="button"], .card-nav__link, .cursor-target, [data-cursor-label]',
   spinDuration: 0,
   hoverDuration: 0.22,
   hideDefaultCursor: true,

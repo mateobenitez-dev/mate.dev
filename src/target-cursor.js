@@ -3,12 +3,17 @@
 const CORNER_ANGLES = [0, 90, 180, 270];
 const QUARTER = Math.PI / 2;
 
+// Pasos chicos según lo duro del resorte: con pasos grandes la cuenta se dispara y el cursor sale volando
 const spring = (state, goal, stiffness, damping, dt) => {
-  const steps = 4;
+  const steps = Math.max(4, Math.ceil(dt * (Math.sqrt(stiffness) + damping) * 2));
   const h = dt / steps;
   for (let i = 0; i < steps; i++) {
     state.v += (stiffness * (goal - state.x) - damping * state.v) * h;
     state.x += state.v * h;
+  }
+  if (!Number.isFinite(state.x) || !Number.isFinite(state.v)) {
+    state.x = goal;
+    state.v = 0;
   }
 };
 
@@ -20,13 +25,8 @@ const DEFAULT_TARGET_SELECTOR = [
   'input',
   'textarea',
   'select',
-  'label',
+  '.chips label',
   '[role="button"]',
-  '.plan',
-  '.friend',
-  '.folder',
-  '.note',
-  '.card-nav__card',
   '.card-nav__link',
   '.cursor-target',
   '[data-cursor-label]'
@@ -165,7 +165,7 @@ export function mountTargetCursor(options = {}) {
       target = next;
       if (target) {
         const angle = turn.x;
-        quarter = s.spinDuration > 0 ? Math.round(angle / QUARTER) : 0;
+        quarter = settings.spinDuration > 0 ? Math.round(angle / QUARTER) : 0;
         const corner = parseFloat(getComputedStyle(target).borderTopLeftRadius) || 0;
         targetRadius = corner;
         spinSpeed = 0;

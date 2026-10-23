@@ -188,7 +188,7 @@ export function mountProfileCard(container, options = {}) {
   container.append(root);
 
   // ---- Motor: resorte para la inclinación y luz que sigue al cursor ----
-  const reduced = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+  const reduced = false;
   const size = { width: root.offsetWidth, height: root.offsetHeight };
   const x = { p: 0, v: 0, target: 0 };
   const y = { p: 0, v: 0, target: 0 };
