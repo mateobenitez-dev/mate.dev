@@ -104,7 +104,7 @@ if (header) {
       },
       {
         label: 'Contacto',
-        description: 'Escribime y te respondo en el día.',
+        description: 'Escribime y arrancamos.',
         links: [
           { label: 'Armar mi mensaje', href: '#contacto' },
           { label: 'WhatsApp directo', href: waHref, external: true }
