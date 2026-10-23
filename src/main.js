@@ -117,6 +117,10 @@ const fold = {
 const heroTitle = document.querySelector('.hero h1');
 if (heroTitle) mountFoldText(heroTitle, { ...fold, trigger: 'mount', stagger: 0.09 });
 document.querySelectorAll('main h2, .steps h3').forEach(title => mountFoldText(title, { ...fold, trigger: 'scroll' }));
+// Párrafos de intro: por palabra, si no con tantas letras tardaría una eternidad
+const heroLead = document.querySelector('.hero-row > p');
+if (heroLead) mountFoldText(heroLead, { ...fold, trigger: 'mount', splitBy: 'word', stagger: 0.06, foldAngle: 80 });
+document.querySelectorAll('.contact .lead').forEach(p => mountFoldText(p, { ...fold, trigger: 'scroll', splitBy: 'word', stagger: 0.06, foldAngle: 80 }));
 
 // ---- Gente de confianza: tarjetas ReflectiveCard (antes que los botones, así el de WhatsApp queda adentro) ----
 document.querySelectorAll('.friend-grid .friend').forEach(card => {
