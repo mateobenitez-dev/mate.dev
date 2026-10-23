@@ -23,8 +23,13 @@ const LOGO_SRC = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
 const heroCard = document.getElementById('hero-card');
 if (heroCard) {
   const bio = document.createElement('div');
+  // Resumen de lo que hace, en chips
   bio.innerHTML =
-    '<p>Hago tiendas online, sistemas con panel y landings.</p>';
+    '<ul class="pc-skills" aria-label="Qué hago">' +
+    ['Landing pages', 'Sitios web', 'Tiendas online', 'Sistemas con panel', 'Turnos y pagos', 'Mercado Pago']
+      .map(s => `<li>${s}</li>`)
+      .join('') +
+    '</ul>';
   mountProfileCard(heroCard, {
     avatarUrl: 'assets/mate.jpg',
     body: bio,

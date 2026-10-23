@@ -303,6 +303,8 @@ main, footer { position: relative; z-index: 1; }
 .profile-card__extra { display: grid; gap: 12px; padding: 6px 12px 2px; }
 .profile-card__extra p { margin: 0; font-size: 14.5px; line-height: 1.55; color: var(--pc-muted); text-wrap: pretty; }
 .profile-card__extra p strong { color: var(--pc-ink); font-weight: 600; }
+.pc-skills { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; }
+.pc-skills li { font-size: 12.5px; line-height: 1.4; padding: 3px 10px; border-radius: var(--radius-pill); border: 1px solid var(--line); color: var(--pc-ink); }
 .pc-stack { display: flex; flex-wrap: wrap; gap: 6px; }
 .pc-stack span { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; padding: 4px 9px; border-radius: 999px; color: var(--accent-text); background: rgba(178, 58, 58, .14); border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent); }
 .hero-card .profile-card__footer { padding: 4px 8px 4px 12px; border-top: 1px solid rgba(255, 255, 255, .06); padding-top: 12px; }
@@ -1084,6 +1086,6 @@ document.getElementById("copy").addEventListener("click", e => {
   });
 });
 </script>
-<script src="assets/app.js?v=51" defer></script>
+<script src="assets/app.js?v=52" defer></script>
 </body>
 </html>
