@@ -5,6 +5,7 @@ import { mountGradualBlur } from './gradual-blur.js';
 import { applySpecular } from './specular-button.js';
 import { mountReflectiveCard } from './reflective-card.js';
 import { mountDotGrid } from './dot-grid.js';
+import { mountCardNav } from './card-nav.js';
 
 const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
@@ -34,6 +35,67 @@ if (logoBox) {
 }
 
 const TINT = '#c94848';
+// ---- Barra de arriba: CardNav flotante con las secciones en tarjetas ----
+const header = document.querySelector('.top');
+if (header) {
+  const waHref = document.querySelector('.js-wa')?.href || '#contacto';
+  const logoSvg = header.querySelector('.brand svg')?.cloneNode(true);
+  const slot = document.createElement('div');
+  slot.className = 'top-cardnav';
+  header.replaceChildren(slot);
+  header.classList.add('has-cardnav');
+  mountCardNav(slot, {
+    logo: logoSvg,
+    logoAlt: 'mate.dev, inicio',
+    logoHref: '#inicio',
+    menuWords: ['Menú', 'Cerrar'],
+    ariaLabel: 'Principal',
+    theme: 'dark',
+    surface: 'glass',
+    openOn: 'click',
+    cardEffect: 'rise',
+    maxWidth: 1088,
+    accentColor: '#c94848',
+    vars: {
+      '--cn-panel': 'rgba(43, 44, 47, 0.72)',
+      '--cn-solid': '#2b2c2f',
+      '--cn-tile': 'linear-gradient(180deg, #3a3b40 0%, #303135 100%)',
+      '--cn-text': '#f3f2f1',
+      '--cn-muted': 'rgba(199, 199, 201, 0.7)',
+      '--cn-ring': 'rgba(201, 72, 72, 0.8)'
+    },
+    cta: { label: 'WhatsApp', href: waHref, external: true },
+    items: [
+      {
+        label: 'Servicios',
+        description: 'Landing, sitio completo o app a medida.',
+        links: [
+          { label: 'Ver servicios', href: '#servicios' },
+          { label: 'Cómo trabajo', href: '#proceso' }
+        ]
+      },
+      {
+        label: 'Trabajos',
+        description: 'Proyectos reales y gente de confianza.',
+        links: [
+          { label: 'Mis proyectos', href: '#trabajos' },
+          { label: 'Gente de confianza', href: '#recomendados' }
+        ]
+      },
+      {
+        label: 'Contacto',
+        description: 'Escribime y te respondo en el día.',
+        bgColor: '#b23a3a',
+        textColor: '#ffffff',
+        links: [
+          { label: 'Armar mi mensaje', href: '#contacto' },
+          { label: 'WhatsApp directo', href: waHref, external: true }
+        ]
+      }
+    ]
+  });
+}
+
 // ---- Gente de confianza: tarjetas ReflectiveCard (antes que los botones, así el de WhatsApp queda adentro) ----
 document.querySelectorAll('.friend-grid .friend').forEach(card => {
   mountReflectiveCard(card, {
