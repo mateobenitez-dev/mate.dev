@@ -10,6 +10,7 @@ import { mountCardNav } from './card-nav.js';
 import { mountFoldText } from './fold-text.js';
 
 const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+const TINT = css('--accent');
 
 // ---- Logo eléctrico: el "m." recortado, para que el rayo recorra el cuadrado y la letra ----
 const M_PATH =
@@ -31,7 +32,7 @@ if (heroCard) {
     title: 'Futuro Desarrollador de Software',
     handle: 'mateoacksbenitez-wq',
     status: 'Argentina',
-    statusColor: '#c94848',
+    statusColor: TINT,
     contactText: 'GitHub',
     contactHref: 'https://github.com/mateoacksbenitez-wq',
     contactIcon:
@@ -52,7 +53,6 @@ if (heroCard) {
   });
 }
 
-const TINT = '#c94848';
 // ---- Barra de arriba: CardNav flotante con las secciones en tarjetas ----
 const header = document.querySelector('.top');
 if (header) {
@@ -76,7 +76,7 @@ if (header) {
     stagger: 0.08,
     bounce: 0.12,
     maxWidth: 1088,
-    accentColor: '#c94848',
+    accentColor: TINT,
     vars: {
       '--cn-panel': 'rgba(43, 44, 47, 0.26)',
       '--cn-blur': 'blur(12px) saturate(1.4)',

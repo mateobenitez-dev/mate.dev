@@ -128,8 +128,10 @@ export function mountProfileCard(container, options = {}) {
     const photo = el('img', 'profile-card__photo');
     photo.src = avatarUrl;
     photo.alt = name || '';
-    photo.loading = 'lazy';
+    // Está arriba de todo: que cargue ya, y si falla queda el fondo con el nombre
+    photo.fetchPriority = 'high';
     photo.draggable = false;
+    photo.addEventListener('error', () => photo.remove(), { once: true });
     tile.append(photo);
   }
   if (name || title) {
