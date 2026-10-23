@@ -102,14 +102,15 @@ mountGradualBlur(document.body, {
   zIndex: 7
 });
 
-// ---- Fondo de toda la web: FluxLines con los props de Mate ----
+// ---- Fondo de toda la web: FluxLines, versión "A · Sutil" que eligió Mate ----
 const fluxBox = document.querySelector('.flux-bg');
 if (fluxBox) {
   mountFluxLines(fluxBox, {
     colors: ['#ffffff', '#ffffff', '#ffffff'],
-    glow: 2,
+    glow: 1.2,
     rimWidth: 0.2,
-    lineWidth: 1,
+    lineWidth: 0.6,
+    opacity: 0.35,
     flowDirection: 'down',
     mouseInteraction: true,
     clickSwirl: true,
