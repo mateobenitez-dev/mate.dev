@@ -327,9 +327,12 @@ main, footer { position: relative; z-index: 1; }
 .specular-button__light { position: absolute; inset: -24px; z-index: 1; display: block; width: calc(100% + 48px); height: calc(100% + 48px); pointer-events: none; }
 .specular-button__label { position: relative; z-index: 2; display: inline-flex; align-items: center; gap: inherit; }
 .hero h1 {
-  font-size: clamp(44px, 9.5vw, 124px); font-weight: 900; font-stretch: 125%;
+  font-size: clamp(30px, 10.4vw, 124px); font-weight: 900; font-stretch: 125%;
   line-height: .9; letter-spacing: -.025em;
 }
+/* El tamaño sale del ancho de la columna, para que "desarrollador" entre entero en PC, tablet y celu */
+.hero h1 { container-type: inline-size; }
+.hero h1 > .fold-text { font-size: min(11.4cqi, 124px); }
 .hero h1 em { font-style: normal; color: var(--accent); }
 .hero h1 .thin { font-weight: 400; font-stretch: 62%; letter-spacing: 0; }
 .hero-row { display: flex; flex-wrap: wrap; gap: 24px 48px; align-items: end; justify-content: space-between; }
@@ -653,7 +656,7 @@ img { max-width: 100%; }
     <div class="wrap">
       <div class="hero-card" id="hero-card"></div>
       <span class="eyebrow status"><i></i>Tomando proyectos · Santa Fe, Argentina</span>
-      <h1>Hago <em>webs</em><br><span class="thin">para negocios.</span></h1>
+      <h1>Tu futuro <em>desarrollador</em><br><span class="thin">web y de software<br>a medida.</span></h1>
       <div class="hero-row">
         <p>Soy Mate, tengo 21 años y estudio Desarrollo de Software en Santa Fe. Hago landings, sitios y sistemas con panel propio. Me escribís por WhatsApp y hablás conmigo.</p>
         <div class="ctas">
