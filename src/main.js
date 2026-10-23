@@ -20,26 +20,12 @@ const LOGO_SRC = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
 // ---- Tarjeta de presentación (ProfileCard) en el inicio ----
 const heroCard = document.getElementById('hero-card');
 if (heroCard) {
-  const svg = (inner, attrs = '') => `<svg xmlns="http://www.w3.org/2000/svg" ${attrs}>${inner}</svg>`;
-  // Patrón de "m." chiquitos: el brillo holográfico solo se ve a través de ellos
-  const mark = (x, y) => `<g transform="translate(${x} ${y}) scale(.34)"><path d="${M_PATH}"/><path d="M93.53 70H106.73V83.2H93.53Z"/></g>`;
-  const pattern = svg(
-    [mark(0, 0), mark(48, 0), mark(24, 40), mark(72, 40), mark(-24, 40)].join(''),
-    'width="96" height="80" viewBox="0 0 96 80" fill="#000"'
-  );
-  const art = document.createElement('div');
-  art.innerHTML = svg(
-    `<path fill="#f3f2f1" d="${M_PATH}"/><rect fill="#c94848" x="93.53" y="70" width="13.2" height="13.2"/>`,
-    'viewBox="20 40 92 48" aria-hidden="true"'
-  );
   const bio = document.createElement('div');
   bio.innerHTML =
-    '<p><strong>Full stack de Argentina.</strong> Construyo productos reales: tiendas online, sistemas con panel de administración y landings con animaciones. Mis últimos trabajos: BuildFit y Tesla Computación.</p>' +
-    '<div class="pc-stack"><span>Next.js</span><span>React</span><span>Node</span><span>PostgreSQL</span><span>GSAP</span></div>';
+    '<p><strong>Full stack de Argentina.</strong> Construyo productos reales: tiendas online, sistemas con panel de administración y landings con animaciones. Mis últimos trabajos: BuildFit y Tesla Computación.</p>';
   mountProfileCard(heroCard, {
-    art,
+    avatarUrl: 'assets/mate.jpg',
     body: bio,
-    iconUrl: `data:image/svg+xml;charset=utf-8,${encodeURIComponent(pattern)}`,
     name: 'Mate',
     title: 'Desarrollador web full stack',
     handle: 'mateoacksbenitez-wq',
@@ -52,13 +38,12 @@ if (heroCard) {
     theme: 'dark',
     backdropColor: '#2b2c2f',
     radius: 18,
-    holo: 0.8,
-    glare: 0.5,
-    tiltStrength: 10,
+    holo: 0,
+    glare: 0.35,
+    tiltStrength: 8,
     parallax: 8,
     vars: {
       '--pc-frame': 'rgba(43, 44, 47, 0.55)',
-      '--pc-pattern-size': '84px auto',
       '--pc-tile': 'linear-gradient(180deg, #3a3b40 0%, #2b2c2f 100%)',
       '--pc-ink': '#f3f2f1',
       '--pc-muted': 'rgba(199, 199, 201, 0.82)'
