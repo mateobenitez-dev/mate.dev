@@ -3,12 +3,23 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>mate.dev · Desarrollo web</title>
-<meta name="description" content="Landing pages, sitios web y apps a medida con front y back. Hablás directo conmigo por WhatsApp.">
-<meta property="og:title" content="mate.dev · Desarrollo web">
-<meta property="og:description" content="Landing pages, sitios web y apps a medida con front y back.">
+<title>Mate · Desarrollo web a medida en Argentina | mate.dev</title>
+<meta name="description" content="Soy Mate, desarrollador web en Argentina. Hago landing pages, sitios y apps a medida con front y back. Hablás directo conmigo por WhatsApp.">
+<!-- Cuando esté activo matedev.com.ar, cambiar la URL base de canonical, og:url, og:image, JSON-LD, robots.txt y sitemap.xml -->
+<link rel="canonical" href="https://mateoacksbenitez-wq.github.io/mate.dev/">
+<meta property="og:title" content="Mate · Desarrollo web a medida">
+<meta property="og:description" content="Landing pages, sitios y apps a medida con front y back. Hablás directo conmigo por WhatsApp.">
 <meta property="og:type" content="website">
-<meta property="og:image" content="assets/favicon-512.png">
+<meta property="og:locale" content="es_AR">
+<meta property="og:url" content="https://mateoacksbenitez-wq.github.io/mate.dev/">
+<meta property="og:image" content="https://mateoacksbenitez-wq.github.io/mate.dev/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="mate.dev, desarrollo web a medida">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"mate.dev","url":"https://mateoacksbenitez-wq.github.io/mate.dev/","image":"https://mateoacksbenitez-wq.github.io/mate.dev/assets/og-image.png","description":"Landing pages, sitios web y apps a medida con front y back.","telephone":"+5493425772820","areaServed":"AR","founder":{"@type":"Person","name":"Mate","url":"https://github.com/mateoacksbenitez-wq","sameAs":["https://github.com/mateoacksbenitez-wq"]}}
+</script>
 <meta name="theme-color" content="#2b2c2f">
 <link rel="icon" href="assets/favicon.ico" sizes="48x48">
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
@@ -168,6 +179,7 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .card-nav__links { display: flex; flex-direction: column; gap: 2px; margin: auto 0 0; padding: 0; list-style: none; }
 .card-nav__link { display: inline-flex; align-items: center; gap: 8px; padding: 3px 0; border: 0; border-radius: 6px; background: none; color: inherit; font-family: inherit; font-size: 14px; font-weight: 500; text-decoration: none; cursor: pointer; outline: none; opacity: 0.82; transition: opacity 0.2s ease; }
 .card-nav__link:hover { opacity: 1; }
+@media (pointer: coarse) { .card-nav__link { min-height: 44px; } }
 .card-nav__arrow { position: relative; display: inline-block; flex: none; width: 14px; height: 14px; overflow: hidden; }
 .card-nav__arrow-icon { position: absolute; inset: 0; width: 100%; height: 100%; transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1); }
 .card-nav__arrow-icon--in { transform: translate(-110%, 110%); }
@@ -352,7 +364,6 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 .plan.featured .plan-cta { background: var(--wa); border-color: var(--wa); color: var(--accent-ink); box-shadow: 0 12px 26px -12px rgba(201, 72, 72, .85); }
 .plan.featured .plan-cta:hover { background: color-mix(in srgb, var(--wa) 88%, #fff); }
 .plan-badge { position: absolute; top: 22px; right: 20px; font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; padding: 5px 10px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 18%, var(--bg)); border: 1px solid color-mix(in srgb, var(--accent) 50%, var(--line)); color: #f0b0b0; }
-.plan.featured .plan-num { top: 52px; }
 
 /* Trabajos: carpetas que se abren y largan sus notas flotando */
 .work { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 24px; }
@@ -475,7 +486,7 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 @media (max-width: 900px) { .steps { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 520px) { .steps { grid-template-columns: minmax(0, 1fr); } }
 .step { display: grid; gap: 10px; align-content: start; border-top: 2px solid var(--ink); padding-top: 16px; min-width: 0; }
-.step .n { font-family: var(--f-mono); font-size: 13px; color: var(--accent); }
+.step .n { font-family: var(--f-mono); font-size: 13px; color: #e08585; }
 .step p { color: var(--muted); font-size: 15.5px; }
 
 /* Contacto */
@@ -534,6 +545,8 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 .hint { font-size: 13px; color: var(--muted); text-align: center; margin-top: -6px; }
 
 footer { border-top: 1px solid var(--line); }
+footer a { text-decoration: none; }
+footer a:hover { color: var(--ink); }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 28px; color: var(--muted); font-size: 14px; }
 
 .fab {
@@ -570,7 +583,6 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 .cb-who { display: grid; gap: 2px; min-width: 0; }
 .cb-who strong { font-size: 15.5px; }
 .cb-who span { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; color: var(--muted); }
-.cb-who span::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: #4cc38a; box-shadow: 0 0 0 3px rgba(76, 195, 138, .18); }
 .cb-x { margin-left: auto; width: 34px; height: 34px; display: grid; place-items: center; border-radius: 10px; border: 1px solid rgba(199, 199, 201, .14); background: none; color: var(--muted); cursor: pointer; transition: color .2s, border-color .2s; }
 .cb-x:hover { color: var(--ink); border-color: rgba(201, 72, 72, .6); }
 .cb-x svg { width: 16px; height: 16px; }
@@ -666,12 +678,14 @@ img { max-width: 100%; }
           <a class="plan-cta" href="#contacto" data-plan="Landing page">Consultar por esto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
         </article>
         <article class="plan featured">
-          <span class="plan-num" aria-hidden="true">02</span><span class="plan-badge">Más pedido</span><span class="plan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 17.5l9 5 9-5" opacity=".55"/></svg></span>
+          <span class="plan-num" aria-hidden="true">02</span><span class="plan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 17.5l9 5 9-5" opacity=".55"/></svg></span>
           <div class="plan-top"><h3>Sitio web completo</h3><span class="tag">Multi-página</span></div>
           <p class="desc">La web de tu negocio o marca, con varias secciones que podés actualizar vos.</p>
           <ul>
             <li>Inicio, servicios, nosotros, blog o catálogo, contacto</li>
             <li>Panel para editar textos e imágenes</li>
+            <li>Adaptado a celular</li>
+            <li>SEO para aparecer en Google y vista previa al compartir</li>
           </ul>
           <dl class="spec">
             <div><dt>Ideal para</dt><dd>Pymes y marcas</dd></div>
@@ -769,7 +783,7 @@ img { max-width: 100%; }
           </ul>
           <div class="friend-foot">
             <div class="who"><img class="partner-badge" src="assets/partners/bytefix.png" alt="Logo de ByteFix" width="120" height="120"><span>ByteFix<small>Optimización remota</small></span></div>
-            <a class="btn btn-wa js-partner" href="#recomendados" data-wa="5492914380467" data-msg="Hola ByteFix! Vengo de mate.web, quiero optimizar mi PC de forma remota."><svg><use href="#wa"/></svg>Consultar</a>
+            <a class="btn btn-wa js-partner" href="#recomendados" data-wa="5492914380467" data-msg="Hola ByteFix! Vengo de mate.dev, quiero optimizar mi PC de forma remota."><svg><use href="#wa"/></svg>Consultar</a>
           </div>
         </article>
         <article class="friend">
@@ -783,7 +797,7 @@ img { max-width: 100%; }
           </ul>
           <div class="friend-foot">
             <div class="who"><img class="partner-logo" src="assets/partners/tesla.png" alt="Tesla Computación" width="242" height="77"><small>Armado y reparación</small></div>
-            <a class="btn btn-wa js-partner" href="#recomendados" data-wa="5493425117356" data-msg="Hola Tesla Computación! Vengo de mate.web, quiero armar o reparar una PC."><svg><use href="#wa"/></svg>Consultar</a>
+            <a class="btn btn-wa js-partner" href="#recomendados" data-wa="5493425117356" data-msg="Hola Tesla Computación! Vengo de mate.dev, quiero armar o reparar una PC."><svg><use href="#wa"/></svg>Consultar</a>
           </div>
         </article>
       </div>
@@ -799,7 +813,7 @@ img { max-width: 100%; }
         </div>
       </div>
       <div class="steps">
-        <div class="step"><span class="n">01 · Charla</span><h3>Me contás tu idea</h3><p>Por mensaje. Definimos qué necesitás y para cuándo.</p></div>
+        <div class="step"><span class="n">01 · Charla</span><h3>Me contás tu idea</h3><p>Por mensaje. Definimos qué necesitás y por dónde conviene arrancar.</p></div>
         <div class="step"><span class="n">02 · Propuesta</span><h3>Presupuesto claro</h3><p>Alcance y precio por escrito, sin letra chica.</p></div>
         <div class="step"><span class="n">03 · Construcción</span><h3>Avances que ves</h3><p>Te comparto un link con la web en progreso para que opines.</p></div>
         <div class="step"><span class="n">04 · Lanzamiento</span><h3>Online y con soporte</h3><p>Publico la web en tu dominio y te acompaño después.</p></div>
@@ -821,7 +835,7 @@ img { max-width: 100%; }
       <form class="composer" id="composer">
         <div class="cmp-head">
           <span class="cmp-avatar" aria-hidden="true">m<i>.</i></span>
-          <div class="cmp-who"><strong>Mate</strong><span><i class="cmp-live"></i>En línea</span></div>
+          <div class="cmp-who"><strong>Mate</strong><span>Te respondo por WhatsApp</span></div>
           <span class="cmp-step" id="cmp-step">0 / 2</span>
         </div>
         <div class="cmp-progress" aria-hidden="true"><i id="cmp-bar"></i></div>
@@ -847,14 +861,14 @@ img { max-width: 100%; }
 <footer>
   <div class="wrap">
     <span>© 2026 mate.dev · Desarrollo web</span>
-    <span class="mono">Hecho a mano, sin plantillas</span>
+    <a class="mono" href="https://github.com/mateoacksbenitez-wq" target="_blank" rel="noopener">github.com/mateoacksbenitez-wq</a>
   </div>
 </footer>
 
 <section class="cb" id="cb" aria-label="Asistente de Mate" hidden>
   <div class="cb-head">
     <span class="cb-av" aria-hidden="true">m<i>.</i></span>
-    <div class="cb-who"><strong>Asistente de Mate</strong><span>Responde al instante</span></div>
+    <div class="cb-who"><strong>Asistente de Mate</strong><span>Preguntas frecuentes</span></div>
     <button class="cb-x" type="button" id="cb-x" aria-label="Cerrar asistente"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
   </div>
   <div class="cb-log" id="cb-log" aria-live="polite"></div>
@@ -867,7 +881,7 @@ img { max-width: 100%; }
 <button class="fab cb-fab" id="cb-fab" type="button" aria-label="Abrir asistente" aria-expanded="false" aria-controls="cb" data-cursor-label="Chat"><svg class="cb-ic-open" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12Z"/></svg><svg class="cb-ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span class="cb-ping" aria-hidden="true"></span></button>
 
 <script>
-// Reemplazar por el número real, en formato internacional sin + ni espacios
+// Número de WhatsApp en formato internacional, sin + ni espacios
 const WA_NUMBER = "5493425772820";
 
 const form = document.getElementById("composer");
@@ -1048,6 +1062,6 @@ document.getElementById("copy").addEventListener("click", e => {
   });
 });
 </script>
-<script src="assets/app.js?v=48" defer></script>
+<script src="assets/app.js?v=49" defer></script>
 </body>
 </html>

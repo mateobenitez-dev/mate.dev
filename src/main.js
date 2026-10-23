@@ -23,15 +23,15 @@ const heroCard = document.getElementById('hero-card');
 if (heroCard) {
   const bio = document.createElement('div');
   bio.innerHTML =
-    '<p><strong>Futuro Desarrollador de Software de Argentina.</strong> Construyo productos reales: tiendas online, sistemas con panel de administración y landings con animaciones. Mis últimos trabajos: BuildFit y Tesla Computación.</p>';
+    '<p>Construyo productos reales: tiendas online, sistemas con panel de administración y landings con animaciones. Mis últimos trabajos: BuildFit y Tesla Computación.</p>';
   mountProfileCard(heroCard, {
     avatarUrl: 'assets/mate.jpg',
     body: bio,
     name: 'Mate',
     title: 'Futuro Desarrollador de Software',
     handle: 'mateoacksbenitez-wq',
-    status: 'Tomando proyectos',
-    statusColor: '#4cc38a',
+    status: 'Argentina',
+    statusColor: '#c94848',
     contactText: 'GitHub',
     contactHref: 'https://github.com/mateoacksbenitez-wq',
     contactIcon:
@@ -214,11 +214,12 @@ mountTargetCursor({
 });
 
 // ---- Desenfoque gradual en el borde de abajo de la pantalla ----
-mountGradualBlur(document.body, {
+// Solo en pantallas grandes y más finito: en el celu tapaba botones y texto
+if (matchMedia('(min-width: 900px) and (hover: hover)').matches) mountGradualBlur(document.body, {
   position: 'bottom',
   target: 'page',
-  height: '6rem',
-  strength: 2,
+  height: '3rem',
+  strength: 1.5,
   layers: 8,
   curve: 'linear',
   exponential: true,
