@@ -1,3 +1,4 @@
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 // Efectos de la web. Se compila con `npm run build` a assets/app.js.
 import { mountProfileCard } from './profile-card.js';
 import { mountTargetCursor } from './target-cursor.js';
@@ -71,9 +72,9 @@ if (header) {
     surface: 'glass',
     openOn: 'click',
     cardEffect: 'rise',
-    speed: 0.22,
-    stagger: 0.26,
-    bounce: 0.05,
+    speed: 1.15,
+    stagger: 0.08,
+    bounce: 0.12,
     maxWidth: 1088,
     accentColor: '#c94848',
     vars: {
@@ -120,8 +121,8 @@ const fold = {
   splitBy: 'char',
   hinge: 'top',
   foldAngle: 92,
-  duration: 1.6,
-  stagger: 0.11,
+  duration: 0.48,
+  stagger: 0.024,
   staggerFrom: 'start',
   ease: 'power3.out',
   loopDelay: 1.4,
@@ -132,12 +133,12 @@ const fold = {
   creaseShading: 0.55
 };
 const heroTitle = document.querySelector('.hero h1');
-if (heroTitle) mountFoldText(heroTitle, { ...fold, trigger: 'mount', stagger: 0.09 });
-document.querySelectorAll('main h2, .steps h3').forEach(title => mountFoldText(title, { ...fold, trigger: 'scroll' }));
+if (heroTitle) mountFoldText(heroTitle, { ...fold, trigger: 'mount', stagger: 0.022, duration: 0.5 });
+document.querySelectorAll('main h2, .steps h3').forEach(title => mountFoldText(title, { ...fold, trigger: 'scroll', stagger: 0.022, duration: 0.45 }));
 // Párrafos de intro: por palabra, si no con tantas letras tardaría una eternidad
 const heroLead = document.querySelector('.hero-row > p');
-if (heroLead) mountFoldText(heroLead, { ...fold, trigger: 'mount', splitBy: 'word', stagger: 0.06, foldAngle: 80 });
-document.querySelectorAll('.contact .lead').forEach(p => mountFoldText(p, { ...fold, trigger: 'scroll', splitBy: 'word', stagger: 0.06, foldAngle: 80 }));
+if (heroLead) mountFoldText(heroLead, { ...fold, trigger: 'mount', splitBy: 'word', stagger: 0.018, duration: 0.42, foldAngle: 80 });
+document.querySelectorAll('.contact .lead').forEach(p => mountFoldText(p, { ...fold, trigger: 'scroll', splitBy: 'word', stagger: 0.018, duration: 0.42, foldAngle: 80 }));
 
 // ---- Gente de confianza: tarjetas ReflectiveCard (antes que los botones, así el de WhatsApp queda adentro) ----
 document.querySelectorAll('.friend-grid .friend').forEach(card => {
@@ -223,3 +224,8 @@ mountGradualBlur(document.body, {
 // ---- Fondo de toda la web: grilla de puntos que se ilumina en rojo cerca del cursor ----
 const bgBox = document.querySelector('.page-bg');
 if (bgBox) mountDotGrid(bgBox);
+
+
+// Calibración de ScrollTrigger en PC y celular
+ScrollTrigger.refresh();
+window.addEventListener('load', () => ScrollTrigger.refresh());
