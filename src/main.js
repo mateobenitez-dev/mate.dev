@@ -4,7 +4,7 @@ import { mountTargetCursor } from './target-cursor.js';
 import { mountGradualBlur } from './gradual-blur.js';
 import { applySpecular } from './specular-button.js';
 import { mountReflectiveCard } from './reflective-card.js';
-import { mountFluxLines } from './flux-lines.js';
+import { mountDotGrid } from './dot-grid.js';
 
 const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
@@ -102,27 +102,6 @@ mountGradualBlur(document.body, {
   zIndex: 7
 });
 
-// ---- Fondo de toda la web: FluxLines, versión "A · Sutil" que eligió Mate ----
-const fluxBox = document.querySelector('.flux-bg');
-if (fluxBox) {
-  mountFluxLines(fluxBox, {
-    colors: ['#ffffff', '#ffffff', '#ffffff'],
-    glow: 1.2,
-    rimWidth: 0.2,
-    lineWidth: 0.6,
-    opacity: 0.35,
-    flowDirection: 'down',
-    mouseInteraction: true,
-    clickSwirl: true,
-    speed: 0.5,
-    scale: 1.6,
-    turbulence: 1,
-    fluidity: 0.1,
-    sharpness: 2.5,
-    shimmer: 1.5,
-    mouseStrength: 1,
-    mouseRadius: 0.35,
-    intro: true,
-    lightMode: false
-  });
-}
+// ---- Fondo de toda la web: grilla de puntos que se ilumina en rojo cerca del cursor ----
+const bgBox = document.querySelector('.page-bg');
+if (bgBox) mountDotGrid(bgBox);
