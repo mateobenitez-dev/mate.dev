@@ -42,7 +42,7 @@ if (heroCard) {
     holo: 0,
     glare: 0.35,
     tiltStrength: 8,
-    parallax: 8,
+    parallax: 5,
     vars: {
       '--pc-frame': 'rgba(43, 44, 47, 0.55)',
       '--pc-tile': 'linear-gradient(180deg, #3a3b40 0%, #2b2c2f 100%)',
