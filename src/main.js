@@ -6,6 +6,7 @@ import { applySpecular } from './specular-button.js';
 import { mountReflectiveCard } from './reflective-card.js';
 import { mountDotGrid } from './dot-grid.js';
 import { mountCardNav } from './card-nav.js';
+import { mountFoldText } from './fold-text.js';
 
 const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
@@ -95,6 +96,27 @@ if (header) {
     ]
   });
 }
+
+// ---- Títulos que se despliegan como papel (FoldText) ----
+const fold = {
+  foldStyle: 'paper',
+  splitBy: 'char',
+  hinge: 'top',
+  foldAngle: 92,
+  duration: 0.65,
+  stagger: 0.045,
+  staggerFrom: 'start',
+  ease: 'power3.out',
+  loopDelay: 1.4,
+  hoverRefold: true,
+  refoldRadius: 140,
+  refoldAngle: 45,
+  perspective: 700,
+  creaseShading: 0.55
+};
+const heroTitle = document.querySelector('.hero h1');
+if (heroTitle) mountFoldText(heroTitle, { ...fold, trigger: 'mount', stagger: 0.035 });
+document.querySelectorAll('main h2').forEach(title => mountFoldText(title, { ...fold, trigger: 'scroll' }));
 
 // ---- Gente de confianza: tarjetas ReflectiveCard (antes que los botones, así el de WhatsApp queda adentro) ----
 document.querySelectorAll('.friend-grid .friend').forEach(card => {
