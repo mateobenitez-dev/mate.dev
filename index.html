@@ -440,6 +440,7 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 .note .bar { height: 14px; border-bottom: 1px solid var(--line); display: flex; align-items: center; gap: 3px; padding-inline: 6px; }
 .note .bar i { width: 4px; height: 4px; border-radius: 50%; background: var(--steel); opacity: .6; }
 .note .mock { padding: 8px; display: grid; gap: 5px; }
+.note .shot { display: block; width: 100%; height: 80px; object-fit: cover; object-position: center top; }
 .mock .h { height: 8px; border-radius: 2px; background: var(--ink); opacity: .85; }
 .mock .t { height: 4px; border-radius: 2px; background: var(--line); }
 .mock .blk { height: 26px; border-radius: 4px; background: color-mix(in srgb, var(--accent) 20%, var(--surface)); }
@@ -743,7 +744,7 @@ img { max-width: 100%; }
         <article class="project">
           <div class="folder">
             <div class="f-back"></div>
-            <div class="note n1"><div class="note-in"><div class="bar"><i></i><i></i><i></i></div><div class="mock m2"><div class="h" style="grid-column:span 2;width:50%"></div><div class="blk"></div><div class="blk"></div><div class="blk"></div><div class="blk"></div></div></div></div>
+            <div class="note n1"><div class="note-in"><div class="bar"><i></i><i></i><i></i></div><img class="shot" src="assets/work/tesla.jpg" alt="Portada de Tesla Computación" width="520" height="302" loading="lazy"></div></div>
             <div class="note n2"><div class="note-in"><p class="note-title">Stack</p><div class="stack"><span>Next.js</span><span>PostgreSQL</span></div></div></div>
             <a class="note n3" href="https://tesla-computacion.vercel.app/" target="_blank" rel="noopener"><span class="note-in"><strong>Ver sitio</strong><span>→</span></span></a>
             <div class="f-front"><span class="f-label">tesla computación</span></div>
