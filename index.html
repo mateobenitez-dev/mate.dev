@@ -561,6 +561,8 @@ footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; g
 .cb[hidden] { display: none; }
 .cb.is-in { animation: cb-pop .5s cubic-bezier(.2, .8, .2, 1); }
 @keyframes cb-pop { from { opacity: 0; transform: translateY(14px) scale(.95); } }
+.cb.is-out { animation: cb-close .32s cubic-bezier(.4, 0, .7, .2) forwards; pointer-events: none; }
+@keyframes cb-close { to { opacity: 0; transform: translateY(16px) scale(.92); filter: blur(4px); } }
 .cb::after { content: ""; position: absolute; top: 0; left: 12%; right: 12%; height: 1px; background: linear-gradient(90deg, transparent, rgba(201, 72, 72, .9), transparent); pointer-events: none; }
 .cb-head { display: flex; align-items: center; gap: 12px; padding: 16px 18px; border-bottom: 1px solid rgba(199, 199, 201, .1); background: rgba(23, 24, 26, .25); }
 .cb-av { width: 40px; height: 40px; flex: none; border-radius: 11px; background: #1d1e21; border: 1px solid rgba(199, 199, 201, .14); display: flex; align-items: center; justify-content: center; padding-bottom: 3px; font-family: var(--f-display); font-weight: 800; font-size: 20px; white-space: nowrap; }
@@ -975,16 +977,25 @@ document.querySelectorAll(".js-wa").forEach(a => { a.href = generic; a.target = 
     chips.append(b);
   });
   add("cb-bot", "¡Hola! 👋 Soy el asistente de <b>Mate</b>. ¿Tenés dudas sobre cómo hacer tu web? Elegí una pregunta o escribile directo por WhatsApp.");
+  let closing = 0;
   const setOpen = open => {
-    box.hidden = !open;
+    clearTimeout(closing);
+    box.classList.remove("is-out");
+    if (open) box.hidden = false;
+    else if (!box.hidden) {
+      // Se achica y se desvanece hacia la burbuja antes de esconderse
+      box.classList.remove("is-in");
+      box.classList.add("is-out");
+      closing = setTimeout(() => { box.hidden = true; box.classList.remove("is-out"); }, 320);
+    }
     box.classList.toggle("is-in", open);
     fab.setAttribute("aria-expanded", String(open));
     fab.setAttribute("aria-label", open ? "Cerrar asistente" : "Abrir asistente");
     if (open) fab.classList.add("seen");
   };
-  fab.addEventListener("click", () => setOpen(box.hidden));
+  fab.addEventListener("click", () => setOpen(box.hidden || box.classList.contains("is-out")));
   document.getElementById("cb-x").addEventListener("click", () => { setOpen(false); fab.focus(); });
-  document.addEventListener("keydown", e => { if (e.key === "Escape" && !box.hidden) { setOpen(false); fab.focus(); } });
+  document.addEventListener("keydown", e => { if (e.key === "Escape" && !box.hidden && !box.classList.contains("is-out")) { setOpen(false); fab.focus(); } });
 })();
 
 // Carpetas del portfolio: se abren solas una vez al aparecer en pantalla (PC y celular), y con toque o clic
@@ -1037,6 +1048,6 @@ document.getElementById("copy").addEventListener("click", e => {
   });
 });
 </script>
-<script src="assets/app.js?v=47" defer></script>
+<script src="assets/app.js?v=48" defer></script>
 </body>
 </html>
