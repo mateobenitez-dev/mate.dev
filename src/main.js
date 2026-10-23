@@ -4,6 +4,7 @@ import { mountTargetCursor } from './target-cursor.js';
 import { mountGradualBlur } from './gradual-blur.js';
 import { applySpecular } from './specular-button.js';
 import { mountReflectiveCard } from './reflective-card.js';
+import { mountFluxLines } from './flux-lines.js';
 
 const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 
@@ -63,7 +64,7 @@ document.querySelectorAll('.btn').forEach(btn => {
       proximity: 250
     });
   } else {
-    const dark = onDark(btn) || matchMedia('(prefers-color-scheme: dark)').matches;
+    const dark = onDark(btn) || document.documentElement.dataset.theme === 'dark' || matchMedia('(prefers-color-scheme: dark)').matches;
     applySpecular(btn, {
       radius: 999,
       tint: dark ? '#ffffff' : '#2b2c2f',
@@ -101,59 +102,26 @@ mountGradualBlur(document.body, {
   zIndex: 7
 });
 
-// ---- Fondo de la portada: líneas blancas que se curvan hacia el cursor ----
-// Versión provisoria hasta integrar el componente FluxLines original.
-(() => {
-  const hero = document.querySelector('.hero');
-  const cv = document.getElementById('flux');
-  if (!hero || !cv) return;
-  const ctx = cv.getContext('2d');
-  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  let W = 0, H = 0, dpr = 1, t = 0, visible = true;
-  const mouse = { x: -9999, y: -9999, k: 0, tk: 0 };
-  const R = 260;
-  const resize = () => {
-    dpr = Math.min(devicePixelRatio || 1, 2); W = hero.clientWidth; H = hero.clientHeight;
-    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  };
-  const frame = () => {
-    ctx.clearRect(0, 0, W, H);
-    mouse.k += (mouse.tk - mouse.k) * 0.08;
-    const n = Math.max(16, Math.round(W / 34)), step = 12;
-    ctx.strokeStyle = '#ffffff';
-    for (let i = 0; i < n; i++) {
-      const base = (i + 0.5) / n * W;
-      const pts = [];
-      for (let y = -step; y <= H + step; y += step) {
-        let x = base + 22 * Math.sin(y * 0.006 - t * 0.5 + i * 0.47) + 10 * Math.sin(y * 0.014 + t * 0.7 + i * 1.3);
-        const dx = x - mouse.x, dy = y - mouse.y, d = Math.hypot(dx, dy);
-        let f = 0;
-        if (d < R) {
-          f = Math.pow(1 - d / R, 2) * mouse.k;
-          const a = Math.atan2(dy, dx) + 1.2;
-          x += (mouse.x - x) * f * 0.45 + Math.cos(a) * 24 * f;
-        }
-        pts.push([x, y, f]);
-      }
-      ctx.lineWidth = 1; ctx.globalAlpha = 0.09;
-      ctx.beginPath(); pts.forEach(([x, y], j) => (j ? ctx.lineTo(x, y) : ctx.moveTo(x, y))); ctx.stroke();
-      ctx.lineWidth = 1.3;
-      for (let j = 1; j < pts.length; j++) {
-        const f = Math.max(pts[j][2], pts[j - 1][2]);
-        if (f < 0.02) continue;
-        ctx.globalAlpha = Math.min(0.9, f * 1.8);
-        ctx.beginPath(); ctx.moveTo(pts[j - 1][0], pts[j - 1][1]); ctx.lineTo(pts[j][0], pts[j][1]); ctx.stroke();
-      }
-    }
-    ctx.globalAlpha = 1;
-  };
-  const loop = () => { if (!visible) return; t += 0.016; frame(); requestAnimationFrame(loop); };
-  hero.addEventListener('pointermove', e => {
-    const r = hero.getBoundingClientRect(); mouse.x = e.clientX - r.left; mouse.y = e.clientY - r.top; mouse.tk = 1;
-  }, { passive: true });
-  hero.addEventListener('pointerleave', () => { mouse.tk = 0; });
-  new ResizeObserver(() => { resize(); if (reduce) frame(); }).observe(hero);
-  new IntersectionObserver(([e]) => { const was = visible; visible = e.isIntersecting && !reduce; if (visible && !was) loop(); }).observe(hero);
-  resize();
-  if (reduce) { visible = false; frame(); } else loop();
-})();
+// ---- Fondo de toda la web: FluxLines con los props de Mate ----
+const fluxBox = document.querySelector('.flux-bg');
+if (fluxBox) {
+  mountFluxLines(fluxBox, {
+    colors: ['#ffffff', '#ffffff', '#ffffff'],
+    glow: 2,
+    rimWidth: 0.2,
+    lineWidth: 1,
+    flowDirection: 'down',
+    mouseInteraction: true,
+    clickSwirl: true,
+    speed: 0.5,
+    scale: 1.6,
+    turbulence: 1,
+    fluidity: 0.1,
+    sharpness: 2.5,
+    shimmer: 1.5,
+    mouseStrength: 1,
+    mouseRadius: 0.35,
+    intro: true,
+    lightMode: false
+  });
+}
