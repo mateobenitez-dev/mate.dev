@@ -627,7 +627,7 @@ export function mountReflectiveCard(root, options = {}) {
   const camElement = makeVideo();
   root.append(body, videoElement, camElement);
 
-  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduced = false;
   if (settings.intro && !reduced) {
     root.style.setProperty('--rc-presence', '0');
     root.style.setProperty('--rc-lift', '14px');

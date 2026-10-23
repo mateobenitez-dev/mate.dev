@@ -149,7 +149,7 @@ export function mountFoldText(target, options = {}) {
   const elements = Array.from(root.querySelectorAll('.fold-text-piece'));
   if (!elements.length) return () => {};
 
-  const reduceMotion = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
+  const reduceMotion = false;
   const { axis, sign, origin } = hingeConfig;
   const slats = SLATS[axis];
   const unfoldEase = gsap.parseEase(reduceMotion ? 'power1.out' : ease) || gsap.parseEase('power3.out');

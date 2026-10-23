@@ -68,7 +68,7 @@ export function mountTargetCursor(options = {}) {
     root.append(dot, label);
     document.body.appendChild(root);
 
-    const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const reduce = false;
     const style = document.createElement('style');
     document.head.appendChild(style);
 

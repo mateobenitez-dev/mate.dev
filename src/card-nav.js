@@ -107,7 +107,7 @@ export function mountCardNav(container, options = {}) {
     speed: clamp(speed, 0.2, 3)
   };
   const contentId = `card-nav-${++uid}`;
-  const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+  const reduce = false;
 
   const palette = THEMES[theme] ?? THEMES.dark;
   const vars = {
