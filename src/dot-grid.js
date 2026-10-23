@@ -1,18 +1,17 @@
 // Fondo de grilla de puntos: puntos grises fijos detrás de la web que se agrandan,
-// se corren un poco y se ponen rojos cerca del cursor. Canvas 2D, sin dependencias.
+// se corren un poco y se prenden en rojo cerca del cursor. Canvas 2D, sin dependencias.
 const DEFAULTS = {
   gap: 22,
   size: 1.3,
-  grow: 1.6,
-  radius: 180,
+  grow: 1.4,
+  radius: 200,
   push: 6,
   baseColor: [243, 242, 241],
   baseAlpha: 0.13,
-  activeColor: [201, 72, 72],
-  activeAlpha: 0.85,
+  activeColor: [255, 70, 70],
+  activeAlpha: 1,
   dampening: 0.12,
-  aura: 260,
-  auraAlpha: 0.22
+  shine: 10
 };
 
 // Devuelve una función para desmontarlo.
@@ -44,26 +43,24 @@ export function mountDotGrid(container, options = {}) {
     }
     ctx.fill();
     if (glow.k <= 0) return;
-    const aura = ctx.createRadialGradient(glow.x, glow.y, 0, glow.x, glow.y, o.aura);
-    aura.addColorStop(0, `rgba(${ar}, ${ag}, ${ab}, ${o.auraAlpha * glow.k})`);
-    aura.addColorStop(1, `rgba(${ar}, ${ag}, ${ab}, 0)`);
-    ctx.fillStyle = aura;
-    ctx.fillRect(glow.x - o.aura, glow.y - o.aura, o.aura * 2, o.aura * 2);
     for (let y = half; y < H; y += o.gap) {
       if (Math.abs(y - glow.y) >= o.radius) continue;
       for (let x = half; x < W; x += o.gap) {
         if (Math.abs(x - glow.x) >= o.radius) continue;
         const dx = x - glow.x, dy = y - glow.y;
         const d = Math.hypot(dx, dy);
-        const f = Math.pow(Math.max(0, 1 - d / o.radius), 2) * glow.k;
+        const f = Math.pow(Math.max(0, 1 - d / o.radius), 1.4) * glow.k;
         const mix = (a, b) => Math.round(a + (b - a) * f);
         const shift = d > 0 ? (o.push * f) / d : 0;
         ctx.fillStyle = `rgba(${mix(br, ar)}, ${mix(bg, ag)}, ${mix(bb, ab)}, ${o.baseAlpha + (o.activeAlpha - o.baseAlpha) * f})`;
+        ctx.shadowColor = `rgba(${ar}, ${ag}, ${ab}, ${f})`;
+        ctx.shadowBlur = o.shine * f;
         ctx.beginPath();
         ctx.arc(x + dx * shift, y + dy * shift, o.size * (1 + o.grow * f), 0, Math.PI * 2);
         ctx.fill();
       }
     }
+    ctx.shadowBlur = 0;
   };
 
   const frame = now => {
