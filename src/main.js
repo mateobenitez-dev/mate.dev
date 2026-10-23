@@ -33,11 +33,12 @@ if (logoBox) {
   if (logo) logoBox.closest('.elogo').classList.add('is-live');
 }
 
+const TINT = '#c94848';
 // ---- Gente de confianza: tarjetas ReflectiveCard (antes que los botones, así el de WhatsApp queda adentro) ----
 document.querySelectorAll('.friend-grid .friend').forEach(card => {
   mountReflectiveCard(card, {
     theme: 'dark',
-    tint: '#ffffff',
+    tint: TINT,
     metalness: 1,
     roughness: 0.3,
     blurStrength: 6,
@@ -45,7 +46,19 @@ document.querySelectorAll('.friend-grid .friend').forEach(card => {
     glare: 0.5,
     width: '100%',
     height: 440,
-    radius: 24
+    radius: 24,
+    // Colores de la paleta: grafito #2B2C2F, grises #8B8D92 / #C7C7C9 y rojo #B23A3A
+    vars: {
+      '--rc-base': '#2b2c2f',
+      '--rc-ink': '#f3f2f1',
+      '--rc-muted': 'rgba(199, 199, 201, 0.78)',
+      '--rc-tile': 'linear-gradient(180deg, #b23a3a 0%, #7a2626 100%)',
+      '--rc-tile-edge': 'rgba(243, 242, 241, 0.12)',
+      '--rc-tile-highlight': 'rgba(243, 242, 241, 0.22)',
+      '--rc-tile-shadow': '0 6px 14px -6px rgba(122, 38, 38, 0.8)',
+      '--rc-rim': 'rgba(199, 199, 201, 0.14)',
+      '--rc-rim-highlight': 'rgba(243, 242, 241, 0.16)'
+    }
   });
 });
 

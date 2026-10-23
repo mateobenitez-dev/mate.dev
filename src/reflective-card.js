@@ -565,7 +565,8 @@ export function mountReflectiveCard(root, options = {}) {
     intro = true,
     width = 320,
     height = 500,
-    radius = 24
+    radius = 24,
+    vars = {}
   } = options;
 
   const palette = theme === 'light' ? 'light' : 'dark';
@@ -596,7 +597,8 @@ export function mountReflectiveCard(root, options = {}) {
     '--rc-height': toPx(height),
     '--rc-radius': `${corner}px`,
     '--rc-pad': `${Math.round(clamp(corner * 0.8, 16, 22))}px`,
-    '--rc-tile-radius': `${Math.round(clamp(corner * 0.5, 8, 14))}px`
+    '--rc-tile-radius': `${Math.round(clamp(corner * 0.5, 8, 14))}px`,
+    ...vars
   };
   root.classList.add('reflective-card');
   for (const [key, value] of Object.entries(cardStyle)) root.style.setProperty(key, value);
