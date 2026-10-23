@@ -103,8 +103,8 @@ const fold = {
   splitBy: 'char',
   hinge: 'top',
   foldAngle: 92,
-  duration: 0.65,
-  stagger: 0.045,
+  duration: 1.6,
+  stagger: 0.11,
   staggerFrom: 'start',
   ease: 'power3.out',
   loopDelay: 1.4,
@@ -115,7 +115,7 @@ const fold = {
   creaseShading: 0.55
 };
 const heroTitle = document.querySelector('.hero h1');
-if (heroTitle) mountFoldText(heroTitle, { ...fold, trigger: 'mount', stagger: 0.035 });
+if (heroTitle) mountFoldText(heroTitle, { ...fold, trigger: 'mount', stagger: 0.09 });
 document.querySelectorAll('main h2').forEach(title => mountFoldText(title, { ...fold, trigger: 'scroll' }));
 
 // ---- Gente de confianza: tarjetas ReflectiveCard (antes que los botones, así el de WhatsApp queda adentro) ----
