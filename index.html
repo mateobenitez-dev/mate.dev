@@ -205,7 +205,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .top.has-cardnav .card-nav[data-open] .card-nav__card:nth-child(3) .card-nav__links li:nth-child(2) { transition-delay: .28s; }
 .top.has-cardnav .card-nav__link:hover { transform: translateX(3px); color: #fff; }
 .top.has-cardnav .card-nav__link { transition: opacity .2s ease, transform .22s cubic-bezier(.2, .8, .2, 1); }
- .top.has-cardnav .card-nav__card-head, .top.has-cardnav .card-nav__links li { opacity: 1; transform: none; transition: none; } }
 /* FoldText: títulos que se despliegan letra por letra (CSS del componente) */
 .fold-text { display: inline-block; color: var(--fold-text-color, currentColor); font-size: var(--fold-text-font-size, inherit); font-weight: var(--fold-text-font-weight, inherit); line-height: inherit; letter-spacing: inherit; white-space: pre-wrap; user-select: text; }
 .fold-text-sr-only { position: absolute; user-select: none; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
@@ -221,7 +220,6 @@ body::before { content: ""; position: fixed; inset: 0 0 auto; height: env(safe-a
 .fold-text-slat { position: relative; display: inline-block; backface-visibility: hidden; }
 .fold-text-slat[data-fold-slat='b'] { position: absolute; inset: 0; visibility: hidden; }
 .fold-text-piece::after, .fold-text-slat::after { content: attr(data-fold-text); position: absolute; inset: 0; pointer-events: none; color: transparent; -webkit-text-fill-color: transparent; background-image: var(--fold-shade); -webkit-background-clip: text; background-clip: text; opacity: var(--fold-crease, 0); }
- .fold-text-piece::after, .fold-text-slat::after { opacity: 0 !important; } }
 /* Grilla de puntos: fondo fijo detrás de toda la web */
 .page-bg { position: fixed; inset: 0; z-index: 0; pointer-events: none; }
 .dot-grid-canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; }
@@ -287,7 +285,6 @@ main, footer { position: relative; z-index: 1; }
 .pc-stack span { font-family: var(--f-mono); font-size: 11px; letter-spacing: .04em; padding: 4px 9px; border-radius: 999px; color: #f0b0b0; background: rgba(178, 58, 58, .14); border: 1px solid rgba(201, 72, 72, .35); }
 .hero-card .profile-card__footer { padding: 4px 8px 4px 12px; border-top: 1px solid rgba(255, 255, 255, .06); padding-top: 12px; }
 .hero-card .profile-card__contact:hover { box-shadow: inset 0 0 0 1px rgba(201, 72, 72, .6), inset 0 1px 0 var(--pc-tile-highlight), 0 8px 18px -8px rgba(201, 72, 72, .7); }
- }
 
 /* Componentes portados de React Bits */
 .target-cursor { position: fixed; inset: 0; z-index: 2147483647; pointer-events: none; }
@@ -357,7 +354,6 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 .plan.featured .plan-cta:hover { background: color-mix(in srgb, var(--wa) 88%, #fff); }
 .plan-badge { position: absolute; top: 22px; right: 20px; font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .08em; padding: 5px 10px; border-radius: 999px; background: color-mix(in srgb, var(--accent) 18%, var(--bg)); border: 1px solid color-mix(in srgb, var(--accent) 50%, var(--line)); color: #f0b0b0; }
 .plan.featured .plan-num { top: 52px; }
- }
 
 /* Trabajos: carpetas que se abren y largan sus notas flotando */
 .work { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 24px; }
@@ -436,7 +432,6 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 .n3 .note-in span { font-family: var(--f-mono); font-size: 18px; }
 .example { font-family: var(--f-mono); font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; border: 1px dashed var(--muted); color: var(--muted); padding: 3px 7px; border-radius: 4px; }
 .work-hint { margin-top: 32px; text-align: center; font-size: 14px; color: var(--muted); }
- }
 
 /* Servicios amigos */
 .friends { border-top: 1px solid var(--line); background: color-mix(in srgb, var(--steel) 14%, transparent); }
@@ -924,6 +919,6 @@ document.getElementById("copy").addEventListener("click", e => {
   });
 });
 </script>
-<script src="assets/app.js?v=36" defer></script>
+<script src="assets/app.js?v=37" defer></script>
 </body>
 </html>

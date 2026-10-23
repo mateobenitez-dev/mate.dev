@@ -203,9 +203,18 @@ const labels = [
   ['.n3', 'Ver'],
   ['.copy', 'Copiar']
 ];
-document.querySelectorAll('a, button, .chips label, input, textarea').forEach(el => el.classList.add('cursor-target'));
+document.querySelectorAll('.btn, .plan-cta, .f-hit, .n3, .copy, .card-nav__link, .chips label').forEach(el => el.classList.add('cursor-target'));
 labels.forEach(([sel, text]) => document.querySelectorAll(sel).forEach(el => el.setAttribute('data-cursor-label', text)));
-mountTargetCursor({ spinDuration: 2, hideDefaultCursor: true, parallaxOn: true, cursorColor: '#ffffff' });
+mountTargetCursor({
+  spinDuration: 2,
+  hideDefaultCursor: false,
+  matchRadius: false,
+  padding: 10,
+  cornerSize: 10,
+  thickness: 2,
+  parallaxOn: true,
+  cursorColor: '#ffffff'
+});
 
 // ---- Desenfoque gradual en el borde de abajo de la pantalla ----
 mountGradualBlur(document.body, {

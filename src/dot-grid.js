@@ -96,7 +96,6 @@ export function mountDotGrid(container, options = {}) {
   };
 
   const onMove = event => {
-    if (event.pointerType === 'touch') return;
     const rect = container.getBoundingClientRect();
     pointer.x = event.clientX - rect.left;
     pointer.y = event.clientY - rect.top;
@@ -110,14 +109,24 @@ export function mountDotGrid(container, options = {}) {
 
   const observer = new ResizeObserver(resize);
   observer.observe(container);
+  window.addEventListener('resize', resize, { passive: true });
+  window.addEventListener('orientationchange', resize, { passive: true });
   window.addEventListener('pointermove', onMove, { passive: true });
+  window.addEventListener('pointerdown', onMove, { passive: true });
+  window.addEventListener('pointerup', onLeave, { passive: true });
+  window.addEventListener('pointercancel', onLeave, { passive: true });
   document.documentElement.addEventListener('pointerleave', onLeave);
   resize();
 
   return () => {
     cancelAnimationFrame(raf);
     observer.disconnect();
+    window.removeEventListener('resize', resize);
+    window.removeEventListener('orientationchange', resize);
     window.removeEventListener('pointermove', onMove);
+    window.removeEventListener('pointerdown', onMove);
+    window.removeEventListener('pointerup', onLeave);
+    window.removeEventListener('pointercancel', onLeave);
     document.documentElement.removeEventListener('pointerleave', onLeave);
     canvas.remove();
   };
