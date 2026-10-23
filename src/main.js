@@ -72,7 +72,7 @@ if (header) {
     surface: 'glass',
     openOn: 'click',
     cardEffect: 'rise',
-    speed: 1.15,
+    speed: 1.8,
     stagger: 0.08,
     bounce: 0.12,
     maxWidth: 1088,
@@ -121,7 +121,7 @@ const fold = {
   splitBy: 'char',
   hinge: 'top',
   foldAngle: 92,
-  duration: 0.48,
+  duration: 0.3,
   stagger: 0.024,
   staggerFrom: 'start',
   ease: 'power3.out',
@@ -133,12 +133,12 @@ const fold = {
   creaseShading: 0.55
 };
 const heroTitle = document.querySelector('.hero h1');
-if (heroTitle) mountFoldText(heroTitle, { ...fold, trigger: 'mount', stagger: 0.022, duration: 0.5 });
-document.querySelectorAll('main h2, .steps h3').forEach(title => mountFoldText(title, { ...fold, trigger: 'scroll', stagger: 0.022, duration: 0.45 }));
+if (heroTitle) mountFoldText(heroTitle, { ...fold, trigger: 'mount', stagger: 0.012, duration: 0.3 });
+document.querySelectorAll('main h2, .steps h3').forEach(title => mountFoldText(title, { ...fold, trigger: 'scroll', stagger: 0.012, duration: 0.28 }));
 // Párrafos de intro: por palabra, si no con tantas letras tardaría una eternidad
 const heroLead = document.querySelector('.hero-row > p');
-if (heroLead) mountFoldText(heroLead, { ...fold, trigger: 'mount', splitBy: 'word', stagger: 0.018, duration: 0.42, foldAngle: 80 });
-document.querySelectorAll('.contact .lead').forEach(p => mountFoldText(p, { ...fold, trigger: 'scroll', splitBy: 'word', stagger: 0.018, duration: 0.42, foldAngle: 80 }));
+if (heroLead) mountFoldText(heroLead, { ...fold, trigger: 'mount', splitBy: 'word', stagger: 0.01, duration: 0.25, foldAngle: 80 });
+document.querySelectorAll('.contact .lead').forEach(p => mountFoldText(p, { ...fold, trigger: 'scroll', splitBy: 'word', stagger: 0.01, duration: 0.25, foldAngle: 80 }));
 
 // ---- Gente de confianza: tarjetas ReflectiveCard (antes que los botones, así el de WhatsApp queda adentro) ----
 document.querySelectorAll('.friend-grid .friend').forEach(card => {
@@ -200,6 +200,7 @@ document.querySelectorAll('.btn').forEach(btn => {
 mountTargetCursor({
   targetSelector: 'a, button, input, textarea, select, label, [role="button"], .plan, .friend, .folder, .note, .card-nav__card, .card-nav__link, .cursor-target, [data-cursor-label]',
   spinDuration: 0,
+  hoverDuration: 0.09,
   hideDefaultCursor: true,
   matchRadius: false,
   padding: 8,

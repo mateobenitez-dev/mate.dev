@@ -10,7 +10,7 @@ const DEFAULTS = {
   baseAlpha: 0.13,
   activeColor: [255, 70, 70],
   activeAlpha: 1,
-  dampening: 0.12,
+  dampening: 0.04,
   shine: 10
 };
 
@@ -54,7 +54,7 @@ export function mountDotGrid(container, options = {}) {
         const shift = d > 0 ? (o.push * f) / d : 0;
         ctx.fillStyle = `rgba(${mix(br, ar)}, ${mix(bg, ag)}, ${mix(bb, ab)}, ${o.baseAlpha + (o.activeAlpha - o.baseAlpha) * f})`;
         ctx.shadowColor = `rgba(${ar}, ${ag}, ${ab}, ${f})`;
-        ctx.shadowBlur = o.shine * f;
+        ctx.shadowBlur = f > 0.35 ? o.shine * f : 0;
         ctx.beginPath();
         ctx.arc(x + dx * shift, y + dy * shift, o.size * (1 + o.grow * f), 0, Math.PI * 2);
         ctx.fill();
@@ -74,7 +74,7 @@ export function mountDotGrid(container, options = {}) {
       glow.y += (pointer.y - glow.y) * follow;
     }
     const target = pointer.inside ? 1 : 0;
-    glow.k += (target - glow.k) * (1 - Math.exp(-dt / 0.25));
+    glow.k += (target - glow.k) * (1 - Math.exp(-dt / 0.1));
     if (Math.abs(target - glow.k) < 0.005) glow.k = target;
     draw();
     const moving = Math.abs(pointer.x - glow.x) > 0.3 || Math.abs(pointer.y - glow.y) > 0.3 || glow.k !== target;

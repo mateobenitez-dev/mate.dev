@@ -4,7 +4,7 @@ const CORNER_ANGLES = [0, 90, 180, 270];
 const QUARTER = Math.PI / 2;
 
 const spring = (state, goal, stiffness, damping, dt) => {
-  const steps = 2;
+  const steps = 4;
   const h = dt / steps;
   for (let i = 0; i < steps; i++) {
     state.v += (stiffness * (goal - state.x) - damping * state.v) * h;
@@ -37,7 +37,7 @@ const DEFAULTS = {
   cursorColor: '#ffffff',
   cursorColorOnTarget: undefined,
   spinDuration: 0,
-  hoverDuration: 0.2,
+  hoverDuration: 0.09,
   parallaxOn: true,
   hideDefaultCursor: true,
   size: 32,
@@ -185,9 +185,9 @@ export function mountTargetCursor(options = {}) {
       const snapK = snapW * snapW;
       const snapC = 2 * 0.62 * snapW;
 
-      spring(presence, pointer.inside ? 1 : 0, 260, 32, dt);
+      spring(presence, pointer.inside ? 1 : 0, 650, 52, dt);
       spring(lock, locked ? 1 : 0, snapK, 2 * snapW, dt);
-      spring(press, pointer.pressed && s.clickEffect ? 1 : 0, 900, 40, dt);
+      spring(press, pointer.pressed && s.clickEffect ? 1 : 0, 1800, 60, dt);
 
       let goalX = pointer.x;
       let goalY = pointer.y;
@@ -217,8 +217,8 @@ export function mountTargetCursor(options = {}) {
         pointer.seen = pointer.inside;
       }
 
-      const follow = locked ? snapK : 2200;
-      const followC = locked ? snapC : 2 * Math.sqrt(2200);
+      const follow = locked ? snapK : 26000;
+      const followC = locked ? snapC : 2 * Math.sqrt(26000);
       spring(centerX, goalX, follow, followC, dt);
       spring(centerY, goalY, follow, followC, dt);
       spring(halfW, goalW, snapK, snapC, dt);
@@ -326,6 +326,7 @@ export function mountTargetCursor(options = {}) {
         pointer.inside = inside;
         hideCursor();
       }
+      dot.style.transform = `translate3d(${pointer.x}px, ${pointer.y}px, 0) translate(-50%, -50%)`;
       lockOn(inside ? findTarget(pointer.x, pointer.y, event.target) : null);
       wake();
     };
