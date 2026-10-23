@@ -200,7 +200,7 @@ document.querySelectorAll('.btn').forEach(btn => {
 mountTargetCursor({
   targetSelector: 'a, button, input, textarea, select, label, [role="button"], .plan, .friend, .folder, .note, .card-nav__card, .card-nav__link, .cursor-target, [data-cursor-label]',
   spinDuration: 0,
-  hoverDuration: 0.09,
+  hoverDuration: 0.22,
   hideDefaultCursor: true,
   matchRadius: false,
   padding: 8,

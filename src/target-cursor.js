@@ -37,7 +37,7 @@ const DEFAULTS = {
   cursorColor: '#ffffff',
   cursorColorOnTarget: undefined,
   spinDuration: 0,
-  hoverDuration: 0.09,
+  hoverDuration: 0.22,
   parallaxOn: true,
   hideDefaultCursor: true,
   size: 32,
