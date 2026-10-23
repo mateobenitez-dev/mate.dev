@@ -297,6 +297,7 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 .friend-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; border-top: 1px solid var(--line); padding-top: 18px; }
 .who { display: flex; align-items: center; gap: 10px; font-size: 15px; }
 .who .av { width: 34px; height: 34px; border-radius: 50%; background: var(--ink); color: var(--bg); display: grid; place-items: center; font-family: var(--f-display); font-weight: 800; font-size: 14px; }
+.who .partner-badge { width: 52px; height: 52px; border-radius: 50%; display: block; box-shadow: 0 0 0 1px rgba(243, 242, 241, .14); }
 .who .partner-logo { height: 30px; width: auto; display: block; }
 .who:has(.partner-logo) { flex-direction: column; align-items: flex-start; gap: 6px; }
 .who small { display: block; color: var(--muted); font-size: 12.5px; line-height: 1.2; }
@@ -544,7 +545,7 @@ img { max-width: 100%; }
             <li>Todo por acceso remoto, vos mirás en vivo</li>
           </ul>
           <div class="friend-foot">
-            <div class="who"><span class="av">B</span><span>ByteFix<small>Optimización remota</small></span></div>
+            <div class="who"><img class="partner-badge" src="assets/partners/bytefix.png" alt="Logo de ByteFix" width="120" height="120"><span>ByteFix<small>Optimización remota</small></span></div>
             <a class="btn btn-wa js-partner" href="#recomendados" data-wa="5492914380467" data-msg="Hola ByteFix! Vengo de mate.web, quiero optimizar mi PC de forma remota."><svg><use href="#wa"/></svg>Consultar</a>
           </div>
         </article>
@@ -704,6 +705,6 @@ document.getElementById("copy").addEventListener("click", e => {
   });
 });
 </script>
-<script src="assets/app.js?v=15" defer></script>
+<script src="assets/app.js?v=16" defer></script>
 </body>
 </html>
