@@ -314,17 +314,17 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 .step p { color: var(--muted); font-size: 15.5px; }
 
 /* Contacto */
-.contact { background: var(--ink); color: var(--bg); }
-.contact .eyebrow { color: color-mix(in srgb, var(--bg) 65%, var(--ink)); }
+.contact { background: transparent; color: var(--ink); }
+.contact .eyebrow { color: var(--muted); }
 .contact-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 48px; align-items: start; }
 @media (max-width: 860px) { .contact-grid { grid-template-columns: minmax(0, 1fr); } }
 .contact h2 { font-size: clamp(36px, 5vw, 60px); overflow-wrap: anywhere; }
-.contact .lead { color: color-mix(in srgb, var(--bg) 72%, var(--ink)); margin-top: 18px; max-width: 42ch; }
+.contact .lead { color: var(--muted); margin-top: 18px; max-width: 42ch; }
 .number { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
 .number strong { font-family: var(--f-mono); font-weight: 500; font-size: 20px; user-select: all; }
-.copy { font: inherit; font-size: 13px; padding: 6px 12px; border-radius: 999px; background: transparent; color: var(--bg); border: 1px solid color-mix(in srgb, var(--bg) 35%, var(--ink)); cursor: pointer; }
+.copy { font: inherit; font-size: 13px; padding: 6px 12px; border-radius: 999px; background: transparent; color: var(--ink); border: 1px solid var(--line); cursor: pointer; }
 
-.composer { background: var(--surface); color: var(--ink); border-radius: 16px; padding: 24px; display: grid; gap: 18px; }
+.composer { background: color-mix(in srgb, var(--surface) 88%, transparent); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); color: var(--ink); border: 1px solid var(--line); border-radius: 16px; padding: 24px; display: grid; gap: 18px; box-shadow: 0 30px 60px -24px rgba(0, 0, 0, .7), 0 8px 20px -10px rgba(0, 0, 0, .5); }
 .composer label, .composer legend { font-family: var(--f-mono); font-size: 12px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); }
 .composer fieldset { border: 0; padding: 0; margin: 0; display: grid; gap: 10px; }
 .chips { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -680,6 +680,6 @@ document.getElementById("copy").addEventListener("click", e => {
   });
 });
 </script>
-<script src="assets/app.js?v=7" defer></script>
+<script src="assets/app.js?v=8" defer></script>
 </body>
 </html>
