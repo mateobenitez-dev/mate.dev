@@ -425,6 +425,12 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 .chips input:focus-visible + label { outline: 2px solid var(--accent); outline-offset: 2px; }
 .field { display: grid; gap: 8px; }
 .field input, .field textarea { font: inherit; font-size: 16px; color: var(--ink); background: var(--bg); border: 1px solid var(--line); border-radius: 10px; padding: 12px 14px; width: 100%; resize: vertical; }
+.preview-field[hidden] { display: none; }
+.preview-field:not([hidden]) { animation: preview-in .45s cubic-bezier(.2, .8, .2, 1); }
+@keyframes preview-in { from { opacity: 0; transform: translateY(-6px); } }
+.composer .btn-wa.is-off { opacity: .45; filter: saturate(.6); cursor: not-allowed; }
+.composer.tried input:invalid, .composer.tried textarea:invalid { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 22%, transparent); }
+.composer input::placeholder, .composer textarea::placeholder { color: var(--muted); opacity: .7; }
 .preview { font-family: var(--f-mono); font-size: 13.5px; line-height: 1.55; background: color-mix(in srgb, var(--wa) 12%, var(--surface)); border: 1px solid color-mix(in srgb, var(--wa) 35%, var(--surface)); border-radius: 12px 12px 12px 2px; padding: 14px 16px; white-space: pre-wrap; overflow-wrap: anywhere; }
 .composer .btn-wa { justify-content: center; font-size: 16px; padding: 14px 18px; }
 .hint { font-size: 13px; color: var(--muted); }
@@ -683,11 +689,11 @@ img { max-width: 100%; }
             <input type="radio" name="tipo" id="t4" value="otra cosa"><label for="t4">Otra cosa</label>
           </div>
         </fieldset>
-        <div class="field"><label for="nombre">Tu nombre</label><input id="nombre" value="Laura"></div>
-        <div class="field"><label for="idea">Contame en corto</label><textarea id="idea" rows="2">Tengo una pastelería y quiero mostrar los productos y recibir pedidos.</textarea></div>
-        <div class="field"><span class="eyebrow">Así me llega</span><div class="preview" id="preview"></div></div>
+        <div class="field"><label for="nombre">Tu nombre</label><input id="nombre" required autocomplete="given-name" placeholder="Cómo te llamás"></div>
+        <div class="field"><label for="idea">Contame en corto</label><textarea id="idea" rows="2" required placeholder="Qué querés hacer, en una o dos líneas"></textarea></div>
+        <div class="field preview-field" id="preview-field" hidden><span class="eyebrow">Así me llega</span><div class="preview" id="preview"></div></div>
         <a class="btn btn-wa" id="send" href="#" target="_blank" rel="noopener"><svg><use href="#wa"/></svg>Enviar por WhatsApp</a>
-        <p class="hint">Se abre WhatsApp con el mensaje listo. Lo mandás vos.</p>
+        <p class="hint" id="hint">Completá tu nombre y contame en corto para armar el mensaje.</p>
       </form>
     </div>
   </section>
@@ -718,11 +724,25 @@ function buildMessage() {
   if (idea) msg += `\n\n${idea}`;
   return msg;
 }
+const nombreIn = document.getElementById("nombre"), ideaIn = document.getElementById("idea");
+const previewField = document.getElementById("preview-field"), hint = document.getElementById("hint");
 function update() {
+  const ready = nombreIn.value.trim() !== "" && ideaIn.value.trim() !== "";
   const msg = buildMessage();
   preview.textContent = msg;
-  send.href = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}`;
+  previewField.hidden = !ready;
+  send.classList.toggle("is-off", !ready);
+  send.setAttribute("aria-disabled", String(!ready));
+  send.href = ready ? `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent(msg)}` : "#";
+  hint.textContent = ready ? "Se abre WhatsApp con el mensaje listo. Lo mandás vos." : "Completá tu nombre y contame en corto para armar el mensaje.";
+  if (ready) form.classList.remove("tried");
 }
+send.addEventListener("click", e => {
+  if (send.getAttribute("aria-disabled") !== "true") return;
+  e.preventDefault();
+  form.classList.add("tried");
+  (nombreIn.value.trim() ? ideaIn : nombreIn).focus();
+});
 form.addEventListener("input", update);
 form.addEventListener("submit", e => e.preventDefault());
 const planTipo = { "Landing page": "t1", "Sitio web completo": "t2", "App web a medida": "t3" };
@@ -784,6 +804,6 @@ document.getElementById("copy").addEventListener("click", e => {
   });
 });
 </script>
-<script src="assets/app.js?v=23" defer></script>
+<script src="assets/app.js?v=24" defer></script>
 </body>
 </html>
