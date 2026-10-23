@@ -1,5 +1,5 @@
 // Efectos de la web. Se compila con `npm run build` a assets/app.js.
-import { mountElectricLogo } from './electric-logo.js';
+import { mountProfileCard } from './profile-card.js';
 import { mountTargetCursor } from './target-cursor.js';
 import { mountGradualBlur } from './gradual-blur.js';
 import { applySpecular } from './specular-button.js';
@@ -17,22 +17,53 @@ const LOGO_SRC = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
   `<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 128 128"><path fill="#fff" fill-rule="evenodd" d="M30.4 4H97.6Q124 4 124 30.4V97.6Q124 124 97.6 124H30.4Q4 124 4 97.6V30.4Q4 4 30.4 4Z${M_PATH}M93.53 70H106.73V83.2H93.53Z"/></svg>`
 )}`;
 
-const logoBox = document.querySelector('.elogo-gl');
-if (logoBox) {
-  const logo = mountElectricLogo(logoBox, {
-    src: LOGO_SRC,
-    color: '#ffe9e6',
-    glowColor: '#c94848',
-    scale: 0.6,
-    strands: 4,
-    bend: 0.6,
-    crackle: 1.5,
-    arcs: 1,
-    speed: 2.5,
-    interactive: true,
-    theme: 'dark'
+// ---- Tarjeta de presentación (ProfileCard) en el inicio ----
+const heroCard = document.getElementById('hero-card');
+if (heroCard) {
+  const svg = (inner, attrs = '') => `<svg xmlns="http://www.w3.org/2000/svg" ${attrs}>${inner}</svg>`;
+  // Patrón de "m." chiquitos: el brillo holográfico solo se ve a través de ellos
+  const mark = (x, y) => `<g transform="translate(${x} ${y}) scale(.34)"><path d="${M_PATH}"/><path d="M93.53 70H106.73V83.2H93.53Z"/></g>`;
+  const pattern = svg(
+    [mark(0, 0), mark(48, 0), mark(24, 40), mark(72, 40), mark(-24, 40)].join(''),
+    'width="96" height="80" viewBox="0 0 96 80" fill="#000"'
+  );
+  const art = document.createElement('div');
+  art.innerHTML = svg(
+    `<path fill="#f3f2f1" d="${M_PATH}"/><rect fill="#c94848" x="93.53" y="70" width="13.2" height="13.2"/>`,
+    'viewBox="20 40 92 48" aria-hidden="true"'
+  );
+  const bio = document.createElement('div');
+  bio.innerHTML =
+    '<p><strong>Full stack de Argentina.</strong> Construyo productos reales: tiendas online, sistemas con panel de administración y landings con animaciones. Mis últimos trabajos: BuildFit y Tesla Computación.</p>' +
+    '<div class="pc-stack"><span>Next.js</span><span>React</span><span>Node</span><span>PostgreSQL</span><span>GSAP</span></div>';
+  mountProfileCard(heroCard, {
+    art,
+    body: bio,
+    iconUrl: `data:image/svg+xml;charset=utf-8,${encodeURIComponent(pattern)}`,
+    name: 'Mate',
+    title: 'Desarrollador web full stack',
+    handle: 'mateoacksbenitez-wq',
+    status: 'Tomando proyectos',
+    statusColor: '#4cc38a',
+    contactText: 'GitHub',
+    contactHref: 'https://github.com/mateoacksbenitez-wq',
+    contactIcon:
+      '<svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 .5a11.5 11.5 0 0 0-3.64 22.41c.58.1.79-.25.79-.56v-2c-3.2.7-3.88-1.37-3.88-1.37-.53-1.33-1.28-1.69-1.28-1.69-1.05-.71.08-.7.08-.7 1.16.08 1.77 1.19 1.77 1.19 1.03 1.77 2.7 1.26 3.36.96.1-.75.4-1.26.73-1.55-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.17 1.18a11 11 0 0 1 5.77 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.11 3.05.74.8 1.19 1.83 1.19 3.09 0 4.42-2.69 5.39-5.26 5.68.41.36.78 1.06.78 2.14v3.17c0 .31.21.67.8.56A11.5 11.5 0 0 0 12 .5Z"/></svg>',
+    theme: 'dark',
+    backdropColor: '#2b2c2f',
+    radius: 18,
+    holo: 0.8,
+    glare: 0.5,
+    tiltStrength: 10,
+    parallax: 8,
+    vars: {
+      '--pc-frame': 'rgba(43, 44, 47, 0.55)',
+      '--pc-pattern-size': '84px auto',
+      '--pc-tile': 'linear-gradient(180deg, #3a3b40 0%, #2b2c2f 100%)',
+      '--pc-ink': '#f3f2f1',
+      '--pc-muted': 'rgba(199, 199, 201, 0.82)'
+    }
   });
-  if (logo) logoBox.closest('.elogo').classList.add('is-live');
 }
 
 const TINT = '#c94848';
@@ -55,6 +86,9 @@ if (header) {
     surface: 'glass',
     openOn: 'click',
     cardEffect: 'rise',
+    speed: 0.22,
+    stagger: 0.26,
+    bounce: 0.05,
     maxWidth: 1088,
     accentColor: '#c94848',
     vars: {

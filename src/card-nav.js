@@ -285,7 +285,7 @@ export function mountCardNav(container, options = {}) {
         card.style.filter = e < 0.999 ? `blur(${(1 - e) * 6}px)` : '';
       } else {
         card.style.transform = `translateY(${(1 - e) * 34}px) rotateX(${(1 - e) * -16}deg) scale(${0.94 + 0.06 * e})`;
-        card.style.opacity = `${clamp(e * 1.15, 0, 1)}`;
+        card.style.opacity = `${clamp(local * 1.1, 0, 1)}`;
         card.style.filter = e < 0.999 ? `blur(${(1 - e) * 8}px)` : '';
       }
     });
