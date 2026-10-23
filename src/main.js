@@ -23,12 +23,12 @@ const heroCard = document.getElementById('hero-card');
 if (heroCard) {
   const bio = document.createElement('div');
   bio.innerHTML =
-    '<p><strong>Full stack de Argentina.</strong> Construyo productos reales: tiendas online, sistemas con panel de administración y landings con animaciones. Mis últimos trabajos: BuildFit y Tesla Computación.</p>';
+    '<p><strong>Futuro Desarrollador de Software de Argentina.</strong> Construyo productos reales: tiendas online, sistemas con panel de administración y landings con animaciones. Mis últimos trabajos: BuildFit y Tesla Computación.</p>';
   mountProfileCard(heroCard, {
     avatarUrl: 'assets/mate.jpg',
     body: bio,
     name: 'Mate',
-    title: 'Desarrollador web full stack',
+    title: 'Futuro Desarrollador de Software',
     handle: 'mateoacksbenitez-wq',
     status: 'Tomando proyectos',
     statusColor: '#4cc38a',
