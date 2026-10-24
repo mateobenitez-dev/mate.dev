@@ -1075,5 +1075,18 @@ document.getElementById("copy").addEventListener("click", e => {
 });
 </script>
 <script src="assets/app.js?v=55" defer></script>
+<!-- Analíticas de visitas: GoatCounter, sin cookies ni datos personales -->
+<script data-goatcounter="https://matedev.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script>
+  // Cuenta los toques a los botones de WhatsApp como eventos para el panel
+  document.addEventListener("click", e => {
+    const a = e.target.closest('a[href^="https://wa.me/"]');
+    if (!a || !window.goatcounter || !window.goatcounter.count) return;
+    const donde = (a.closest("section[id]") || {}).id || location.pathname.replace(/\W+/g, "") || "web";
+    // Los botones de Gente de confianza van al WhatsApp de ellos, no al de Mate
+    const tipo = a.classList.contains("js-partner") ? "recomendado-" : "whatsapp-";
+    window.goatcounter.count({ path: tipo + donde, title: "WhatsApp: " + (a.textContent.trim() || donde), event: true });
+  });
+</script>
 </body>
 </html>
