@@ -8,15 +8,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/mateoacksbenitez-wq/mate.dev.git"
+    "url": "git+https://github.com/mateobenitez-dev/mate.dev.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/mateoacksbenitez-wq/mate.dev/issues"
+    "url": "https://github.com/mateobenitez-dev/mate.dev/issues"
   },
-  "homepage": "https://github.com/mateoacksbenitez-wq/mate.dev#readme",
+  "homepage": "https://github.com/mateobenitez-dev/mate.dev#readme",
   "devDependencies": {
     "esbuild": "^0.24.2",
     "gsap": "^3.15.0",
