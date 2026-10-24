@@ -76,7 +76,8 @@
 * { box-sizing: border-box; }
 html, body { overflow-x: clip; }
 html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-/* reduced-motion kill switch disabled */
+/* Reducir movimiento: solo frena lo que se repite en loop; las entradas y efectos al pasar el mouse siguen */
+@media (prefers-reduced-motion: reduce) { .status i, .note-in, .cmp-live { animation: none !important; } }
 body {
   background: var(--bg); color: var(--ink);
   font-family: var(--f-body); font-size: 17px; line-height: 1.6;
@@ -1073,6 +1074,6 @@ document.getElementById("copy").addEventListener("click", e => {
   });
 });
 </script>
-<script src="assets/app.js?v=54" defer></script>
+<script src="assets/app.js?v=55" defer></script>
 </body>
 </html>
