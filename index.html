@@ -353,8 +353,6 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 .plan::after { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: radial-gradient(260px circle at var(--mx) var(--my), color-mix(in srgb, var(--accent) 90%, transparent), transparent 70%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); opacity: 0; transition: opacity .45s; pointer-events: none; }
 .plan:hover { transform: translateY(-6px); box-shadow: 0 40px 70px -28px rgba(0, 0, 0, .8), 0 10px 24px -10px rgba(0, 0, 0, .55); }
 .plan:hover::before, .plan:hover::after { opacity: 1; }
-.plan-num { position: absolute; top: 12px; right: 20px; z-index: -1; font-family: var(--f-display); font-weight: 800; font-size: 88px; line-height: 1; letter-spacing: -.04em; color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--line) 80%, transparent); pointer-events: none; transition: -webkit-text-stroke-color .45s; }
-.plan:hover .plan-num { -webkit-text-stroke-color: color-mix(in srgb, var(--accent) 40%, transparent); }
 .plan-icon { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--bg)); border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line)); }
 .plan-icon svg { width: 24px; height: 24px; }
 .plan-top { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -447,9 +445,9 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 .mock.m2 .blk { height: 20px; background: color-mix(in srgb, var(--steel) 30%, var(--surface)); }
 .mock.m3 { grid-template-columns: 26px 1fr; }
 .mock.m3 .side { grid-row: span 3; height: 52px; border-radius: 3px; background: color-mix(in srgb, var(--ink) 10%, var(--surface)); }
-.note-title { font-family: var(--f-mono); font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); padding: 10px 10px 6px; }
+.note-title { font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); padding: 10px 10px 6px; }
 .stack { display: flex; flex-wrap: wrap; gap: 4px; padding-inline: 10px; }
-.stack span { font-family: var(--f-mono); font-size: 10.5px; padding: 2px 6px; border-radius: 3px; background: color-mix(in srgb, var(--ink) 7%, var(--surface)); color: var(--ink); }
+.stack span { font-family: var(--f-mono); font-size: 11px; padding: 2px 6px; border-radius: 3px; background: color-mix(in srgb, var(--ink) 7%, var(--surface)); color: var(--ink); }
 .n3 { text-decoration: none; }
 .n3 .note-in { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); text-decoration: none; padding: 12px; align-content: space-between; }
 .n3 .note-in strong { font-family: var(--f-display); font-size: 17px; line-height: 1.05; font-stretch: 110%; }
@@ -563,6 +561,8 @@ footer { border-top: 1px solid var(--line); }
 footer a { text-decoration: none; }
 footer a:hover { color: var(--ink); }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 28px; color: var(--muted); font-size: 14px; }
+/* Pantallas táctiles: links de texto con zona de toque de 44px */
+@media (pointer: coarse) { .card-nav__link, article > h3 > a, footer a { display: inline-flex; align-items: center; min-height: 44px; } }
 
 .fab {
   position: fixed; z-index: 8;
@@ -677,7 +677,7 @@ img { max-width: 100%; }
       </div>
       <div class="plans">
         <article class="plan">
-          <span class="plan-num" aria-hidden="true">01</span><span class="plan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18M7 13h6M7 16.5h10"/></svg></span>
+          <span class="plan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18M7 13h6M7 16.5h10"/></svg></span>
           <div class="plan-top"><h3>Landing page</h3><span class="tag">1 página</span></div>
           <ul>
             <li>Una sola página, 5 a 7 secciones, pensada para que te escriban</li>
@@ -690,7 +690,7 @@ img { max-width: 100%; }
           <a class="plan-cta" href="#contacto" data-plan="Landing page">Consultar por esto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
         </article>
         <article class="plan featured">
-          <span class="plan-num" aria-hidden="true">02</span><span class="plan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 17.5l9 5 9-5" opacity=".55"/></svg></span>
+          <span class="plan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 17.5l9 5 9-5" opacity=".55"/></svg></span>
           <div class="plan-top"><h3>Sitio web completo</h3><span class="tag">Multi-página</span></div>
           <ul>
             <li>Varias secciones o un catálogo con tus productos</li>
@@ -703,7 +703,7 @@ img { max-width: 100%; }
           <a class="plan-cta" href="#contacto" data-plan="Sitio web completo">Consultar por esto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
         </article>
         <article class="plan">
-          <span class="plan-num" aria-hidden="true">03</span><span class="plan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg></span>
+          <span class="plan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg></span>
           <div class="plan-top"><h3>App web a medida</h3><span class="tag">Front + back</span></div>
           <ul>
             <li>Cuando la web tiene que hacer cosas: turnos, stock, pedidos</li>
