@@ -234,7 +234,9 @@ async function api(ruta, params = {}) {
   return d;
 }
 
-const ymd = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+// La API toma fechas en UTC y una fecha sola la lee como las 00:00 UTC: con eso "hasta hoy" dejaba
+// afuera el día de hoy (y en Argentina, de 21 a 24 h, también el de ayer). Se manda la hora exacta.
+const utc = d => d.toISOString().slice(0, 14) + "00:00Z";
 const diaCorto = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d).toLocaleDateString("es-AR", { day: "numeric", month: "short" }); };
 const bandera = iso => /^[A-Z]{2}$/.test(iso) ? String.fromCodePoint(...[...iso].map(c => 0x1F1A5 + c.charCodeAt(0))) + " " : "";
 
@@ -297,9 +299,12 @@ let dias = Number(leer(localStorage, KEY + "-dias")) || 7;
 async function cargar() {
   document.querySelectorAll(".ranges button").forEach(b => b.setAttribute("aria-pressed", String(Number(b.dataset.days) === dias)));
   $("body").classList.add("loading");
-  const hoy = new Date(), ini = new Date(hoy);
-  ini.setDate(hoy.getDate() - (dias - 1));
-  const p = { start: ymd(ini), end: ymd(hoy) };
+  const ini = new Date();
+  ini.setDate(ini.getDate() - (dias - 1));
+  ini.setHours(0, 0, 0, 0);
+  const fin = new Date();
+  fin.setHours(fin.getHours() + 1, 0, 0, 0);
+  const p = { start: utc(ini), end: utc(fin) };
 
   // api() ya los ordena de a uno respetando el límite de GoatCounter
   const [total, hits, paises, refs, sistemas] = await Promise.all([
