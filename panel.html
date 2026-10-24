@@ -1,0 +1,396 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Panel | mate.dev</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#2b2c2f">
+<link rel="icon" type="image/svg+xml" href="assets/favicon.svg">
+<style>
+  :root { --bg: #2b2c2f; --ink: #f3f2f1; --muted: #c7c7c9; --line: #8b8d92; --accent: #b23a3a; --accent-hi: #c94848; }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; }
+  body {
+    background: var(--bg) radial-gradient(rgba(139, 141, 146, .28) 1px, transparent 1.5px) 0 0 / 22px 22px;
+    color: var(--ink);
+    font: 16px/1.5 system-ui, -apple-system, "Segoe UI", sans-serif;
+    padding: 40px 16px 64px;
+  }
+  main { max-width: 920px; margin: 0 auto; }
+  .hidden { display: none !important; }
+  .code { font: 500 13px/1 ui-monospace, "JetBrains Mono", monospace; letter-spacing: .14em; color: var(--accent); margin: 0 0 10px; }
+  h1 { font-size: clamp(26px, 6vw, 34px); line-height: 1.1; margin: 0; letter-spacing: -.01em; }
+  a { color: var(--muted); }
+  :focus-visible { outline: 2px solid var(--accent-hi); outline-offset: 3px; }
+  .card {
+    border: 1px solid rgba(199, 199, 201, .18); border-radius: 14px;
+    background: rgba(43, 44, 47, .72); padding: 18px;
+  }
+  .label { font: 500 12px/1.2 ui-monospace, "JetBrains Mono", monospace; letter-spacing: .1em; text-transform: uppercase; color: var(--line); margin: 0 0 14px; }
+  button, input {
+    font: inherit; color: var(--ink); min-height: 44px; border-radius: 999px;
+    border: 1px solid rgba(199, 199, 201, .3); background: rgba(243, 242, 241, .04);
+  }
+  button { padding: 0 18px; font-weight: 600; cursor: pointer; transition: background .3s, border-color .3s; }
+  button:hover { border-color: var(--muted); background: rgba(243, 242, 241, .09); }
+  button.primary { background: var(--accent); border-color: var(--accent); }
+  button.primary:hover { background: var(--accent-hi); border-color: var(--accent-hi); }
+
+  /* Ingreso */
+  #login { max-width: 460px; margin: 12vh auto 0; }
+  #login p { color: var(--muted); font-size: 14px; margin: 12px 0 18px; }
+  #login form { display: flex; gap: 8px; flex-wrap: wrap; }
+  #login input, #setup input { flex: 1 1 220px; padding: 0 16px; font-size: 15px; }
+  #setup { max-width: 460px; margin: 8vh auto 0; }
+  #setup p { color: var(--muted); font-size: 14px; margin: 12px 0 18px; }
+  #setup .stack { display: grid; gap: 8px; }
+  
+  .msg { color: #e07a7a; font-size: 14px; margin: 12px 0 0; min-height: 1.5em; }
+
+  /* Panel */
+  .top { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; margin-bottom: 28px; }
+  .ranges { display: flex; gap: 6px; flex-wrap: wrap; }
+  .ranges button { min-height: 36px; padding: 0 14px; font-size: 14px; }
+  .ranges button[aria-pressed="true"] { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+  .tile .n { font-size: clamp(28px, 7vw, 38px); font-weight: 600; letter-spacing: -.02em; font-variant-numeric: tabular-nums; line-height: 1.1; }
+  .tile .sub { color: var(--line); font-size: 13px; margin-top: 6px; }
+  .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 380px), 1fr)); gap: 12px; margin-top: 12px; }
+  .wide { margin-top: 12px; }
+
+  .bars { position: relative; display: flex; align-items: flex-end; gap: 2px; height: 160px; }
+  .col { flex: 1; height: 100%; display: flex; align-items: flex-end; justify-content: center; }
+  .bar { width: 100%; max-width: 38px; min-height: 2px; background: var(--accent); border-radius: 4px 4px 0 0; transition: height .9s cubic-bezier(.22, 1, .36, 1); }
+  .col.zero .bar { background: rgba(199, 199, 201, .2); }
+  .col:hover .bar, .col:focus .bar { background: var(--accent-hi); }
+  .axis { display: flex; justify-content: space-between; border-top: 1px solid rgba(199, 199, 201, .14); padding-top: 8px; margin-top: 0; font: 500 11px/1 ui-monospace, monospace; color: var(--line); }
+  .tip {
+    position: absolute; pointer-events: none; transform: translate(-50%, -100%);
+    background: var(--ink); color: var(--bg); font-size: 13px; padding: 6px 10px; border-radius: 8px; white-space: nowrap;
+    opacity: 0; transition: opacity .15s;
+  }
+  .tip.on { opacity: 1; }
+
+  .list { list-style: none; margin: 0; padding: 0; }
+  .list li { position: relative; display: flex; justify-content: space-between; gap: 12px; padding: 7px 10px; font-size: 14px; border-radius: 8px; overflow: hidden; }
+  .list li + li { margin-top: 3px; }
+  .list .fill { position: absolute; inset: 0 auto 0 0; background: rgba(178, 58, 58, .22); border-radius: 8px; z-index: 0; transition: width .9s cubic-bezier(.22, 1, .36, 1); }
+  .list span { position: relative; z-index: 1; }
+  .list .name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .list .num { color: var(--muted); font-variant-numeric: tabular-nums; flex: none; }
+  .empty { color: var(--line); font-size: 14px; margin: 0; }
+  .foot { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin-top: 28px; font-size: 13px; color: var(--line); }
+  .foot button { min-height: 36px; font-size: 13px; }
+  .loading { opacity: .45; transition: opacity .3s; }
+</style>
+</head>
+<body>
+<main>
+
+  <section id="login" class="card hidden">
+    <p class="code">PANEL PRIVADO</p>
+    <h1>Entrar</h1>
+    <p>Escribí la contraseña del panel.</p>
+    <form id="login-form">
+      <input id="pass" type="password" autocomplete="current-password" placeholder="Contraseña" aria-label="Contraseña" required>
+      <button class="primary" type="submit">Entrar</button>
+    </form>
+    <p class="msg" id="login-msg" role="alert"></p>
+    <p><a href="#" id="reset">Me olvidé la contraseña</a></p>
+  </section>
+
+  <section id="setup" class="card hidden">
+    <p class="code">CONFIGURACIÓN</p>
+    <h1>Crear la contraseña</h1>
+    <p>Pegá la clave de la API de GoatCounter y elegí una contraseña. La clave se guarda cifrada con esa contraseña: sin ella no se puede leer.</p>
+    <form id="setup-form" class="stack">
+      <input id="s-token" type="password" autocomplete="off" spellcheck="false" placeholder="Clave de la API de GoatCounter" aria-label="Clave de la API" required>
+      <input id="s-pass" type="password" autocomplete="new-password" minlength="8" placeholder="Contraseña (mínimo 8 caracteres)" aria-label="Contraseña nueva" required>
+      <button class="primary" type="submit">Guardar</button>
+    </form>
+    <p class="msg" id="setup-msg" role="alert"></p>
+    <div id="setup-out" class="hidden">
+      <p>Listo. En este navegador ya entrás con la contraseña. En otro celu o compu, repetí este paso con una clave nueva de GoatCounter.</p>
+      <button type="button" class="primary" id="ir-panel">Ir al panel</button>
+    </div>
+  </section>
+
+  <section id="panel" class="hidden">
+    <div class="top">
+      <div>
+        <p class="code">PANEL PRIVADO</p>
+        <h1>Visitas a la web</h1>
+      </div>
+      <div class="ranges" role="group" aria-label="Período">
+        <button type="button" data-days="1">Hoy</button>
+        <button type="button" data-days="7">7 días</button>
+        <button type="button" data-days="30">30 días</button>
+        <button type="button" data-days="90">90 días</button>
+      </div>
+    </div>
+
+    <div id="body">
+      <div class="tiles">
+        <div class="card tile"><p class="label">Visitantes</p><div class="n" id="t-visitas">—</div><div class="sub" id="t-visitas-sub"></div></div>
+        <div class="card tile"><p class="label">Páginas vistas</p><div class="n" id="t-vistas">—</div><div class="sub">contando las repetidas</div></div>
+        <div class="card tile"><p class="label">Tocaron WhatsApp</p><div class="n" id="t-wa">—</div><div class="sub" id="t-wa-sub"></div></div>
+        <div class="card tile"><p class="label">Países</p><div class="n" id="t-paises">—</div><div class="sub" id="t-pais-top"></div></div>
+      </div>
+
+      <div class="card wide">
+        <p class="label">Visitantes por día</p>
+        <div class="bars" id="bars"><div class="tip" id="tip"></div></div>
+        <div class="axis"><span id="ax-ini"></span><span id="ax-fin"></span></div>
+      </div>
+
+      <div class="grid">
+        <div class="card"><p class="label">De dónde son</p><ul class="list" id="l-paises"></ul></div>
+        <div class="card"><p class="label">De dónde llegan</p><ul class="list" id="l-refs"></ul></div>
+        <div class="card"><p class="label">Qué miran</p><ul class="list" id="l-paginas"></ul></div>
+        <div class="card"><p class="label">Desde qué entran</p><ul class="list" id="l-sistemas"></ul></div>
+      </div>
+    </div>
+
+    <div class="foot">
+      <span id="actualizado"></span>
+      <span><a id="dash" href="#" target="_blank" rel="noopener">Panel completo en GoatCounter</a> · <button type="button" id="salir">Cerrar sesión</button></span>
+    </div>
+  </section>
+
+</main>
+
+<script>
+// Código de la cuenta de GoatCounter: si cambia, se cambia acá y en index.html / 404.html
+const GC = "matedev";
+const API = `https://${GC}.goatcounter.com/api/v0`;
+// La clave de la API se guarda cifrada con la contraseña (AES-GCM + PBKDF2) solo en el navegador de Mate,
+// nunca en el repo: así nadie puede probar contraseñas contra ella sin tener su dispositivo
+const KEY = "matedev-panel";
+const $ = id => document.getElementById(id);
+const fmt = n => n.toLocaleString("es-AR");
+
+// Storage puede fallar (modo privado, datos bloqueados): todo funciona igual, solo no recuerda
+const leer = (s, k) => { try { return s.getItem(k) || ""; } catch { return ""; } };
+const escribir = (s, k, v) => { try { v ? s.setItem(k, v) : s.removeItem(k); } catch {} };
+
+// La clave descifrada vive solo en esta pestaña; se borra al cerrarla
+let token = leer(sessionStorage, KEY + "-token");
+
+// Las visitas de Mate desde este navegador no se cuentan (count.js lee "skipgc")
+escribir(localStorage, "skipgc", "t");
+const BLOQUEADO = "El navegador bloqueó la conexión con GoatCounter. Si usás Brave, tocá el león de la barra de direcciones y apagá los escudos para matedev.com.ar (también sirve desactivar el bloqueador de anuncios en esta página).";
+const guardar = t => {
+  token = t; escribir(sessionStorage, KEY + "-token", t);
+  if (!t) try { Object.keys(sessionStorage).filter(k => k.startsWith(KEY + "-c:")).forEach(k => sessionStorage.removeItem(k)); } catch {}
+};
+const sellado = () => leer(localStorage, KEY + "-sealed");
+
+const b64 = buf => btoa(String.fromCharCode(...new Uint8Array(buf)));
+const unb64 = s => Uint8Array.from(atob(s), c => c.charCodeAt(0));
+async function llave(pass, sal) {
+  const base = await crypto.subtle.importKey("raw", new TextEncoder().encode(pass), "PBKDF2", false, ["deriveKey"]);
+  return crypto.subtle.deriveKey({ name: "PBKDF2", salt: sal, iterations: 600000, hash: "SHA-256" }, base, { name: "AES-GCM", length: 256 }, false, ["encrypt", "decrypt"]);
+}
+async function cifrar(texto, pass) {
+  const sal = crypto.getRandomValues(new Uint8Array(16)), iv = crypto.getRandomValues(new Uint8Array(12));
+  const datos = await crypto.subtle.encrypt({ name: "AES-GCM", iv }, await llave(pass, sal), new TextEncoder().encode(texto));
+  return [b64(sal), b64(iv), b64(datos)].join(".");
+}
+async function descifrar(sellado, pass) {
+  const [sal, iv, datos] = sellado.split(".").map(unb64);
+  const plano = await crypto.subtle.decrypt({ name: "AES-GCM", iv }, await llave(pass, sal), datos);
+  return new TextDecoder().decode(plano);
+}
+
+$("dash").href = `https://${GC}.goatcounter.com/`;
+
+// GoatCounter permite 4 pedidos por segundo y 500 por hora, y el preflight de CORS también cuenta:
+// los pedidos van de a uno, separados, y se guardan 5 minutos para no gastar el cupo al cambiar de período
+const espera = ms => new Promise(r => setTimeout(r, ms));
+let cola = Promise.resolve();
+async function api(ruta, params = {}) {
+  const u = new URL(API + ruta);
+  Object.entries(params).forEach(([k, v]) => u.searchParams.set(k, v));
+  const cache = leer(sessionStorage, KEY + "-c:" + u);
+  if (cache) { const c = JSON.parse(cache); if (Date.now() - c.t < 300000) return c.d; }
+
+  const turno = cola.then(async () => {
+    for (let intento = 0; ; intento++) {
+      let r;
+      try { r = await fetch(u, { headers: { Authorization: `Bearer ${token}` } }); }
+      catch { throw Object.assign(new Error("red"), { bloqueado: true }); }
+      if (r.status === 429 && intento < 3) { await espera(1500 * (intento + 1)); continue; }
+      if (r.status === 401 || r.status === 403) throw Object.assign(new Error("auth"), { auth: true });
+      if (r.status === 429) throw new Error("demasiados pedidos seguidos, esperá un minuto");
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.json();
+    }
+  });
+  cola = turno.catch(() => {}).then(() => espera(600));
+  const d = await turno;
+  escribir(sessionStorage, KEY + "-c:" + u, JSON.stringify({ t: Date.now(), d }));
+  return d;
+}
+
+const ymd = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
+const diaCorto = s => { const [y, m, d] = s.split("-").map(Number); return new Date(y, m - 1, d).toLocaleDateString("es-AR", { day: "numeric", month: "short" }); };
+const bandera = iso => /^[A-Z]{2}$/.test(iso) ? String.fromCodePoint(...[...iso].map(c => 0x1F1A5 + c.charCodeAt(0))) + " " : "";
+
+// Nombres de referrers más claros para Mate
+function origen(nombre) {
+  if (!nombre) return "Directo (link pegado, WhatsApp, favoritos)";
+  const n = nombre.toLowerCase();
+  if (n.includes("instagram")) return "Instagram";
+  if (n.includes("facebook") || n === "fb") return "Facebook";
+  if (n.includes("whatsapp")) return "WhatsApp";
+  if (n.includes("linkedin")) return "LinkedIn";
+  if (n.includes("t.co") || n.includes("twitter") || n === "x.com") return "X / Twitter";
+  if (n.includes("github")) return "GitHub";
+  return nombre;
+}
+
+function lista(id, items, total, nombre = i => i.name) {
+  const ul = $(id);
+  if (!items.length) { ul.innerHTML = `<p class="empty">Todavía no hay datos en este período.</p>`; return; }
+  const max = Math.max(...items.map(i => i.count), 1);
+  ul.innerHTML = items.map(i => {
+    const pct = total ? Math.round(i.count / total * 100) : 0;
+    return `<li title="${fmt(i.count)} visitante${i.count === 1 ? "" : "s"}"><span class="fill" style="width:0" data-w="${(i.count / max) * 100}%"></span><span class="name">${nombre(i)}</span><span class="num">${fmt(i.count)}${total ? ` · ${pct}%` : ""}</span></li>`;
+  }).join("");
+  requestAnimationFrame(() => ul.querySelectorAll(".fill").forEach(f => f.style.width = f.dataset.w));
+}
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function barras(stats) {
+  const cont = $("bars"), tip = $("tip");
+  cont.querySelectorAll(".col").forEach(c => c.remove());
+  const max = Math.max(1, ...stats.map(s => s.daily));
+  stats.forEach(s => {
+    const col = document.createElement("div");
+    col.className = "col" + (s.daily ? "" : " zero");
+    col.tabIndex = 0;
+    col.setAttribute("aria-label", `${diaCorto(s.day)}: ${s.daily} visitantes`);
+    col.innerHTML = `<div class="bar" style="height:0"></div>`;
+    const mostrar = () => {
+      tip.textContent = `${diaCorto(s.day)} · ${fmt(s.daily)} visitante${s.daily === 1 ? "" : "s"}`;
+      const r = col.getBoundingClientRect(), b = cont.getBoundingClientRect();
+      const h = Math.max(2, s.daily / max * 150);
+      tip.style.left = `${Math.min(Math.max(r.left - b.left + r.width / 2, 70), b.width - 70)}px`;
+      tip.style.top = `${160 - h - 8}px`;
+      tip.classList.add("on");
+    };
+    col.addEventListener("mouseenter", mostrar);
+    col.addEventListener("focus", mostrar);
+    col.addEventListener("mouseleave", () => tip.classList.remove("on"));
+    col.addEventListener("blur", () => tip.classList.remove("on"));
+    cont.appendChild(col);
+    requestAnimationFrame(() => col.firstChild.style.height = `${Math.max(2, s.daily / max * 150)}px`);
+  });
+  $("ax-ini").textContent = stats.length ? diaCorto(stats[0].day) : "";
+  $("ax-fin").textContent = stats.length ? diaCorto(stats[stats.length - 1].day) : "";
+}
+
+let dias = Number(leer(localStorage, KEY + "-dias")) || 7;
+
+async function cargar() {
+  document.querySelectorAll(".ranges button").forEach(b => b.setAttribute("aria-pressed", String(Number(b.dataset.days) === dias)));
+  $("body").classList.add("loading");
+  const hoy = new Date(), ini = new Date(hoy);
+  ini.setDate(hoy.getDate() - (dias - 1));
+  const p = { start: ymd(ini), end: ymd(hoy) };
+
+  // api() ya los ordena de a uno respetando el límite de GoatCounter
+  const [total, hits, paises, refs, sistemas] = await Promise.all([
+    api("/stats/total", p), api("/stats/hits", { ...p, limit: 30 }), api("/stats/locations", { ...p, limit: 8 }),
+    api("/stats/toprefs", { ...p, limit: 8 }), api("/stats/systems", { ...p, limit: 6 })
+  ]);
+
+  const visitantes = total.total - (total.total_events || 0);
+  const paginas = (hits.hits || []).filter(h => !h.event);
+  const eventos = (hits.hits || []).filter(h => h.event);
+  const suma = pre => eventos.filter(h => h.path.startsWith(pre)).reduce((a, h) => a + h.count, 0);
+  const wa = suma("whatsapp-"), recomendados = suma("recomendado-");
+  const vistas = paginas.reduce((a, h) => a + (h.stats || []).reduce((b, s) => b + s.daily, 0), 0);
+
+  $("t-visitas").textContent = fmt(visitantes);
+  $("t-visitas-sub").textContent = dias === 1 ? "hoy" : `en ${dias} días`;
+  $("t-vistas").textContent = fmt(Math.max(vistas, visitantes));
+  $("t-wa").textContent = fmt(wa);
+  $("t-wa-sub").textContent = [visitantes ? `${Math.round(wa / visitantes * 100)}% de los visitantes` : "", recomendados ? `+ ${fmt(recomendados)} a recomendados` : ""].filter(Boolean).join(" · ");
+  const ps = paises.stats || [];
+  $("t-paises").textContent = fmt(ps.filter(s => s.name).length) + (paises.more ? "+" : "");
+  $("t-pais-top").textContent = ps[0] && ps[0].name ? `más visitas: ${ps[0].name}` : "";
+
+  barras(total.stats || []);
+  lista("l-paises", ps, visitantes, i => bandera(i.id) + esc(i.name || "Desconocido"));
+  lista("l-refs", refs.stats || [], visitantes, i => esc(origen(i.name)));
+  lista("l-paginas", paginas.slice(0, 8), 0, i => esc(i.path === "/" ? "Inicio" : (i.title || i.path)));
+  lista("l-sistemas", sistemas.stats || [], visitantes, i => esc(i.name || "Otro"));
+
+  $("actualizado").textContent = `Actualizado ${new Date().toLocaleTimeString("es-AR", { hour: "2-digit", minute: "2-digit" })}`;
+  $("body").classList.remove("loading");
+}
+
+function mostrar(id) {
+  ["login", "setup", "panel"].forEach(s => $(s).classList.toggle("hidden", s !== id));
+}
+
+function mostrarLogin(msg = "") {
+  if (!sellado()) { mostrar("setup"); $("s-token").focus(); return; }
+  mostrar("login");
+  $("login-msg").textContent = msg;
+  $("pass").focus();
+}
+
+async function entrar() {
+  try {
+    mostrar("panel");
+    await cargar();
+  } catch (e) {
+    if (e.auth) { guardar(""); mostrarLogin("La clave guardada ya no anda en GoatCounter. Hay que generar una nueva."); }
+    else { $("body").classList.remove("loading"); $("actualizado").textContent = e.bloqueado ? BLOQUEADO : `No se pudieron cargar los datos (${e.message}). Probá de nuevo en un rato.`; }
+  }
+}
+
+$("login-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const btn = e.submitter; btn.disabled = true;
+  $("login-msg").textContent = "";
+  try {
+    guardar(await descifrar(sellado(), $("pass").value));
+    $("pass").value = "";
+    entrar();
+  } catch {
+    // Pausa corta para que probar contraseñas a mano sea lento
+    await new Promise(r => setTimeout(r, 800));
+    $("login-msg").textContent = "Contraseña incorrecta.";
+  } finally { btn.disabled = false; }
+});
+
+$("setup-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const t = $("s-token").value.trim(), p = $("s-pass").value;
+  $("setup-msg").textContent = "";
+  guardar(t);
+  try { await api("/stats/total"); }
+  catch (err) { guardar(""); $("setup-msg").textContent = err.auth ? "GoatCounter no acepta esa clave. Fijate que tenga el permiso de leer estadísticas." : err.bloqueado ? BLOQUEADO : `No se pudo comprobar la clave (${err.message}).`; return; }
+  const s = await cifrar(t, p);
+  escribir(localStorage, KEY + "-sealed", s);
+  $("setup-form").classList.add("hidden");
+  $("setup-out").classList.remove("hidden");
+});
+$("ir-panel").addEventListener("click", entrar);
+$("reset").addEventListener("click", e => { e.preventDefault(); escribir(localStorage, KEY + "-sealed", ""); guardar(""); mostrarLogin(); });
+document.querySelectorAll(".ranges button").forEach(b => b.addEventListener("click", () => {
+  dias = Number(b.dataset.days);
+  escribir(localStorage, KEY + "-dias", String(dias));
+  entrar();
+}));
+$("salir").addEventListener("click", () => { guardar(""); mostrarLogin(); });
+
+token ? entrar() : mostrarLogin();
+</script>
+</body>
+</html>
