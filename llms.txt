@@ -21,7 +21,7 @@ No hay precios fijos: el precio se pasa por escrito después de charlar qué nec
 
 - [BuildFit](https://buildfitar.mitiendanube.com/): tienda online en Tienda Nube con diseño personalizado por CSS.
 - [Tesla Computación](https://tesla-computacion.vercel.app/): sitio para un local de PCs de Santa Fe, con armador de PC en 10 pasos, stock real y panel de administración. Next.js y PostgreSQL.
-- [mate.dev](https://mateoacksbenitez-wq.github.io/mate.dev/): esta web. HTML, CSS, JavaScript, GSAP y WebGL, con un formulario que arma el mensaje de WhatsApp.
+- [mate.dev](https://matedev.com.ar/): esta web. HTML, CSS, JavaScript, GSAP y WebGL, con un formulario que arma el mensaje de WhatsApp.
 
 ## Gente de confianza
 
@@ -32,4 +32,4 @@ No hay precios fijos: el precio se pasa por escrito después de charlar qué nec
 
 - [WhatsApp](https://wa.me/5493425772820): +54 9 342 577-2820
 - [GitHub](https://github.com/mateoacksbenitez-wq)
-- [Sitio](https://mateoacksbenitez-wq.github.io/mate.dev/)
+- [Sitio](https://matedev.com.ar/)
