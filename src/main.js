@@ -1,4 +1,3 @@
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 // Efectos de la web. Se compila con `npm run build` a assets/app.js.
 import { mountProfileCard } from './profile-card.js';
 import { mountTargetCursor } from './target-cursor.js';
@@ -229,6 +228,3 @@ const bgBox = document.querySelector('.page-bg');
 if (bgBox) mountDotGrid(bgBox);
 
 
-// Calibración de ScrollTrigger en PC y celular
-ScrollTrigger.refresh();
-window.addEventListener('load', () => ScrollTrigger.refresh());

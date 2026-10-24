@@ -3,9 +3,7 @@
 // Se aplica sobre un título que ya existe: mountFoldText(elemento, opciones) parte sus textos
 // y respeta lo que tenga adentro (<em>, <span>, <br>), así no se pierden los estilos.
 import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
-gsap.registerPlugin(ScrollTrigger);
 
 const HINGES = {
   top: { origin: '50% 0%', axis: 'rotateX', sign: -1 },
@@ -228,7 +226,17 @@ export function mountFoldText(target, options = {}) {
     root.addEventListener('mouseenter', handleEnter);
   } else if (trigger === 'scroll') {
     render();
-    scrollTrigger = ScrollTrigger.create({ trigger: root, start: 'top 82%', once: true, onEnter: handleEnter });
+    // Igual que ScrollTrigger 'top 82%' + once, pero con IntersectionObserver (sin cargar el plugin entero)
+    scrollTrigger = new IntersectionObserver(
+      entries => {
+        const entry = entries[0];
+        if (!entry.isIntersecting && entry.boundingClientRect.top > 0) return;
+        scrollTrigger?.disconnect();
+        handleEnter();
+      },
+      { rootMargin: '0px 0px -18% 0px' }
+    );
+    scrollTrigger.observe(root);
   } else {
     play(trigger === 'loop');
   }
@@ -316,7 +324,7 @@ export function mountFoldText(target, options = {}) {
     window.removeEventListener('scroll', handleScroll, { capture: true });
     document.documentElement.removeEventListener('pointerleave', handleLeave);
     gsap.ticker.remove(relax);
-    scrollTrigger?.kill();
+    scrollTrigger?.disconnect();
     timeline?.kill();
     gsap.killTweensOf(pieces);
   };

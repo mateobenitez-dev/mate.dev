@@ -1,0 +1,35 @@
+# mate.dev
+
+> Web personal de Mateo (Mate), estudiante de Desarrollo de Software en Santa Fe capital, Argentina. Hace páginas y aplicaciones web a medida. El contacto es directo con él por WhatsApp.
+
+## Servicios
+
+No hay precios fijos: el precio se pasa por escrito después de charlar qué necesita el cliente.
+
+- Landing page: una página de 5 a 7 secciones, adaptada a celular, con botón y formulario directo a WhatsApp. Pensada para emprendimientos.
+- Sitio web completo: varias secciones o catálogo, panel para editar textos e imágenes, adaptado a celular. Pensado para pymes y marcas.
+- App web a medida: frontend y backend con base de datos, login de usuarios y roles, integraciones (Mercado Pago, mails, APIs), entregas por etapas. Pensada para sistemas y startups.
+
+## Cómo trabaja
+
+1. Charla por WhatsApp para ver qué se necesita.
+2. Propuesta con precio por escrito y lo que incluye.
+3. Construcción: el cliente ve el avance en un link.
+4. Lanzamiento en el dominio del cliente, con soporte si algo falla.
+
+## Trabajos
+
+- [BuildFit](https://buildfitar.mitiendanube.com/): tienda online en Tienda Nube con diseño personalizado por CSS.
+- [Tesla Computación](https://tesla-computacion.vercel.app/): sitio para un local de PCs de Santa Fe, con armador de PC en 10 pasos, stock real y panel de administración. Next.js y PostgreSQL.
+- [mate.dev](https://mateoacksbenitez-wq.github.io/mate.dev/): esta web. HTML, CSS, JavaScript, GSAP y WebGL, con un formulario que arma el mensaje de WhatsApp.
+
+## Gente de confianza
+
+- ByteFix: optimización avanzada de PC, de forma remota.
+- Tesla Computación: armado y reparación de PC en Santa Fe.
+
+## Contacto
+
+- [WhatsApp](https://wa.me/5493425772820): +54 9 342 577-2820
+- [GitHub](https://github.com/mateoacksbenitez-wq)
+- [Sitio](https://mateoacksbenitez-wq.github.io/mate.dev/)
