@@ -6,18 +6,18 @@
 <title>Mate · Desarrollo web a medida en Santa Fe | mate.dev</title>
 <meta name="description" content="Soy Mate, desarrollador web en Santa Fe, Argentina. Hago landing pages, sitios y apps a medida con front y back. Hablás directo conmigo por WhatsApp.">
 <link rel="canonical" href="https://matedev.com.ar/">
-<meta property="og:title" content="Mate · Desarrollo web a medida">
-<meta property="og:description" content="Landing pages, sitios y apps a medida con front y back. Hablás directo conmigo por WhatsApp.">
+<meta property="og:title" content="Mate · Futuro desarrollador de software">
+<meta property="og:description" content="Estudio Desarrollo de Software en Santa Fe y hago webs para comercios y emprendimientos.">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_AR">
 <meta property="og:url" content="https://matedev.com.ar/">
-<meta property="og:image" content="https://matedev.com.ar/assets/og-image.png">
+<meta property="og:image" content="https://matedev.com.ar/assets/og-image.png?v=2">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="mate.dev, desarrollo web a medida">
+<meta property="og:image:alt" content="Logo m. de Mate, futuro desarrollador de software">
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"ProfessionalService","name":"mate.dev","url":"https://matedev.com.ar/","image":"https://matedev.com.ar/assets/og-image.png","description":"Landing pages, sitios web y apps a medida con front y back.","telephone":"+5493425772820","areaServed":"AR","address":{"@type":"PostalAddress","addressLocality":"Santa Fe","addressRegion":"Santa Fe","addressCountry":"AR"},"founder":{"@type":"Person","name":"Mate","url":"https://github.com/mateoacksbenitez-wq","sameAs":["https://github.com/mateoacksbenitez-wq"]}}
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"mate.dev","url":"https://matedev.com.ar/","image":"https://matedev.com.ar/assets/og-image.png?v=2","description":"Landing pages, sitios web y apps a medida con front y back.","telephone":"+5493425772820","areaServed":"AR","address":{"@type":"PostalAddress","addressLocality":"Santa Fe","addressRegion":"Santa Fe","addressCountry":"AR"},"founder":{"@type":"Person","name":"Mate","url":"https://github.com/mateoacksbenitez-wq","sameAs":["https://github.com/mateoacksbenitez-wq"]}}
 </script>
 <meta name="theme-color" content="#2b2c2f">
 <link rel="icon" href="assets/favicon.ico" sizes="48x48">
@@ -76,7 +76,8 @@
 * { box-sizing: border-box; }
 html, body { overflow-x: clip; }
 html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-/* reduced-motion kill switch disabled */
+/* Reducir movimiento: solo frena lo que se repite en loop; las entradas y efectos al pasar el mouse siguen */
+@media (prefers-reduced-motion: reduce) { .status i, .note-in, .cmp-live { animation: none !important; } }
 body {
   background: var(--bg); color: var(--ink);
   font-family: var(--f-body); font-size: 17px; line-height: 1.6;
@@ -353,8 +354,6 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 .plan::after { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1px; background: radial-gradient(260px circle at var(--mx) var(--my), color-mix(in srgb, var(--accent) 90%, transparent), transparent 70%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); opacity: 0; transition: opacity .45s; pointer-events: none; }
 .plan:hover { transform: translateY(-6px); box-shadow: 0 40px 70px -28px rgba(0, 0, 0, .8), 0 10px 24px -10px rgba(0, 0, 0, .55); }
 .plan:hover::before, .plan:hover::after { opacity: 1; }
-.plan-num { position: absolute; top: 12px; right: 20px; z-index: -1; font-family: var(--f-display); font-weight: 800; font-size: 88px; line-height: 1; letter-spacing: -.04em; color: transparent; -webkit-text-stroke: 1px color-mix(in srgb, var(--line) 80%, transparent); pointer-events: none; transition: -webkit-text-stroke-color .45s; }
-.plan:hover .plan-num { -webkit-text-stroke-color: color-mix(in srgb, var(--accent) 40%, transparent); }
 .plan-icon { width: 46px; height: 46px; border-radius: 12px; display: grid; place-items: center; color: var(--accent); background: color-mix(in srgb, var(--accent) 14%, var(--bg)); border: 1px solid color-mix(in srgb, var(--accent) 45%, var(--line)); }
 .plan-icon svg { width: 24px; height: 24px; }
 .plan-top { display: flex; flex-direction: column; align-items: flex-start; gap: 10px; }
@@ -447,9 +446,9 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 .mock.m2 .blk { height: 20px; background: color-mix(in srgb, var(--steel) 30%, var(--surface)); }
 .mock.m3 { grid-template-columns: 26px 1fr; }
 .mock.m3 .side { grid-row: span 3; height: 52px; border-radius: 3px; background: color-mix(in srgb, var(--ink) 10%, var(--surface)); }
-.note-title { font-family: var(--f-mono); font-size: 10px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); padding: 10px 10px 6px; }
+.note-title { font-family: var(--f-mono); font-size: 11px; text-transform: uppercase; letter-spacing: .1em; color: var(--muted); padding: 10px 10px 6px; }
 .stack { display: flex; flex-wrap: wrap; gap: 4px; padding-inline: 10px; }
-.stack span { font-family: var(--f-mono); font-size: 10.5px; padding: 2px 6px; border-radius: 3px; background: color-mix(in srgb, var(--ink) 7%, var(--surface)); color: var(--ink); }
+.stack span { font-family: var(--f-mono); font-size: 11px; padding: 2px 6px; border-radius: 3px; background: color-mix(in srgb, var(--ink) 7%, var(--surface)); color: var(--ink); }
 .n3 { text-decoration: none; }
 .n3 .note-in { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); text-decoration: none; padding: 12px; align-content: space-between; }
 .n3 .note-in strong { font-family: var(--f-display); font-size: 17px; line-height: 1.05; font-stretch: 110%; }
@@ -563,6 +562,8 @@ footer { border-top: 1px solid var(--line); }
 footer a { text-decoration: none; }
 footer a:hover { color: var(--ink); }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 28px; color: var(--muted); font-size: 14px; }
+/* Pantallas táctiles: links de texto con zona de toque de 44px */
+@media (pointer: coarse) { .card-nav__link, article > h3 > a, footer a { display: inline-flex; align-items: center; min-height: 44px; } }
 
 .fab {
   position: fixed; z-index: 8;
@@ -673,46 +674,46 @@ img { max-width: 100%; }
         <div>
           <h2>Servicios</h2>
         </div>
-        <p>No tengo precios fijos. Te paso uno cuando sé qué necesitás.</p>
+        <p>El precio depende del tipo de proyecto que elijas y se define en el momento, hablando con vos.</p>
       </div>
       <div class="plans">
         <article class="plan">
-          <span class="plan-num" aria-hidden="true">01</span><span class="plan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18M7 13h6M7 16.5h10"/></svg></span>
+          <span class="plan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M3 9h18M7 13h6M7 16.5h10"/></svg></span>
           <div class="plan-top"><h3>Landing page</h3><span class="tag">1 página</span></div>
           <ul>
-            <li>Una página, de 5 a 7 secciones</li>
-            <li>Adaptada a celular</li>
-            <li>Botón y formulario directo a WhatsApp</li>
+            <li>Una sola página, 5 a 7 secciones, pensada para que te escriban</li>
+            <li>La armo mirando primero el celular</li>
+            <li>El formulario te llega ya armado a tu WhatsApp</li>
           </ul>
           <dl class="spec">
-            <div><dt>Ideal para</dt><dd>Emprendimientos</dd></div>
+            <div><dt>Ideal para</dt><dd>Si recién arrancás y querés estar online ya</dd></div>
           </dl>
           <a class="plan-cta" href="#contacto" data-plan="Landing page">Consultar por esto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
         </article>
         <article class="plan featured">
-          <span class="plan-num" aria-hidden="true">02</span><span class="plan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 17.5l9 5 9-5" opacity=".55"/></svg></span>
+          <span class="plan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/><path d="M3 17.5l9 5 9-5" opacity=".55"/></svg></span>
           <div class="plan-top"><h3>Sitio web completo</h3><span class="tag">Multi-página</span></div>
           <ul>
-            <li>Varias secciones o catálogo</li>
-            <li>Panel para editar textos e imágenes</li>
-            <li>Adaptado a celular</li>
+            <li>Varias secciones o un catálogo con tus productos</li>
+            <li>Cambiás textos y fotos vos, sin llamarme</li>
+            <li>Se ve bien en el celu y en la compu</li>
           </ul>
           <dl class="spec">
-            <div><dt>Ideal para</dt><dd>Pymes y marcas</dd></div>
+            <div><dt>Ideal para</dt><dd>Locales y marcas que ya venden y quieren ordenarse</dd></div>
           </dl>
           <a class="plan-cta" href="#contacto" data-plan="Sitio web completo">Consultar por esto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
         </article>
         <article class="plan">
-          <span class="plan-num" aria-hidden="true">03</span><span class="plan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg></span>
+          <span class="plan-icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M8 7l-5 5 5 5M16 7l5 5-5 5M14 4l-4 16"/></svg></span>
           <div class="plan-top"><h3>App web a medida</h3><span class="tag">Front + back</span></div>
           <ul>
-            <li>Frontend y backend con base de datos</li>
-            <li>Login de usuarios y roles</li>
-            <li>Integraciones: Mercado Pago, mails, APIs</li>
-            <li>Entregas por etapas</li>
+            <li>Cuando la web tiene que hacer cosas: turnos, stock, pedidos</li>
+            <li>Cada usuario entra con lo suyo: clientes, empleados, admin</li>
+            <li>Cobra con Mercado Pago y manda mails solo</li>
+            <li>Te la entrego por partes y la vas probando</li>
           </ul>
           <dl class="spec">
-            <div><dt>Ideal para</dt><dd>Sistemas y startups</dd></div>
+            <div><dt>Ideal para</dt><dd>Procesos que hoy hacés a mano o en un Excel</dd></div>
           </dl>
           <a class="plan-cta" href="#contacto" data-plan="App web a medida">Consultar por esto <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 17L17 7M8 7h9v9"/></svg></a>
         </article>
@@ -738,7 +739,7 @@ img { max-width: 100%; }
             <button class="f-hit" type="button" aria-expanded="false" aria-label="Abrir carpeta: BuildFit"></button>
           </div>
           <h3><a href="https://buildfitar.mitiendanube.com/" target="_blank" rel="noopener">BuildFit</a></h3>
-          <p class="desc">Tienda online en Tienda Nube, con diseño personalizado por CSS.</p>
+          <p class="desc">Una tienda en Tienda Nube que dejó de parecerse a todas las demás: le reescribí el diseño a mano con CSS.</p>
         </article>
         <article class="project">
           <div class="folder">
@@ -750,7 +751,7 @@ img { max-width: 100%; }
             <button class="f-hit" type="button" aria-expanded="false" aria-label="Abrir carpeta: Tesla Computación"></button>
           </div>
           <h3><a href="https://tesla-computacion.vercel.app/" target="_blank" rel="noopener">Tesla Computación</a></h3>
-          <p class="desc">Para un local de PCs de Santa Fe: armador de PC en 10 pasos con stock real y panel de administración.</p>
+          <p class="desc">Un local de Santa Fe quería que el cliente se arme la PC solo. Son 10 pasos, descuenta del stock real y el dueño lo maneja desde su panel.</p>
         </article>
         <article class="project">
           <div class="folder">
@@ -762,7 +763,7 @@ img { max-width: 100%; }
             <button class="f-hit" type="button" aria-expanded="false" aria-label="Abrir carpeta: mate.dev"></button>
           </div>
           <h3><a href="https://matedev.com.ar/" target="_blank" rel="noopener">mate.dev</a></h3>
-          <p class="desc">Esta web. GSAP, WebGL y un formulario que arma el mensaje de WhatsApp.</p>
+          <p class="desc">Esta misma web: el fondo animado, las carpetas y el formulario que te deja el mensaje listo en WhatsApp salieron de acá.</p>
         </article>
       </div>
       <p class="work-hint">Pasá el mouse o tocá una carpeta para abrirla.</p>
@@ -785,7 +786,7 @@ img { max-width: 100%; }
             <li>Ajuste a fondo de Windows: servicios, procesos y registro</li>
             <li>Drivers instalados limpios y BIOS configurado</li>
             <li>Menos latencia e input lag para jugar</li>
-            <li>Pruebas de rendimiento antes y después</li>
+            <li>Medís antes y después, así ves cuánto mejoró</li>
           </ul>
           <div class="friend-foot">
             <div class="who"><img class="partner-badge" src="assets/partners/bytefix.png" alt="Logo de ByteFix" width="120" height="120"><span>ByteFix<small>Optimización remota</small></span></div>
@@ -797,7 +798,7 @@ img { max-width: 100%; }
           <div><h3>Armado y reparación de PC</h3></div>
           <ul>
             <li>PC armada según tu uso y presupuesto</li>
-            <li>Armado prolijo y probado</li>
+            <li>Cables ordenados y la PC testeada antes de entregártela</li>
             <li>Windows y drivers instalados</li>
             <li>Diagnóstico, reparación y service</li>
           </ul>
@@ -818,10 +819,10 @@ img { max-width: 100%; }
         </div>
       </div>
       <div class="steps">
-        <div class="step"><span class="n">01 · Charla</span><h3>Me contás tu idea</h3><p>Por WhatsApp. Vemos qué necesitás.</p></div>
-        <div class="step"><span class="n">02 · Propuesta</span><h3>Te paso un precio</h3><p>Por escrito, con lo que incluye.</p></div>
-        <div class="step"><span class="n">03 · Construcción</span><h3>Lo ves mientras lo hago</h3><p>Te mando un link y lo vas mirando.</p></div>
-        <div class="step"><span class="n">04 · Lanzamiento</span><h3>La subo y sigo ahí</h3><p>La publico en tu dominio. Si algo falla, me escribís.</p></div>
+        <div class="step"><span class="n">01 · Charla</span><h3>Me contás qué querés</h3><p>Por WhatsApp, sin formularios largos. Si todavía no lo sabés, lo pensamos juntos.</p></div>
+        <div class="step"><span class="n">02 · Propuesta</span><h3>Te digo cuánto sale</h3><p>Por escrito y con todo lo que incluye, para que no haya sorpresas.</p></div>
+        <div class="step"><span class="n">03 · Construcción</span><h3>La mirás crecer</h3><p>Te paso un link y opinás mientras la armo, no cuando ya está cerrada.</p></div>
+        <div class="step"><span class="n">04 · Lanzamiento</span><h3>La publico y no desaparezco</h3><p>Sale en tu dominio. Si algo se rompe, me escribís y lo arreglo.</p></div>
       </div>
     </div>
   </section>
@@ -1073,7 +1074,7 @@ document.getElementById("copy").addEventListener("click", e => {
   });
 });
 </script>
-<script src="assets/app.js?v=54" defer></script>
+<script src="assets/app.js?v=55" defer></script>
 <!-- Analíticas de visitas: GoatCounter, sin cookies ni datos personales -->
 <script data-goatcounter="https://matedev.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 <script>

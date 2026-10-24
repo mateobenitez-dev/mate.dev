@@ -193,7 +193,8 @@ document.querySelectorAll('.btn').forEach(btn => {
 });
 
 // ---- Cursor de mira (TargetCursor) en toda la página ----
-mountTargetCursor({
+// Con "reducir movimiento" queda el cursor del sistema
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) mountTargetCursor({
   targetSelector: 'a, button, input, textarea, select, .chips label, [role="button"], .card-nav__link, .cursor-target, [data-cursor-label]',
   spinDuration: 0,
   hoverDuration: 0.22,
