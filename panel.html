@@ -181,7 +181,10 @@ let token = leer(sessionStorage, KEY + "-token");
 // Las visitas de Mate desde este navegador no se cuentan (count.js lee "skipgc")
 escribir(localStorage, "skipgc", "t");
 const BLOQUEADO = "El navegador bloqueó la conexión con GoatCounter. Si usás Brave, tocá el león de la barra de direcciones y apagá los escudos para matedev.com.ar (también sirve desactivar el bloqueador de anuncios en esta página).";
-const guardar = t => { token = t; escribir(sessionStorage, KEY + "-token", t); };
+const guardar = t => {
+  token = t; escribir(sessionStorage, KEY + "-token", t);
+  if (!t) try { Object.keys(sessionStorage).filter(k => k.startsWith(KEY + "-c:")).forEach(k => sessionStorage.removeItem(k)); } catch {}
+};
 const sellado = () => leer(localStorage, KEY + "-sealed");
 
 const b64 = buf => btoa(String.fromCharCode(...new Uint8Array(buf)));
@@ -203,15 +206,32 @@ async function descifrar(sellado, pass) {
 
 $("dash").href = `https://${GC}.goatcounter.com/`;
 
+// GoatCounter permite 4 pedidos por segundo y 500 por hora, y el preflight de CORS también cuenta:
+// los pedidos van de a uno, separados, y se guardan 5 minutos para no gastar el cupo al cambiar de período
+const espera = ms => new Promise(r => setTimeout(r, ms));
+let cola = Promise.resolve();
 async function api(ruta, params = {}) {
   const u = new URL(API + ruta);
   Object.entries(params).forEach(([k, v]) => u.searchParams.set(k, v));
-  let r;
-  try { r = await fetch(u, { headers: { Authorization: `Bearer ${token}` } }); }
-  catch { throw Object.assign(new Error("red"), { bloqueado: true }); }
-  if (r.status === 401 || r.status === 403) throw Object.assign(new Error("auth"), { auth: true });
-  if (!r.ok) throw new Error(`HTTP ${r.status}`);
-  return r.json();
+  const cache = leer(sessionStorage, KEY + "-c:" + u);
+  if (cache) { const c = JSON.parse(cache); if (Date.now() - c.t < 300000) return c.d; }
+
+  const turno = cola.then(async () => {
+    for (let intento = 0; ; intento++) {
+      let r;
+      try { r = await fetch(u, { headers: { Authorization: `Bearer ${token}` } }); }
+      catch { throw Object.assign(new Error("red"), { bloqueado: true }); }
+      if (r.status === 429 && intento < 3) { await espera(1500 * (intento + 1)); continue; }
+      if (r.status === 401 || r.status === 403) throw Object.assign(new Error("auth"), { auth: true });
+      if (r.status === 429) throw new Error("demasiados pedidos seguidos, esperá un minuto");
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      return r.json();
+    }
+  });
+  cola = turno.catch(() => {}).then(() => espera(600));
+  const d = await turno;
+  escribir(sessionStorage, KEY + "-c:" + u, JSON.stringify({ t: Date.now(), d }));
+  return d;
 }
 
 const ymd = d => `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, "0")}-${String(d.getDate()).padStart(2, "0")}`;
@@ -281,12 +301,9 @@ async function cargar() {
   ini.setDate(hoy.getDate() - (dias - 1));
   const p = { start: ymd(ini), end: ymd(hoy) };
 
-  // La API permite 4 pedidos por segundo: van en dos tandas de 3
-  const [total, hits, paises] = await Promise.all([
-    api("/stats/total", p), api("/stats/hits", { ...p, limit: 30 }), api("/stats/locations", { ...p, limit: 8 })
-  ]);
-  await new Promise(r => setTimeout(r, 1000));
-  const [refs, sistemas] = await Promise.all([
+  // api() ya los ordena de a uno respetando el límite de GoatCounter
+  const [total, hits, paises, refs, sistemas] = await Promise.all([
+    api("/stats/total", p), api("/stats/hits", { ...p, limit: 30 }), api("/stats/locations", { ...p, limit: 8 }),
     api("/stats/toprefs", { ...p, limit: 8 }), api("/stats/systems", { ...p, limit: 6 })
   ]);
 
