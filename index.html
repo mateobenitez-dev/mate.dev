@@ -17,7 +17,7 @@
 <meta property="og:image:alt" content="Logo m. de Mate, desarrollador de software">
 <meta name="twitter:card" content="summary_large_image">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"ProfessionalService","name":"mate.dev","url":"https://matedev.com.ar/","image":"https://matedev.com.ar/assets/og-image.png?v=2","description":"Landing pages, sitios web y apps a medida con front y back.","telephone":"+5493425772820","areaServed":"AR","address":{"@type":"PostalAddress","addressLocality":"Santa Fe","addressRegion":"Santa Fe","addressCountry":"AR"},"founder":{"@type":"Person","name":"Mate","url":"https://github.com/mateobenitez-dev","sameAs":["https://github.com/mateobenitez-dev"]}}
+{"@context":"https://schema.org","@type":"ProfessionalService","name":"mate.dev","url":"https://matedev.com.ar/","image":"https://matedev.com.ar/assets/og-image.png?v=2","description":"Landing pages, sitios web y apps a medida con front y back.","telephone":"+5493425772820","areaServed":"AR","address":{"@type":"PostalAddress","addressLocality":"Santa Fe","addressRegion":"Santa Fe","addressCountry":"AR"},"founder":{"@type":"Person","name":"Mate","url":"https://github.com/mateobenitez-dev","sameAs":["https://github.com/mateobenitez-dev","https://instagram.com/matedevv"]}}
 </script>
 <meta name="theme-color" content="#2b2c2f">
 <link rel="icon" href="assets/favicon.ico" sizes="48x48">
@@ -511,6 +511,10 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 .contact .lead { color: var(--muted); margin-top: 18px; max-width: 42ch; }
 .number { margin-top: 28px; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
 .number strong { font-family: var(--f-mono); font-weight: 500; font-size: 20px; user-select: all; }
+.ig-link { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; min-height: var(--control-h-sm); color: var(--muted); font-size: 14px; text-decoration: none; transition: color .2s ease; }
+.ig-link svg { width: 18px; height: 18px; }
+.ig-link:hover { color: var(--ink); }
+.ig-link .mono { color: var(--ink); }
 .copy { font: inherit; font-size: 13px; min-height: var(--control-h-sm); padding: 0 14px; border-radius: var(--radius-pill); background: transparent; color: var(--ink); border: 1px solid var(--line); cursor: pointer; }
 
 .composer { --mx: 50%; --my: 0%; position: relative; isolation: isolate; overflow: hidden; background: linear-gradient(180deg, rgba(58, 59, 64, .72), rgba(43, 44, 47, .86)); -webkit-backdrop-filter: blur(14px); backdrop-filter: blur(14px); color: var(--ink); border: 1px solid var(--field-border); border-radius: 22px; padding: 0 26px 24px; display: grid; gap: 20px; box-shadow: 0 40px 80px -30px rgba(0, 0, 0, .8), 0 10px 24px -12px rgba(0, 0, 0, .5), inset 0 1px 0 rgba(243, 242, 241, .06); }
@@ -561,7 +565,9 @@ section { padding-block: clamp(64px, 9vw, 112px); }
 footer { border-top: 1px solid var(--line); }
 footer a { text-decoration: none; }
 footer a:hover { color: var(--ink); }
+.foot-links { display: flex; flex-wrap: wrap; gap: 20px; }
 footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; padding-block: 28px; color: var(--muted); font-size: 14px; }
+@media (max-width: 600px) { footer .wrap { padding-bottom: 96px; } }
 /* Pantallas táctiles: links de texto con zona de toque de 44px */
 @media (pointer: coarse) { .card-nav__link, article > h3 > a, footer a { display: inline-flex; align-items: center; min-height: 44px; } }
 
@@ -836,6 +842,7 @@ img { max-width: 100%; }
           <strong id="num">+54 9 342 577-2820</strong>
           <button class="copy" id="copy" type="button">Copiar número</button>
         </div>
+        <a class="ig-link" href="https://instagram.com/matedevv" target="_blank" rel="noopener"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r=".6" fill="currentColor"/></svg>Instagram <span class="mono">@matedevv</span></a>
       </div>
       <form class="composer" id="composer">
         <div class="cmp-head">
@@ -866,7 +873,10 @@ img { max-width: 100%; }
 <footer>
   <div class="wrap">
     <span>© 2026 mate.dev · Desarrollo web</span>
-    <a class="mono" href="https://github.com/mateobenitez-dev" target="_blank" rel="noopener">github.com/mateobenitez-dev</a>
+    <span class="foot-links">
+      <a class="mono" href="https://instagram.com/matedevv" target="_blank" rel="noopener">@matedevv</a>
+      <a class="mono" href="https://github.com/mateobenitez-dev" target="_blank" rel="noopener">github.com/mateobenitez-dev</a>
+    </span>
   </div>
 </footer>
 
