@@ -22,7 +22,7 @@ const LOGO_SRC = `data:image/svg+xml;charset=utf-8,${encodeURIComponent(
 const heroCard = document.getElementById('hero-card');
 if (heroCard) {
   mountProfileCard(heroCard, {
-    avatarUrl: 'assets/mate.jpg',
+    avatarUrl: 'assets/mate-foto.jpg',
     name: 'Mate',
     title: 'Desarrollador de Software',
     handle: '',
