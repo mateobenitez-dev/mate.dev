@@ -24,7 +24,7 @@ if (heroCard) {
   mountProfileCard(heroCard, {
     avatarUrl: 'assets/mate.jpg',
     name: 'Mate',
-    title: 'Futuro Desarrollador de Software',
+    title: 'Desarrollador de Software',
     handle: '',
     status: 'Santa Fe, Argentina',
     statusColor: TINT,
