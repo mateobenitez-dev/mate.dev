@@ -237,7 +237,7 @@ export function applySpecular(button, options = {}) {
   gl.bindVertexArray(null);
 
   const probe = document.createElement('canvas').getContext('2d', { willReadFrequently: true });
-  const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches ?? false;
+  const reduce = false;
   const colors = new Map();
   const view = { width: 1, height: 1, ratio: 1 };
   const pointer = { x: 0, y: 0, known: false };
