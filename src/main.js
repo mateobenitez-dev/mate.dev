@@ -7,6 +7,7 @@ import { mountReflectiveCard } from './reflective-card.js';
 import { mountDotGrid } from './dot-grid.js';
 import { mountCardNav } from './card-nav.js';
 import { mountFoldText } from './fold-text.js';
+import { mountIntro } from './intro.js';
 
 const css = name => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
 const TINT = css('--accent');
@@ -128,12 +129,14 @@ const fold = {
   perspective: 700,
   creaseShading: 0.55
 };
+// Si está la intro, el título y el párrafo del inicio se arman recién cuando se abre (así se ven)
+const afterIntro = fn => (document.getElementById('intro') ? window.addEventListener('matedev:intro-open', fn, { once: true }) : fn());
 const heroTitle = document.querySelector('.hero h1');
-if (heroTitle) mountFoldText(heroTitle, { ...fold, trigger: 'mount', stagger: 0.012, duration: 0.3 });
+if (heroTitle) afterIntro(() => mountFoldText(heroTitle, { ...fold, trigger: 'mount', stagger: 0.012, duration: 0.3 }));
 document.querySelectorAll('main h2, .steps h3').forEach(title => mountFoldText(title, { ...fold, trigger: 'scroll', stagger: 0.012, duration: 0.28 }));
 // Párrafos de intro: por palabra, si no con tantas letras tardaría una eternidad
 const heroLead = document.querySelector('.hero-row > p');
-if (heroLead) mountFoldText(heroLead, { ...fold, trigger: 'mount', splitBy: 'word', stagger: 0.01, duration: 0.25, foldAngle: 80 });
+if (heroLead) afterIntro(() => mountFoldText(heroLead, { ...fold, trigger: 'mount', splitBy: 'word', stagger: 0.01, duration: 0.25, foldAngle: 80 }));
 document.querySelectorAll('.contact .lead').forEach(p => mountFoldText(p, { ...fold, trigger: 'scroll', splitBy: 'word', stagger: 0.01, duration: 0.25, foldAngle: 80 }));
 
 // ---- Gente de confianza: tarjetas ReflectiveCard (antes que los botones, así el de WhatsApp queda adentro) ----
@@ -227,4 +230,5 @@ if (matchMedia('(min-width: 900px) and (hover: hover)').matches) mountGradualBlu
 const bgBox = document.querySelector('.page-bg');
 if (bgBox) mountDotGrid(bgBox);
 
-
+// ---- Intro animada (al final, así la barra de arriba ya está armada y el logo sabe a dónde volar) ----
+mountIntro();
