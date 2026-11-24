@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tu compra | mate.dev</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#2b2c2f">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="licencias.css">
+<style> main { max-width: 560px; } </style>
+</head>
+<body>
+<main>
+  <nav class="nav">
+    <a class="logo" href="../">m<span>.</span></a>
+    <a class="volver" href="./">Ver más software</a>
+  </nav>
+
+  <section class="card" aria-live="polite">
+    <p class="code" id="producto">Tu compra</p>
+    <h1 id="titulo">Confirmando el pago…</h1>
+    <p class="lead" id="texto">Mercado Pago nos avisa en unos segundos. No cierres esta página.</p>
+    <div id="lista" class="hidden">
+      <div class="key" id="key"></div>
+      <p class="lead" id="vence"></p>
+      <div class="row">
+        <button class="primary" type="button" id="copiar">Copiar key</button>
+        <a id="descarga" class="hidden" href="#">Descargar el programa</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script type="module">
+import { FUNCIONES, fecha } from "./config.js";
+const $ = (id) => document.getElementById(id);
+const orden = new URLSearchParams(location.search).get("orden");
+let intentos = 0;
+
+async function consultar() {
+  if (!orden) return fin("No encontramos la compra", "Si pagaste, escribime por WhatsApp y lo resolvemos.");
+  const r = await fetch(`${FUNCIONES}/checkout?orden=${encodeURIComponent(orden)}`).catch(() => null);
+  const d = r && r.ok ? await r.json() : null;
+  if (d?.producto) $("producto").textContent = `${d.producto} · ${d.plan}`;
+  if (d?.estado === "pagada" && d.key) {
+    $("titulo").textContent = "¡Listo! Esta es tu key";
+    $("texto").textContent = "Pegala en el sistema para activarlo. También te la mandé por mail.";
+    $("key").textContent = d.key;
+    $("vence").textContent = d.vence ? `Vence el ${fecha(d.vence)}.` : "Es de por vida.";
+    const link = d.url_app || d.url_descarga;
+    if (link) { $("descarga").href = link; $("descarga").textContent = d.url_app ? "Entrar al sistema" : "Descargar el programa"; $("descarga").classList.remove("hidden"); }
+    $("lista").classList.remove("hidden");
+    return;
+  }
+  if (d?.estado === "rechazada") return fin("El pago no se aprobó", "Podés volver a intentarlo con otro medio de pago.");
+  if (++intentos > 40) {
+    return fin("El pago sigue pendiente", "Si pagaste en efectivo o por transferencia puede tardar. Te llega la key por mail cuando se acredite.");
+  }
+  setTimeout(consultar, 3000);
+}
+function fin(t, x) { $("titulo").textContent = t; $("texto").textContent = x; }
+$("copiar").onclick = async () => { await navigator.clipboard.writeText($("key").textContent); $("copiar").textContent = "Copiada"; };
+consultar();
+</script>
+</body>
+</html>

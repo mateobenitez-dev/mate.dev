@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Software | mate.dev</title>
+<meta name="description" content="Programas hechos por Mate. Pagás con Mercado Pago y te llega la key al instante.">
+<meta name="theme-color" content="#2b2c2f">
+<link rel="canonical" href="https://matedev.com.ar/software/">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="licencias.css">
+</head>
+<body>
+<main>
+  <nav class="nav">
+    <a class="logo" href="../">m<span>.</span></a>
+    <a class="volver" href="../">Volver a la web</a>
+  </nav>
+
+  <header>
+    <p class="code">Software</p>
+    <h1>Programas listos para usar</h1>
+    <p class="lead">Elegís un plan, pagás con Mercado Pago y te llega la key al momento. La pegás en el sistema y listo.</p>
+  </header>
+
+  <div id="rubros" class="tabs" role="group" aria-label="Rubros" style="margin-top:32px"></div>
+  <section id="productos" class="productos" aria-live="polite">
+    <p class="vacio">Cargando…</p>
+  </section>
+</main>
+
+<dialog id="compra">
+  <p class="code" id="c-producto"></p>
+  <h2 id="c-plan"></h2>
+  <form id="c-form">
+    <label class="field"><span>Tu mail (ahí te llega la key)</span>
+      <input id="c-email" type="email" autocomplete="email" required></label>
+    <label class="field"><span>Tu nombre</span>
+      <input id="c-nombre" type="text" autocomplete="name"></label>
+    <label class="field hidden" id="c-renovar-wrap"><span>¿Ya tenés una key? Pegala para renovarla (opcional)</span>
+      <input id="c-renovar" type="text" spellcheck="false" placeholder="MATE-XXXX-XXXX-XXXX"></label>
+    <div class="row">
+      <button class="primary" type="submit" id="c-ir">Ir a pagar</button>
+      <button type="button" id="c-cerrar">Cancelar</button>
+    </div>
+    <p class="msg" id="c-msg" role="alert"></p>
+  </form>
+  <div id="c-prueba" class="hidden">
+    <p>Esta es tu key de prueba:</p>
+    <div class="key" id="c-key"></div>
+    <p class="lead" id="c-vence"></p>
+    <div class="row"><button class="primary" type="button" id="c-copiar">Copiar key</button>
+      <a id="c-descarga" class="hidden" href="#">Descargar el programa</a></div>
+  </div>
+</dialog>
+
+<script type="module">
+import { SUPABASE_URL, SUPABASE_KEY, FUNCIONES, pesos, fecha, duracionTexto, esc } from "./config.js";
+
+const $ = (id) => document.getElementById(id);
+const dlg = $("compra");
+let planActual = null;
+
+async function cargar() {
+  const r = await fetch(`${SUPABASE_URL}/rest/v1/productos?select=*,planes(*)&order=orden,created_at`, {
+    headers: { apikey: SUPABASE_KEY },
+  }).catch(() => null);
+  todos = r?.ok ? await r.json() : [];
+  const rubros = [...new Set(todos.map((p) => p.rubro).filter(Boolean))];
+  $("rubros").innerHTML = rubros.length > 1
+    ? [["", "Todos"], ...rubros.map((x) => [x, x])].map(([v, t]) => `<button type="button" data-rubro="${esc(v)}" aria-selected="${v === rubro}">${esc(t)}</button>`).join("")
+    : "";
+  pintar();
+}
+let todos = [], rubro = "";
+$("rubros").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-rubro]"); if (!b) return;
+  rubro = b.dataset.rubro;
+  document.querySelectorAll("[data-rubro]").forEach((x) => x.setAttribute("aria-selected", x === b));
+  pintar();
+});
+function pintar() {
+  const productos = todos.filter((p) => !rubro || p.rubro === rubro);
+  const cont = $("productos");
+  if (!productos.length) {
+    cont.innerHTML = `<p class="vacio">Pronto vas a encontrar acá los programas. Si querés uno a medida, <a href="../#contacto">escribime</a>.</p>`;
+    return;
+  }
+  cont.innerHTML = productos.map((p) => {
+    const planes = (p.planes || []).filter((pl) => pl.activo).sort((a, b) => a.orden - b.orden || a.precio - b.precio);
+    return `<article class="card producto">
+      ${p.imagen_url ? `<img src="${esc(p.imagen_url)}" alt="" loading="lazy">` : ""}
+      <div>${p.rubro ? `<p class="code">${esc(p.rubro)}</p>` : ""}<h2>${esc(p.nombre)}</h2>
+        <p class="det" style="color:var(--line);font-size:13px;margin:6px 0 0">${p.entrega === "web" ? "Se usa desde el navegador, en la compu o el celu" : "Programa para instalar en Windows"}</p>${p.descripcion ? `<p class="lead">${esc(p.descripcion)}</p>` : ""}</div>
+      <div class="planes">${planes.map((pl, i) => `
+        <div class="plan${pl.tipo === "suscripcion" && i > 0 ? " destacado" : ""}">
+          <span class="label">${esc(pl.nombre)}</span>
+          <span class="precio">${pl.tipo === "prueba" ? "Gratis" : pesos(pl.precio, pl.moneda)}</span>
+          <span class="det">${duracionTexto(pl)}${pl.max_equipos > 1 ? ` · hasta ${pl.max_equipos} equipos` : ""}</span>
+          <button class="${pl.tipo === "prueba" ? "" : "primary"}" type="button" data-plan='${esc(JSON.stringify({ ...pl, producto: p.nombre }))}'>
+            ${pl.tipo === "prueba" ? "Probar gratis" : pl.tipo === "suscripcion" ? "Suscribirme" : "Comprar"}</button>
+        </div>`).join("")}
+      </div>
+    </article>`;
+  }).join("");
+}
+
+$("productos").addEventListener("click", (e) => {
+  const b = e.target.closest("button[data-plan]");
+  if (!b) return;
+  planActual = JSON.parse(b.dataset.plan);
+  $("c-producto").textContent = planActual.producto;
+  $("c-plan").textContent = `${planActual.nombre} · ${planActual.tipo === "prueba" ? "Gratis" : pesos(planActual.precio, planActual.moneda)}`;
+  $("c-ir").textContent = planActual.tipo === "prueba" ? "Quiero la prueba" : "Ir a pagar";
+  $("c-renovar-wrap").classList.toggle("hidden", planActual.tipo !== "unico");
+  $("c-form").classList.remove("hidden");
+  $("c-prueba").classList.add("hidden");
+  $("c-msg").textContent = "";
+  dlg.showModal();
+});
+$("c-cerrar").onclick = () => dlg.close();
+
+$("c-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  $("c-ir").disabled = true;
+  $("c-msg").textContent = "";
+  try {
+    const r = await fetch(`${FUNCIONES}/checkout`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        plan_id: planActual.id, email: $("c-email").value.trim(), nombre: $("c-nombre").value.trim(),
+        renovar_key: $("c-renovar").value.trim() || undefined,
+      }),
+    });
+    const d = await r.json();
+    if (!r.ok) throw new Error(d.error || "No se pudo seguir.");
+    if (d.tipo === "prueba") {
+      $("c-form").classList.add("hidden");
+      $("c-prueba").classList.remove("hidden");
+      $("c-key").textContent = d.key;
+      $("c-vence").textContent = `Dura hasta el ${fecha(d.vence)}. También te la mandé por mail.`;
+      const link = d.url_app || d.url_descarga;
+      if (link) { $("c-descarga").href = link; $("c-descarga").textContent = d.url_app ? "Entrar al sistema" : "Descargar el programa"; $("c-descarga").classList.remove("hidden"); }
+    } else {
+      location.href = d.url;
+    }
+  } catch (err) {
+    $("c-msg").textContent = err.message;
+  } finally {
+    $("c-ir").disabled = false;
+  }
+});
+$("c-copiar").onclick = async () => {
+  await navigator.clipboard.writeText($("c-key").textContent);
+  $("c-copiar").textContent = "Copiada";
+};
+
+cargar();
+</script>
+</body>
+</html>
