@@ -1,0 +1,450 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Licencias | mate.dev</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#2b2c2f">
+<link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=Figtree:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="licencias.css">
+</head>
+<body>
+<main>
+
+  <!-- Ingreso -->
+  <section id="login" class="card hidden" style="max-width:460px;margin:10vh auto 0">
+    <p class="code">Panel privado</p>
+    <h1>Licencias</h1>
+    <form id="login-form" style="display:grid;gap:10px;margin-top:18px">
+      <input id="l-email" type="email" autocomplete="email" placeholder="Mail" aria-label="Mail" required>
+      <input id="l-pass" type="password" autocomplete="current-password" minlength="8" placeholder="Contraseña" aria-label="Contraseña" required>
+      <div class="row">
+        <button class="primary" type="submit">Entrar</button>
+        <button type="button" id="l-crear">Crear mi usuario</button>
+      </div>
+    </form>
+    <p class="msg" id="l-msg" role="alert"></p>
+  </section>
+
+  <!-- Panel -->
+  <section id="panel" class="hidden">
+    <div class="top">
+      <div>
+        <p class="code">Panel privado</p>
+        <h1>Licencias</h1>
+      </div>
+      <div class="tabs" role="tablist">
+        <button type="button" role="tab" data-tab="licencias" aria-selected="true">Licencias</button>
+        <button type="button" role="tab" data-tab="software">Software y planes</button>
+        <button type="button" role="tab" data-tab="ventas">Ventas</button>
+        <button type="button" role="tab" data-tab="nueva">Crear key</button>
+      </div>
+    </div>
+
+    <div class="tiles">
+      <div class="card tile"><p class="label">Activas</p><div class="n" id="t-activas">—</div><div class="sub">licencias funcionando</div></div>
+      <div class="card tile"><p class="label">Vencen pronto</p><div class="n" id="t-pronto">—</div><div class="sub">en los próximos 7 días</div></div>
+      <div class="card tile"><p class="label">Vencidas</p><div class="n" id="t-vencidas">—</div><div class="sub" id="t-gracia"></div></div>
+      <div class="card tile"><p class="label">Cobrado</p><div class="n" id="t-cobrado">—</div><div class="sub">últimos 30 días</div></div>
+    </div>
+
+    <!-- Licencias -->
+    <div data-panel="licencias">
+      <div class="filtros">
+        <input id="f-buscar" type="search" placeholder="Buscar por key, mail o nombre" aria-label="Buscar">
+        <select id="f-estado" aria-label="Estado">
+          <option value="">Todos los estados</option>
+          <option value="activa">Activas</option>
+          <option value="en_gracia">En gracia</option>
+          <option value="vencida">Vencidas</option>
+          <option value="pausada">Pausadas</option>
+          <option value="revocada">Revocadas</option>
+        </select>
+        <select id="f-producto" aria-label="Software"><option value="">Todo el software</option></select>
+      </div>
+      <div class="card scroll">
+        <table class="tabla">
+          <thead><tr><th>Key</th><th>Cliente</th><th>Software</th><th>Estado</th><th>Vence</th><th>Uso</th></tr></thead>
+          <tbody id="lic-body"><tr><td colspan="6">Cargando…</td></tr></tbody>
+        </table>
+      </div>
+      <div id="detalle" class="card detalle hidden"></div>
+    </div>
+
+    <!-- Software -->
+    <div data-panel="software" class="hidden">
+      <div class="grid2">
+        <form id="prod-form" class="card" style="display:grid;gap:10px">
+          <h2 id="prod-titulo">Nuevo software</h2>
+          <input type="hidden" id="p-id">
+          <label class="field"><span>Nombre</span><input id="p-nombre" required></label>
+          <label class="field"><span>Identificador (va en el código del programa, sin espacios)</span><input id="p-slug" pattern="[a-z0-9-]+" required placeholder="mi-programa"></label>
+          <label class="field"><span>Rubro (para agrupar en la tienda)</span><input id="p-rubro" list="rubros" placeholder="Gastronomía, Comercios, Talleres…"></label>
+          <datalist id="rubros"></datalist>
+          <label class="field"><span>Cómo se usa</span>
+            <select id="p-entrega"><option value="web">Online, desde el navegador</option><option value="escritorio">Programa para instalar</option></select></label>
+          <label class="field" id="p-app-wrap"><span>Link para entrar al sistema (software online)</span><input id="p-app" type="url" placeholder="https://…"></label>
+          <label class="field"><span>Descripción corta</span><textarea id="p-desc"></textarea></label>
+          <label class="field"><span>Imagen (URL, opcional)</span><input id="p-img" type="url"></label>
+          <label class="field" id="p-desc-wrap"><span>Link de descarga (se muestra después de pagar)</span><input id="p-desc-url" type="url"></label>
+          <label class="row"><input id="p-activo" type="checkbox" checked style="width:auto;min-height:auto"> Visible en la tienda</label>
+          <div class="row"><button class="primary" type="submit">Guardar</button><button type="button" id="p-nuevo">Limpiar</button></div>
+          <p class="msg" id="p-msg"></p>
+        </form>
+        <form id="plan-form" class="card" style="display:grid;gap:10px">
+          <h2>Agregar plan</h2>
+          <label class="field"><span>Software</span><select id="pl-producto" required></select></label>
+          <label class="field"><span>Nombre del plan</span><input id="pl-nombre" required placeholder="Mensual, Anual, Para siempre…"></label>
+          <label class="field"><span>Tipo</span>
+            <select id="pl-tipo">
+              <option value="suscripcion">Suscripción (se cobra sola)</option>
+              <option value="unico">Pago único</option>
+              <option value="prueba">Prueba gratis</option>
+            </select></label>
+          <div class="grid2" style="gap:10px">
+            <label class="field"><span>Precio (ARS)</span><input id="pl-precio" type="number" min="0" step="1" value="0"></label>
+            <label class="field" id="pl-frec-wrap"><span>Cobrar cada (meses)</span><input id="pl-frec" type="number" min="1" value="1"></label>
+            <label class="field"><span>Días que dura (vacío = de por vida)</span><input id="pl-dias" type="number" min="1" value="30"></label>
+            <label class="field"><span>Equipos por key</span><input id="pl-equipos" type="number" min="1" value="1"></label>
+            <label class="field"><span>Días de gracia</span><input id="pl-gracia" type="number" min="0" value="3"></label>
+          </div>
+          <button class="primary" type="submit">Agregar plan</button>
+          <p class="msg" id="pl-msg"></p>
+        </form>
+      </div>
+      <div id="prod-lista" style="display:grid;gap:12px;margin-top:12px"></div>
+    </div>
+
+    <!-- Ventas -->
+    <div data-panel="ventas" class="hidden">
+      <div class="card scroll">
+        <table class="tabla">
+          <thead><tr><th>Fecha</th><th>Mail</th><th>Monto</th><th>Estado</th><th>Pago MP</th><th>Key</th></tr></thead>
+          <tbody id="ventas-body"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- Nueva key -->
+    <div data-panel="nueva" class="hidden">
+      <form id="nueva-form" class="card" style="display:grid;gap:10px;max-width:520px">
+        <h2>Crear una key a mano</h2>
+        <p class="lead" style="margin:0">Para regalar, para un cliente que te pagó por transferencia o para probar.</p>
+        <label class="field"><span>Software</span><select id="n-producto" required></select></label>
+        <label class="field"><span>Plan (opcional)</span><select id="n-plan"><option value="">Sin plan</option></select></label>
+        <label class="field"><span>Mail del cliente (opcional)</span><input id="n-email" type="email"></label>
+        <label class="field"><span>Nombre (opcional)</span><input id="n-nombre"></label>
+        <div class="grid2" style="gap:10px">
+          <label class="field"><span>Días (vacío = de por vida)</span><input id="n-dias" type="number" min="1" value="30"></label>
+          <label class="field"><span>Equipos</span><input id="n-equipos" type="number" min="1" value="1"></label>
+        </div>
+        <label class="field"><span>Notas</span><input id="n-notas"></label>
+        <button class="primary" type="submit">Crear key</button>
+        <p class="msg" id="n-msg"></p>
+        <div id="n-out" class="hidden"><div class="key" id="n-key"></div><button type="button" id="n-copiar">Copiar</button></div>
+      </form>
+    </div>
+
+    <div class="row" style="justify-content:space-between;margin-top:28px;color:var(--line);font-size:13px">
+      <span id="quien"></span>
+      <button type="button" class="chico" id="salir">Salir</button>
+    </div>
+  </section>
+</main>
+<div class="toast" id="toast"></div>
+
+<script type="module">
+import { createClient } from "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/+esm";
+import { SUPABASE_URL, SUPABASE_KEY, pesos, fecha, duracionTexto, esc } from "./config.js";
+
+const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+const $ = (id) => document.getElementById(id);
+let productos = [], licencias = [], seleccion = null;
+
+function toast(t) { const el = $("toast"); el.textContent = t; el.classList.add("on"); setTimeout(() => el.classList.remove("on"), 2200); }
+const ESTADOS = { activa: "Activa", en_gracia: "En gracia", vencida: "Vencida", pausada: "Pausada", revocada: "Revocada", cancelada: "Cancelada" };
+const pill = (e) => `<span class="pill ${esc(e)}">${ESTADOS[e] || esc(e)}</span>`;
+const horas = (m) => m >= 60 ? `${Math.round(m / 6) / 10} h` : `${m} min`;
+
+// ---------- Ingreso ----------
+async function iniciar() {
+  const { data: { session } } = await sb.auth.getSession();
+  if (!session) return mostrarLogin();
+  const { data: esAdmin } = await sb.rpc("es_admin");
+  if (!esAdmin) {
+    mostrarLogin(`Entraste como ${session.user.email}, pero ese usuario todavía no es administrador.`);
+    return;
+  }
+  $("login").classList.add("hidden");
+  $("panel").classList.remove("hidden");
+  $("quien").textContent = session.user.email;
+  await cargarTodo();
+}
+function mostrarLogin(msg = "") { $("panel").classList.add("hidden"); $("login").classList.remove("hidden"); $("l-msg").textContent = msg; }
+
+$("login-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const { error } = await sb.auth.signInWithPassword({ email: $("l-email").value.trim(), password: $("l-pass").value });
+  if (error) return ($("l-msg").textContent = error.message === "Email not confirmed"
+    ? "Falta confirmar el mail: abrí el link que te llegó." : "Mail o contraseña incorrectos.");
+  iniciar();
+});
+$("l-crear").onclick = async () => {
+  if (!$("login-form").reportValidity()) return;
+  const { error } = await sb.auth.signUp({ email: $("l-email").value.trim(), password: $("l-pass").value,
+    options: { emailRedirectTo: location.href } });
+  $("l-msg").textContent = error ? error.message : "Listo. Confirmá el mail que te llegó y después entrá.";
+};
+$("salir").onclick = async () => { await sb.auth.signOut(); mostrarLogin(); };
+
+// ---------- Pestañas ----------
+document.querySelectorAll("[data-tab]").forEach((b) => b.addEventListener("click", () => {
+  document.querySelectorAll("[data-tab]").forEach((x) => x.setAttribute("aria-selected", x === b));
+  document.querySelectorAll("[data-panel]").forEach((p) => p.classList.toggle("hidden", p.dataset.panel !== b.dataset.tab));
+}));
+
+// ---------- Datos ----------
+async function cargarTodo() {
+  await Promise.all([cargarProductos(), cargarLicencias(), cargarVentas()]);
+}
+
+async function cargarProductos() {
+  const { data } = await sb.from("productos").select("*, planes(*)").order("orden").order("created_at");
+  productos = data || [];
+  const opts = productos.map((p) => `<option value="${p.id}">${esc(p.nombre)}</option>`).join("");
+  $("f-producto").innerHTML = `<option value="">Todo el software</option>${opts}`;
+  $("pl-producto").innerHTML = opts;
+  $("n-producto").innerHTML = opts;
+  $("rubros").innerHTML = [...new Set(productos.map((p) => p.rubro).filter(Boolean))].map((r) => `<option value="${esc(r)}">`).join("");
+  planesNueva();
+  $("prod-lista").innerHTML = productos.map((p) => `
+    <div class="card">
+      <div class="row" style="justify-content:space-between">
+        <div><h2>${esc(p.nombre)}</h2><span class="mono" style="color:var(--line)">${esc(p.slug)}</span> ${p.rubro ? `<span class="pill">${esc(p.rubro)}</span>` : ""} <span class="pill">${p.entrega === "web" ? "online" : "instalable"}</span> ${p.activo ? "" : pill("pausada")}</div>
+        <button type="button" class="chico" data-editar="${p.id}">Editar</button>
+      </div>
+      <div class="scroll" style="margin-top:10px"><table class="tabla">
+        <thead><tr><th>Plan</th><th>Precio</th><th>Duración</th><th>Equipos</th><th></th></tr></thead>
+        <tbody>${(p.planes || []).sort((a, b) => a.orden - b.orden || a.precio - b.precio).map((pl) => `
+          <tr><td>${esc(pl.nombre)} <span class="pill">${pl.tipo}</span></td>
+          <td>${pl.tipo === "prueba" ? "Gratis" : pesos(pl.precio, pl.moneda)}</td>
+          <td>${duracionTexto(pl)}</td><td>${pl.max_equipos}</td>
+          <td><button type="button" class="chico" data-plan-activo="${pl.id}" data-v="${!pl.activo}">${pl.activo ? "Ocultar" : "Mostrar"}</button></td></tr>`).join("")
+          || `<tr><td colspan="5" style="color:var(--line)">Sin planes todavía.</td></tr>`}</tbody>
+      </table></div>
+    </div>`).join("") || `<p class="vacio">Todavía no cargaste ningún software.</p>`;
+}
+
+async function cargarLicencias() {
+  const { data } = await sb.from("licencias_vista").select("*").order("created_at", { ascending: false }).limit(1000);
+  licencias = data || [];
+  const en7 = Date.now() + 7 * 86400000;
+  $("t-activas").textContent = licencias.filter((l) => l.estado_real === "activa").length;
+  $("t-pronto").textContent = licencias.filter((l) => l.estado_real === "activa" && l.vence && new Date(l.vence) < en7).length;
+  $("t-vencidas").textContent = licencias.filter((l) => l.estado_real === "vencida").length;
+  const g = licencias.filter((l) => l.estado_real === "en_gracia").length;
+  $("t-gracia").textContent = g ? `${g} en días de gracia` : "sin renovar";
+  pintarLicencias();
+  if (seleccion) verDetalle(seleccion);
+}
+
+function pintarLicencias() {
+  const q = $("f-buscar").value.trim().toLowerCase();
+  const est = $("f-estado").value, prod = $("f-producto").value;
+  const lista = licencias.filter((l) =>
+    (!est || l.estado_real === est) && (!prod || l.producto_id === prod) &&
+    (!q || [l.key, l.cliente_email, l.cliente_nombre, l.notas].some((x) => (x || "").toLowerCase().includes(q))));
+  $("lic-body").innerHTML = lista.map((l) => `
+    <tr data-id="${l.id}" class="${l.id === seleccion ? "sel" : ""}" style="cursor:pointer">
+      <td class="mono">${esc(l.key)}</td>
+      <td>${esc(l.cliente_nombre || "")}<div style="color:var(--line);font-size:13px">${esc(l.cliente_email || l.origen)}</div></td>
+      <td>${esc(l.producto_nombre)}<div style="color:var(--line);font-size:13px">${esc(l.plan_nombre || "")}</div></td>
+      <td>${pill(l.estado_real)}</td>
+      <td>${l.vence ? `${fecha(l.vence)}<div style="color:var(--line);font-size:13px">${l.dias_restantes} días</div>` : "Nunca"}</td>
+      <td>${l.dias_usados} días<div style="color:var(--line);font-size:13px">${l.equipos_activos}/${l.max_equipos} equipos</div></td>
+    </tr>`).join("") || `<tr><td colspan="6" style="color:var(--line)">No hay licencias${q || est || prod ? " con ese filtro" : " todavía"}.</td></tr>`;
+}
+["f-buscar", "f-estado", "f-producto"].forEach((id) => $(id).addEventListener("input", pintarLicencias));
+$("lic-body").addEventListener("click", (e) => { const tr = e.target.closest("tr[data-id]"); if (tr) verDetalle(tr.dataset.id); });
+
+async function verDetalle(id) {
+  seleccion = id;
+  pintarLicencias();
+  const l = licencias.find((x) => x.id === id);
+  if (!l) return;
+  const [{ data: equipos }, { data: uso }] = await Promise.all([
+    sb.from("activaciones").select("*").eq("licencia_id", id).order("ultima", { ascending: false }),
+    sb.from("uso_diario").select("*").eq("licencia_id", id).order("dia", { ascending: false }).limit(30),
+  ]);
+  const total = l.vence ? (new Date(l.vence) - new Date(l.inicio)) / 86400000 : null;
+  const pct = total ? Math.min(100, Math.max(0, ((Date.now() - new Date(l.inicio)) / 86400000) / total * 100)) : 0;
+  const d = $("detalle");
+  d.classList.remove("hidden");
+  d.innerHTML = `
+    <div class="row" style="justify-content:space-between">
+      <div><p class="label">Licencia</p><div class="mono" style="font-size:18px">${esc(l.key)}</div></div>
+      <div>${pill(l.estado_real)}</div>
+    </div>
+    <div class="grid2" style="margin-top:16px">
+      <dl>
+        <dt>Cliente</dt><dd>${esc(l.cliente_nombre || "—")} ${l.cliente_email ? `· ${esc(l.cliente_email)}` : ""}</dd>
+        <dt>Software</dt><dd>${esc(l.producto_nombre)} · ${esc(l.plan_nombre || "sin plan")}</dd>
+        <dt>Desde</dt><dd>${fecha(l.inicio)}</dd>
+        <dt>Vence</dt><dd>${l.vence ? `${fecha(l.vence)} (${l.dias_restantes} días)` : "Nunca"}</dd>
+        <dt>Usada</dt><dd>${l.dias_usados} días · ${horas(l.minutos_uso)} con el programa abierto</dd>
+        <dt>Último uso</dt><dd>${l.ultimo_uso ? new Date(l.ultimo_uso).toLocaleString("es-AR") : "Nunca"}</dd>
+        <dt>Origen</dt><dd>${esc(l.origen)}${l.mp_preapproval_id ? " · suscripción MP" : ""}</dd>
+        ${l.notas ? `<dt>Notas</dt><dd>${esc(l.notas)}</dd>` : ""}
+      </dl>
+      <div>
+        ${total ? `<p class="label">Tiempo de la licencia</p><div class="barra"><i style="width:${pct}%"></i></div>
+          <p style="color:var(--line);font-size:13px">${Math.round(pct)}% usado</p>` : ""}
+        <p class="label" style="margin-top:14px">Equipos (${l.equipos_activos}/${l.max_equipos})</p>
+        ${(equipos || []).map((e) => `<div class="row" style="justify-content:space-between;font-size:14px;padding:4px 0">
+          <span>${esc(e.equipo_nombre || e.equipo_id)}<br><span style="color:var(--line);font-size:12px">última vez ${new Date(e.ultima).toLocaleString("es-AR")}${e.activa ? "" : " · liberado"}</span></span>
+          ${e.activa ? `<button type="button" class="chico" data-liberar="${e.id}">Liberar</button>` : ""}</div>`).join("") || `<p style="color:var(--line);font-size:14px">Todavía no se activó en ningún equipo.</p>`}
+        ${uso?.length ? `<p class="label" style="margin-top:14px">Últimos días</p><p style="font-size:13px;color:var(--muted)">${uso.slice(0, 7).map((u) => `${u.dia.slice(5)}: ${horas(u.minutos)}`).join(" · ")}</p>` : ""}
+      </div>
+    </div>
+    <div class="row" style="margin-top:16px">
+      <button type="button" class="chico" data-acc="copiar">Copiar key</button>
+      <button type="button" class="chico" data-acc="ext" data-dias="30">+30 días</button>
+      <button type="button" class="chico" data-acc="ext" data-dias="365">+1 año</button>
+      <button type="button" class="chico" data-acc="equipos">Cambiar equipos</button>
+      ${l.estado === "pausada" ? `<button type="button" class="chico" data-acc="estado" data-v="activa">Reanudar</button>`
+        : l.estado === "activa" ? `<button type="button" class="chico" data-acc="estado" data-v="pausada">Pausar</button>` : ""}
+      ${l.estado !== "revocada" ? `<button type="button" class="chico" data-acc="estado" data-v="revocada">Dar de baja</button>`
+        : `<button type="button" class="chico" data-acc="estado" data-v="activa">Reactivar</button>`}
+    </div>`;
+}
+
+$("detalle").addEventListener("click", async (e) => {
+  const b = e.target.closest("button");
+  if (!b || !seleccion) return;
+  const l = licencias.find((x) => x.id === seleccion);
+  if (b.dataset.liberar) {
+    await sb.from("activaciones").update({ activa: false }).eq("id", b.dataset.liberar);
+    toast("Equipo liberado");
+  } else if (b.dataset.acc === "copiar") {
+    await navigator.clipboard.writeText(l.key); return toast("Key copiada");
+  } else if (b.dataset.acc === "ext") {
+    const { error } = await sb.rpc("extender_licencia", { p_licencia_id: l.id, p_dias: Number(b.dataset.dias) });
+    toast(error ? "No se pudo" : `Sumé ${b.dataset.dias} días`);
+  } else if (b.dataset.acc === "equipos") {
+    const n = Number(prompt("¿En cuántos equipos se puede usar?", l.max_equipos));
+    if (!n || n < 1) return;
+    await sb.from("licencias").update({ max_equipos: n }).eq("id", l.id);
+    toast("Listo");
+  } else if (b.dataset.acc === "estado") {
+    if (b.dataset.v === "revocada" && !confirm("¿Dar de baja esta key? El programa deja de funcionar en la próxima verificación.")) return;
+    await sb.from("licencias").update({ estado: b.dataset.v }).eq("id", l.id);
+    toast("Listo");
+  }
+  await cargarLicencias();
+});
+
+async function cargarVentas() {
+  const { data: pagos } = await sb.from("pagos").select("*, licencias(key)").order("created_at", { ascending: false }).limit(300);
+  const hace30 = Date.now() - 30 * 86400000;
+  const cobrado = (pagos || []).filter((p) => p.estado === "approved" && new Date(p.created_at) > hace30)
+    .reduce((s, p) => s + Number(p.monto || 0), 0);
+  $("t-cobrado").textContent = pesos(cobrado);
+  const est = { approved: "activa", pending: "en_gracia", in_process: "en_gracia", rejected: "vencida", cancelled: "vencida", refunded: "vencida" };
+  const txt = { approved: "Aprobado", pending: "Pendiente", in_process: "En proceso", rejected: "Rechazado", cancelled: "Cancelado", refunded: "Devuelto" };
+  $("ventas-body").innerHTML = (pagos || []).map((p) => `<tr>
+    <td>${new Date(p.created_at).toLocaleString("es-AR")}</td><td>${esc(p.email || "—")}</td>
+    <td>${p.monto != null ? pesos(p.monto, p.moneda || "ARS") : "—"}</td>
+    <td><span class="pill ${est[p.estado] || ""}">${txt[p.estado] || esc(p.estado)}</span></td>
+    <td class="mono">${esc(p.mp_payment_id)}</td><td class="mono">${esc(p.licencias?.key || "—")}</td></tr>`).join("")
+    || `<tr><td colspan="6" style="color:var(--line)">Todavía no hay ventas.</td></tr>`;
+}
+
+// ---------- Software y planes ----------
+$("prod-lista").addEventListener("click", async (e) => {
+  const ed = e.target.closest("[data-editar]");
+  if (ed) {
+    const p = productos.find((x) => x.id === ed.dataset.editar);
+    $("p-id").value = p.id; $("p-nombre").value = p.nombre; $("p-slug").value = p.slug;
+    $("p-desc").value = p.descripcion || ""; $("p-img").value = p.imagen_url || "";
+    $("p-rubro").value = p.rubro || ""; $("p-entrega").value = p.entrega || "web"; $("p-app").value = p.url_app || ""; entregaUI();
+    $("p-desc-url").value = p.url_descarga || ""; $("p-activo").checked = p.activo;
+    $("prod-titulo").textContent = `Editar ${p.nombre}`;
+    $("prod-form").scrollIntoView({ behavior: "smooth" });
+  }
+  const pa = e.target.closest("[data-plan-activo]");
+  if (pa) { await sb.from("planes").update({ activo: pa.dataset.v === "true" }).eq("id", pa.dataset.planActivo); await cargarProductos(); }
+});
+$("p-nuevo").onclick = () => { $("prod-form").reset(); $("p-id").value = ""; $("prod-titulo").textContent = "Nuevo software"; entregaUI(); };
+function entregaUI() {
+  const web = $("p-entrega").value === "web";
+  $("p-app-wrap").classList.toggle("hidden", !web);
+  $("p-desc-wrap").classList.toggle("hidden", web);
+}
+$("p-entrega").addEventListener("change", entregaUI);
+entregaUI();
+$("p-nombre").addEventListener("input", () => {
+  if (!$("p-id").value) $("p-slug").value = $("p-nombre").value.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+});
+$("prod-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const fila = { nombre: $("p-nombre").value.trim(), slug: $("p-slug").value.trim(), descripcion: $("p-desc").value.trim() || null,
+    rubro: $("p-rubro").value.trim() || null, entrega: $("p-entrega").value, url_app: $("p-app").value.trim() || null,
+    imagen_url: $("p-img").value.trim() || null, url_descarga: $("p-desc-url").value.trim() || null, activo: $("p-activo").checked };
+  const id = $("p-id").value;
+  const { error } = id ? await sb.from("productos").update(fila).eq("id", id) : await sb.from("productos").insert(fila);
+  $("p-msg").textContent = error ? (error.code === "23505" ? "Ese identificador ya existe." : error.message) : "";
+  if (!error) { toast("Guardado"); $("p-nuevo").click(); await cargarProductos(); }
+});
+$("pl-tipo").addEventListener("change", () => {
+  const t = $("pl-tipo").value;
+  $("pl-frec-wrap").classList.toggle("hidden", t !== "suscripcion");
+  if (t === "prueba") { $("pl-precio").value = 0; $("pl-dias").value = 7; }
+});
+$("plan-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const tipo = $("pl-tipo").value;
+  const dias = $("pl-dias").value ? Number($("pl-dias").value) : null;
+  const frec = Number($("pl-frec").value || 1);
+  const fila = { producto_id: $("pl-producto").value, nombre: $("pl-nombre").value.trim(), tipo,
+    precio: tipo === "prueba" ? 0 : Number($("pl-precio").value || 0),
+    duracion_dias: tipo === "suscripcion" ? (dias || frec * 30) : dias,
+    frecuencia_meses: frec, max_equipos: Number($("pl-equipos").value || 1), dias_gracia: Number($("pl-gracia").value || 0) };
+  if (tipo === "prueba" && !dias) return ($("pl-msg").textContent = "La prueba necesita una cantidad de días.");
+  const { error } = await sb.from("planes").insert(fila);
+  $("pl-msg").textContent = error ? error.message : "";
+  if (!error) { toast("Plan agregado"); $("pl-nombre").value = ""; await cargarProductos(); }
+});
+
+// ---------- Crear key ----------
+function planesNueva() {
+  const p = productos.find((x) => x.id === $("n-producto").value);
+  $("n-plan").innerHTML = `<option value="">Sin plan</option>` + (p?.planes || []).map((pl) => `<option value="${pl.id}">${esc(pl.nombre)}</option>`).join("");
+}
+$("n-producto").addEventListener("change", planesNueva);
+$("n-plan").addEventListener("change", () => {
+  const pl = productos.flatMap((p) => p.planes || []).find((x) => x.id === $("n-plan").value);
+  if (pl) { $("n-dias").value = pl.duracion_dias || ""; $("n-equipos").value = pl.max_equipos; }
+});
+$("nueva-form").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const { data, error } = await sb.rpc("crear_licencia_manual", {
+    p_producto_id: $("n-producto").value, p_plan_id: $("n-plan").value || null,
+    p_email: $("n-email").value.trim() || null, p_nombre: $("n-nombre").value.trim() || null,
+    p_dias: $("n-dias").value ? Number($("n-dias").value) : null, p_max_equipos: Number($("n-equipos").value || 1),
+    p_notas: $("n-notas").value.trim() || null, p_origen: "manual",
+  });
+  $("n-msg").textContent = error ? error.message : "";
+  if (!error) { $("n-key").textContent = data.key; $("n-out").classList.remove("hidden"); await cargarLicencias(); }
+});
+$("n-copiar").onclick = async () => { await navigator.clipboard.writeText($("n-key").textContent); toast("Key copiada"); };
+
+sb.auth.onAuthStateChange((ev) => { if (ev === "SIGNED_IN" && $("panel").classList.contains("hidden")) iniciar(); });
+iniciar();
+</script>
+</body>
+</html>
