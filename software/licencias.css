@@ -84,12 +84,12 @@ dialog form { display: grid; gap: 12px; margin-top: 16px; }
 .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 12px; margin-bottom: 16px; }
 .tile .n { font: 700 clamp(26px, 6vw, 34px)/1.1 Archivo, system-ui, sans-serif; font-variant-numeric: tabular-nums; }
 .tile .sub { color: var(--line); font-size: 13px; margin-top: 4px; }
-.tabla { width: 100%; border-collapse: collapse; font-size: 14px; }
+.tabla { width: 100%; min-width: 640px; border-collapse: collapse; font-size: 14px; }
 .tabla th { text-align: left; font: 500 11px/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--line); padding: 8px; border-bottom: 1px solid var(--border); }
 .tabla td { padding: 10px 8px; border-bottom: 1px solid rgba(199, 199, 201, .08); vertical-align: top; }
 .tabla tr.sel td { background: rgba(178, 58, 58, .08); }
 .scroll { overflow-x: auto; }
-.mono { font-family: var(--mono); font-size: 13px; }
+.mono { font-family: var(--mono); font-size: 13px; white-space: nowrap; }
 .pill { display: inline-block; font: 500 11px/1 var(--mono); padding: 5px 8px; border-radius: 999px; letter-spacing: .05em; text-transform: uppercase; background: rgba(199, 199, 201, .14); color: var(--muted); white-space: nowrap; }
 .pill.activa { background: rgba(111, 191, 142, .16); color: var(--ok); }
 .pill.en_gracia { background: rgba(224, 180, 92, .16); color: var(--warn); }

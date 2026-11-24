@@ -23,7 +23,7 @@
   <header>
     <p class="code">Software</p>
     <h1>Programas listos para usar</h1>
-    <p class="lead">Elegís un plan, pagás con Mercado Pago y te llega la key al momento. La pegás en el programa y listo.</p>
+    <p class="lead">Elegís un plan, pagás con Mercado Pago y te llega la key al momento. La pegás en el sistema y listo.</p>
   </header>
 
   <div id="rubros" class="tabs" role="group" aria-label="Rubros" style="margin-top:32px"></div>
@@ -67,8 +67,8 @@ let planActual = null;
 async function cargar() {
   const r = await fetch(`${SUPABASE_URL}/rest/v1/productos?select=*,planes(*)&order=orden,created_at`, {
     headers: { apikey: SUPABASE_KEY },
-  });
-  todos = r.ok ? await r.json() : [];
+  }).catch(() => null);
+  todos = r?.ok ? await r.json() : [];
   const rubros = [...new Set(todos.map((p) => p.rubro).filter(Boolean))];
   $("rubros").innerHTML = rubros.length > 1
     ? [["", "Todos"], ...rubros.map((x) => [x, x])].map(([v, t]) => `<button type="button" data-rubro="${esc(v)}" aria-selected="${v === rubro}">${esc(t)}</button>`).join("")
